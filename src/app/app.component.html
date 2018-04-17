@@ -1,4 +1,9 @@
-<mat-toolbar color="primary">
-  <mat-icon svgIcon="lightning"></mat-icon>
-  <span>{{ title }}</span>
+<mat-toolbar flexLayout="column" fxLayoutAlign="space-between" color="primary">
+  <div flex fxFlexAlign="center">
+    <mat-icon svgIcon="lightning"></mat-icon>
+    <span>{{ title }}</span>
+  </div>
+  <div flex fxFlexAlign="center">
+    LogIn
+  </div>
 </mat-toolbar>
