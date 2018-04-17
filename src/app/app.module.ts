@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { FlexLayoutModule } from "@angular/flex-layout";
 
 
 import { AppComponent } from './app.component';
@@ -18,6 +19,7 @@ import { AppComponent } from './app.component';
     HttpClientModule,
     MatIconModule,
     MatToolbarModule,
+    FlexLayoutModule,
   ],
   providers: [ ],
   bootstrap: [ AppComponent ]
