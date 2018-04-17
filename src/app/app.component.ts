@@ -8,7 +8,7 @@ import { MatIconRegistry } from '@angular/material';
   styles: [ ],
 })
 export class AppComponent {
-  private title = 'sg';
+  title: string = 'Storm Golem';
 
   constructor(
     private iconRegistry: MatIconRegistry,
