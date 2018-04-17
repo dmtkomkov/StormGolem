@@ -5,7 +5,7 @@ import { MatIconRegistry } from '@angular/material';
 @Component({
   selector: 'sg-root',
   templateUrl: 'app.component.html',
-  styles: [ ],
+  styleUrls: [ 'app.component.scss' ],
 })
 export class AppComponent {
   title: string = 'Storm Golem';
