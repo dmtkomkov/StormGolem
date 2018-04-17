@@ -14,9 +14,9 @@ export class AppComponent {
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
   ) {
-      iconRegistry.addSvgIcon(
-        'lightning',
-        sanitizer.bypassSecurityTrustResourceUrl('assets/lightning.svg')
-      )
+    iconRegistry.addSvgIcon(
+      'lightning',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/lightning.svg')
+    )
   }
 }
