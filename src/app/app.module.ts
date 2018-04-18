@@ -9,10 +9,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
+import { LoginDialogComponent } from './dialogs/login-dialog/login-dialog.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,6 +27,9 @@ import { AppComponent } from './app.component';
     MatDialogModule,
   ],
   providers: [ ],
+  entryComponents: [
+    LoginDialogComponent,
+  ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
