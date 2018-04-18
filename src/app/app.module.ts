@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
 
@@ -21,6 +22,7 @@ import { AppComponent } from './app.component';
     MatToolbarModule,
     FlexLayoutModule,
     MatButtonModule,
+    MatDialogModule,
   ],
   providers: [ ],
   bootstrap: [ AppComponent ]
