@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
+import { MatDialog } from '@angular/material';
+
+import { LoginDialogComponent } from './dialogs/login-dialog/login-dialog.component';
 
 @Component({
   selector: 'sg-root',
@@ -13,10 +16,15 @@ export class AppComponent {
   constructor(
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
+    private dialog: MatDialog,
   ) {
     iconRegistry.addSvgIcon(
       'lightning',
       sanitizer.bypassSecurityTrustResourceUrl('assets/lightning.svg')
     )
+  }
+
+  login() {
+    let dialogRef = this.dialog.open(LoginDialogComponent);
   }
 }
