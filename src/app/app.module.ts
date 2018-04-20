@@ -7,6 +7,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 import { AppComponent } from './app.component';
 import { LoginDialogComponent } from './dialogs/login-dialog/login-dialog.component';
@@ -25,6 +28,9 @@ import { LoginDialogComponent } from './dialogs/login-dialog/login-dialog.compon
     FlexLayoutModule,
     MatButtonModule,
     MatDialogModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatInputModule,
   ],
   providers: [ ],
   entryComponents: [

@@ -1,3 +1,14 @@
-<p>
-  login-dialog works!
-</p>
+<div flexLayout="column" >
+  <form [formGroup]="loginForm">
+    <div fxFlex>
+      <mat-form-field fxFlex color="accent">
+        <input formControlName="username" matInput>
+      </mat-form-field>
+    </div>
+    <div fxFlex>
+      <mat-form-field fxFlex color="accent">
+        <input formControlName="password" matInput>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
