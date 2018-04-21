@@ -10,5 +10,9 @@
         <input formControlName="password" matInput>
       </mat-form-field>
     </div>
+    <div fxFlexAlign="center">
+      <button mat-raised-button color="warn" (click)="close()">CANCEL</button>
+      <button mat-raised-button color="primary" (click)="login()" [disabled]="loginForm.invalid">OK</button>
+    </div>
   </form>
 </div>
