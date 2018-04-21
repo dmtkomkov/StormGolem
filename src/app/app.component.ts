@@ -24,7 +24,7 @@ export class AppComponent {
     )
   }
 
-  login() {
-    let dialogRef = this.dialog.open(LoginDialogComponent);
+  openLoginDialog() {
+    this.dialog.open(LoginDialogComponent);
   }
 }
