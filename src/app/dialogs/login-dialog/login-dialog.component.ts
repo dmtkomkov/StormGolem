@@ -11,12 +11,15 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginDialogComponent implements OnInit {
   loginForm: FormGroup;
+  loginErrMsg: string;
 
   constructor(
     private dialogRef: MatDialogRef<LoginDialogComponent>,
     private fb: FormBuilder,
     private authService: AuthService,
-  ) { }
+  ) {
+    this.loginErrMsg = null;
+  }
 
   ngOnInit() {
     this.loginForm = this.fb.group({
@@ -31,8 +34,15 @@ export class LoginDialogComponent implements OnInit {
 
   login() {
     this.authService.auth(this.loginForm.value).subscribe(
-      data => this.authService.storeToken(data.token),
-      error => console.log(error.error.non_field_errors[0]),
+      data => {
+        this.loginErrMsg = null;
+        this.authService.storeToken(data.token);
+        this.dialogRef.close();
+      },
+      error => {
+        this.loginErrMsg = error.error.non_field_errors[0];
+        setTimeout(() => this.loginErrMsg = null, 1000);
+      }
     );
   }
 }
