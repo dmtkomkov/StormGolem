@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'sg-login-dialog',
@@ -15,7 +15,7 @@ export class LoginDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<LoginDialogComponent>,
     private fb: FormBuilder,
-    private userService: UserService,
+    private authService: AuthService,
   ) { }
 
   ngOnInit() {
@@ -30,8 +30,8 @@ export class LoginDialogComponent implements OnInit {
   }
 
   login() {
-    this.userService.getUser(this.loginForm.value).subscribe(
-      data => console.log(data.token),
+    this.authService.auth(this.loginForm.value).subscribe(
+      data => this.authService.storeToken(data.token),
       error => console.log(error.error.non_field_errors[0]),
     );
   }

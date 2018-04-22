@@ -14,7 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { AppComponent } from './app.component';
 import { LoginDialogComponent } from './dialogs/login-dialog/login-dialog.component';
 
-import { UserService } from './services/user.service';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +35,7 @@ import { UserService } from './services/user.service';
     MatInputModule,
   ],
   providers: [
-    UserService,
+    AuthService,
   ],
   entryComponents: [
     LoginDialogComponent,

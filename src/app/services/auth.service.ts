@@ -9,12 +9,20 @@ interface LoginUser {
 }
 
 @Injectable()
-export class UserService {
+export class AuthService {
   constructor(
     private http: HttpClient,
   ) { }
 
-  getUser(loginUser: LoginUser): Observable<any> {
+  auth(loginUser: LoginUser): Observable<any> {
     return this.http.post('http://localhost:8000/auth/', loginUser);
+  }
+
+  storeToken(token: string) {
+    sessionStorage.setItem('token', token);
+  }
+
+  getToken(): string {
+    return sessionStorage.getItem('token');
   }
 }
