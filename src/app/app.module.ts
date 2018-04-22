@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { LoginDialogComponent } from './dialogs/login-dialog/login-dialog.component';
 
 import { AuthService } from './services/auth.service';
+import { BlogService } from './services/blog.service';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { AuthService } from './services/auth.service';
   ],
   providers: [
     AuthService,
+    BlogService,
   ],
   entryComponents: [
     LoginDialogComponent,
