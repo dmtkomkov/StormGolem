@@ -14,8 +14,14 @@ export class AuthService {
     private http: HttpClient,
   ) { }
 
+  // Send authentication request
   auth(loginUser: LoginUser): Observable<any> {
     return this.http.post('http://localhost:8000/auth/', loginUser);
+  }
+
+  // Store user information
+  login(data: any) { // FIXME: interface for data
+    this.storeToken(data.token);
   }
 
   storeToken(token: string) {
