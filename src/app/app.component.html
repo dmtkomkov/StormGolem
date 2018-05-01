@@ -1,9 +1,14 @@
 <mat-toolbar flexLayout fxLayoutAlign="space-between" color="primary">
   <div fxFlexAlign="center">
-    <mat-icon svgIcon="lightning"></mat-icon>
-    <span>{{ title }}</span>
+    <a fxFlexAlign="center" mat-icon-button disableRipple="true" routerLink="/">
+      <mat-icon svgIcon="lightning"></mat-icon>
+      <span>{{ title }}</span>
+    </a>
+    <button mat-button routerLink="blog">Blog</button>
   </div>
   <button fxFlexAlign="center" mat-raised-button color="accent" (click)="openLoginDialog()">
     Sign In
   </button>
 </mat-toolbar>
+
+<router-outlet></router-outlet>

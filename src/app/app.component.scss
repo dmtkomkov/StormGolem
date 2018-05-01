@@ -1,9 +1,17 @@
 .mat-toolbar {
   height: 48px;
-  padding: 8px;
+  left: 0;
+  padding: 6px;
   position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2;
 }
 
 .mat-icon {
   vertical-align: sub;
+}
+
+a {
+  width: 120px;
 }
