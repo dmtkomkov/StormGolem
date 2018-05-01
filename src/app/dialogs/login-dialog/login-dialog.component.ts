@@ -39,7 +39,7 @@ export class LoginDialogComponent implements OnInit {
         this.authService.login(data);
         this.dialogRef.close();
       },
-      error => {;
+      error => {
         this.loginErrMsg = `Login failed (${error.status})`;
         setTimeout(() => this.loginErrMsg = null, 2000);
       }
