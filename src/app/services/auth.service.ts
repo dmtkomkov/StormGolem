@@ -20,8 +20,8 @@ export class AuthService {
   }
 
   // Store user information
-  login(data: any) { // FIXME: interface for data
-    this.storeToken(data.token);
+  login(token: string) {
+    this.storeToken(token);
   }
 
   storeToken(token: string) {
