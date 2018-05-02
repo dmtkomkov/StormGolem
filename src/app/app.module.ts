@@ -13,12 +13,13 @@ import { MatInputModule } from '@angular/material/input';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
+import { BlogComponent } from './blog/blog.component';
 import { LoginDialogComponent } from './dialogs/login-dialog/login-dialog.component';
 
 import { AuthService } from './services/auth.service';
+import { UserService } from './services/user.service';
 import { BlogService } from './services/blog.service';
-import { HomeComponent } from './home/home.component';
-import { BlogComponent } from './blog/blog.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -48,6 +49,7 @@ const appRoutes: Routes = [
   ],
   providers: [
     AuthService,
+    UserService,
     BlogService,
   ],
   entryComponents: [
