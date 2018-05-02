@@ -3,10 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 
-interface LoginUser {
-  username: string;
-  password: string;
-}
+import { LoginUser } from '../interfaces';
 
 @Injectable()
 export class AuthService {
