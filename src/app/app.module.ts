@@ -20,10 +20,11 @@ import { LoginDialogComponent } from './dialogs/login-dialog/login-dialog.compon
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { BlogService } from './services/blog.service';
+import { GuardService } from './services/guard.service';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'blog', component: BlogComponent },
+  { path: 'blog', component: BlogComponent, canActivate: [ GuardService ] },
 ];
 
 @NgModule({
@@ -51,6 +52,7 @@ const appRoutes: Routes = [
     AuthService,
     UserService,
     BlogService,
+    GuardService,
   ],
   entryComponents: [
     LoginDialogComponent,
