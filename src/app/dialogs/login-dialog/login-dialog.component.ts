@@ -40,7 +40,6 @@ export class LoginDialogComponent implements OnInit {
     this.authService.auth(this.loginUser).subscribe(
       data => {
         this.loginErrMsg = null;
-        this.authService.login(data.token);
         this.dialogRef.close();
       },
       error => {
