@@ -15,17 +15,12 @@ export class AuthService {
   // Send authentication request
   auth(loginUser: LoginUser): Observable<Token> {
     return this.http.post<Token>('http://localhost:8000/auth/', loginUser).do(
-        data => this.storeToken(data.token),
-        error => this.storeToken(null),
+        data => this.setToken(data.token),
+        error => this.setToken(null),
       );
   }
 
-  // Store user information
-  login(token: string) {
-    this.storeToken(token);
-  }
-
-  storeToken(token: string) {
+  setToken(token: string) {
     sessionStorage.setItem('token', token);
   }
 
