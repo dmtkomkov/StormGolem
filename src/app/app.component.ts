@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MatIconRegistry } from '@angular/material';
-import { MatDialog } from '@angular/material';
+import { MatIconRegistry, MatDialog } from '@angular/material';
 
 import { LoginDialogComponent } from './dialogs/login-dialog/login-dialog.component';
 
