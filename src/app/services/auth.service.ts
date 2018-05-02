@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 
-import { LoginUser } from '../interfaces';
+import { LoginUser, Token } from '../interfaces';
 
 @Injectable()
 export class AuthService {
@@ -12,8 +12,8 @@ export class AuthService {
   ) { }
 
   // Send authentication request
-  auth(loginUser: LoginUser): Observable<any> {
-    return this.http.post('http://localhost:8000/auth/', loginUser);
+  auth(loginUser: LoginUser): Observable<Token> {
+    return this.http.post<Token>('http://localhost:8000/auth/', loginUser);
   }
 
   // Store user information
