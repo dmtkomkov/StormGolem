@@ -12,7 +12,7 @@
     </div>
     <div fxFlexAlign="center">
       <button mat-raised-button color="warn" (click)="close()">CANCEL</button>
-      <button mat-raised-button color="primary" (click)="login()" [disabled]="loginForm.invalid">OK</button>
+      <button mat-raised-button color="primary" (click)="submit()" [disabled]="loginForm.invalid">OK</button>
     </div>
     <div class="error" *ngIf="loginErrMsg">
       {{ loginErrMsg }}
