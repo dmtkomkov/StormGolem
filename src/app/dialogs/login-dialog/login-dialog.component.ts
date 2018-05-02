@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from '../../services/auth.service';
 
+import { LoginUser } from '../../interfaces';
+
 @Component({
   selector: 'sg-login-dialog',
   templateUrl: 'login-dialog.component.html',
@@ -11,6 +13,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginDialogComponent implements OnInit {
   loginForm: FormGroup;
+  loginUser: LoginUser;
   loginErrMsg: string;
 
   constructor(
@@ -33,7 +36,8 @@ export class LoginDialogComponent implements OnInit {
   }
 
   login() {
-    this.authService.auth(this.loginForm.value).subscribe(
+    this.loginUser = <LoginUser>this.loginForm.value;
+    this.authService.auth(this.loginUser).subscribe(
       data => {
         this.loginErrMsg = null;
         this.authService.login(data.token);
