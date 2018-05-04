@@ -7,13 +7,16 @@ import { LoginDialogComponent } from './dialogs/login-dialog/login-dialog.compon
 import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
 
+import { User } from './interfaces';
+
 @Component({
   selector: 'sg-root',
   templateUrl: 'app.component.html',
   styleUrls: [ 'app.component.scss' ],
 })
 export class AppComponent implements OnInit {
-  title: string = 'Storm Golem';
+  title: string;
+  user: User;
 
   constructor(
     private iconRegistry: MatIconRegistry,
@@ -25,7 +28,9 @@ export class AppComponent implements OnInit {
     iconRegistry.addSvgIcon(
       'lightning',
       sanitizer.bypassSecurityTrustResourceUrl('assets/lightning.svg'),
-    )
+    ),
+    this.title = 'Storm Golem';
+    this.user = null;
   }
 
   ngOnInit() {
@@ -39,8 +44,14 @@ export class AppComponent implements OnInit {
 
   readUser() {
     this.userService.getUser().subscribe(
-      res => console.log(res),
-      error => console.log(error),
+      data => {
+        console.log('New User: ', data),
+        this.user = data;
+      },
+      error => {
+        console.log('Failing at getting User: ', error),
+        this.user = null;
+      }
     );
   }
 
