@@ -16,6 +16,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { BlogComponent } from './blog/blog.component';
 import { LoginDialogComponent } from './dialogs/login-dialog/login-dialog.component';
+import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
 
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
@@ -25,6 +26,7 @@ import { GuardService } from './services/guard.service';
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'blog', component: BlogComponent, canActivate: [ GuardService ] },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
@@ -33,6 +35,7 @@ const appRoutes: Routes = [
     LoginDialogComponent,
     HomeComponent,
     BlogComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
