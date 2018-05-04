@@ -1,14 +1,29 @@
 <mat-toolbar flexLayout fxLayoutAlign="space-between" color="primary">
   <div fxFlexAlign="center">
-    <a fxFlexAlign="center" mat-icon-button disableRipple="true" routerLink="/">
+    <a class="logo" mat-icon-button routerLink="/">
       <mat-icon svgIcon="lightning"></mat-icon>
       {{ title }}
     </a>
     <button mat-button routerLink="blog">Blog</button>
   </div>
-  <button fxFlexAlign="center" mat-raised-button color="accent" (click)="openLoginDialog()">
-    Sign In
-  </button>
+  <div *ngIf="!user">
+    <div fxFlexAlign="center">
+      <button mat-button (click)="openLoginDialog()">
+        Log In
+      </button>
+    </div>
+  </div>
+  <div *ngIf="user">
+    <div fxFlexAlign="center">
+      <a class="user" mat-icon-button>
+        <mat-icon svgIcon="lightning"></mat-icon>
+        {{ user.first_name }} {{ user.last_name }}
+      </a>
+      <button mat-button (click)="logout()">
+        Log Out
+      </button>
+    </div>
+  </div>
 </mat-toolbar>
 
 <router-outlet></router-outlet>

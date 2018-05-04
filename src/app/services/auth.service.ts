@@ -22,15 +22,19 @@ export class AuthService {
   // Send authentication request
   auth(loginUser: LoginUser): Observable<Token> {
     return this.http.post<Token>('http://localhost:8000/auth/', loginUser).do(
-      data => {
-        this.setToken(data.token);
-        this.loggedInSource.next(true);
-      },
-      error => {
-        this.setToken(null);
-        this.loggedInSource.next(false);
-      },
+      data => this.logIn(data.token),
+      error => this.logOut(),
     );
+  }
+
+  logIn(token: string) {
+    this.setToken(token);
+    this.loggedInSource.next(true);
+  }
+
+  logOut() {
+    this.setToken(null);
+    this.loggedInSource.next(false);
   }
 
   setToken(token: string) {

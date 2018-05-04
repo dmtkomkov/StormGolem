@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry, MatDialog } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import { LoginDialogComponent } from './dialogs/login-dialog/login-dialog.component';
 
@@ -25,6 +26,7 @@ export class AppComponent implements OnInit {
     private dialog: MatDialog,
     private userService: UserService,
     private authService: AuthService,
+    private router: Router,
   ) {
     iconRegistry.addSvgIcon(
       'lightning',
@@ -58,5 +60,11 @@ export class AppComponent implements OnInit {
 
   openLoginDialog() {
     this.dialog.open(LoginDialogComponent);
+  }
+
+  logout() {
+    this.user = null;
+    this.authService.logOut();
+    this.router.navigate(['/']);
   }
 }
