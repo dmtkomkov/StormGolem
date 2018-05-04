@@ -6,23 +6,19 @@
     </a>
     <button mat-button routerLink="blog">Blog</button>
   </div>
-  <div *ngIf="!user">
-    <div fxFlexAlign="center">
+  <div fxFlexAlign="center" *ngIf="!user">
       <button mat-button (click)="openLoginDialog()">
         Log In
       </button>
-    </div>
   </div>
-  <div *ngIf="user">
-    <div fxFlexAlign="center">
+  <div fxFlexAlign="center" *ngIf="user">
       <a class="user" mat-icon-button>
-        <mat-icon svgIcon="lightning"></mat-icon>
+        <mat-icon svgIcon="user"></mat-icon>
         {{ user.first_name }} {{ user.last_name }}
       </a>
       <button mat-button (click)="logout()">
         Log Out
       </button>
-    </div>
   </div>
 </mat-toolbar>
 

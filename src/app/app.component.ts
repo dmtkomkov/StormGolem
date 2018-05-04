@@ -31,7 +31,11 @@ export class AppComponent implements OnInit {
     iconRegistry.addSvgIcon(
       'lightning',
       sanitizer.bypassSecurityTrustResourceUrl('assets/lightning.svg'),
-    ),
+    );
+    iconRegistry.addSvgIcon(
+      'user',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/user.svg'),
+    );
     this.title = 'Storm Golem';
     this.user = null;
   }
