@@ -28,13 +28,8 @@ export class AppComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
   ) {
-    iconRegistry.addSvgIcon(
-      'lightning',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/lightning.svg'),
-    );
-    iconRegistry.addSvgIcon(
-      'user',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/user.svg'),
+    for (let icon of ['lightning', 'user']) iconRegistry.addSvgIcon(icon,
+      sanitizer.bypassSecurityTrustResourceUrl(`assets/${icon}.svg`),
     );
     this.title = 'Storm Golem';
     this.user = null;
