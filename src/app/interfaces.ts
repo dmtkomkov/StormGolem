@@ -13,3 +13,17 @@ export interface LoginUser {
 export interface Token {
   token: string;
 }
+
+export interface Post {
+  title: string;
+  body: string;
+  created: Date;
+}
+
+export interface BlogPage {
+  results: Post[];
+  page_size: number;
+  count: number;
+  page_count: number;
+  page_number: number;
+}

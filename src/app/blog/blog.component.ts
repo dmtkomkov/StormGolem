@@ -2,21 +2,23 @@ import { Component, OnInit } from '@angular/core';
 import { BlogService } from '../services/blog.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
+import { Post, BlogPage } from '../interfaces';
+
 @Component({
   selector: 'sg-blog',
   templateUrl: 'blog.component.html',
   styles: [],
 })
 export class BlogComponent implements OnInit {
-  posts: any = [];
+  posts: Post[] = [];
 
   constructor(
     private blogService: BlogService,
   ) { }
 
   ngOnInit() {
-    this.blogService.getPosts().subscribe(
-      blogPage => {
+    this.blogService.getBlogPage().subscribe(
+      (blogPage: BlogPage) => {
         console.log(blogPage);
         this.posts = blogPage.results;
       },

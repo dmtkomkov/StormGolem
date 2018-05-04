@@ -5,6 +5,8 @@ import { AuthService } from './auth.service'
 
 import { Observable } from 'rxjs/Observable';
 
+import { Post, BlogPage } from '../interfaces';
+
 @Injectable()
 export class BlogService {
   constructor(
@@ -17,8 +19,9 @@ export class BlogService {
     return new HttpHeaders({ Authorization: `JWT ${token}`});
   }
 
-  getPosts(): Observable<any> {
-    return this.http.get('http://localhost:8000/api/v1/blog/', {
+  getBlogPage(): Observable<BlogPage> {
+    // FIXME: add pagenumber as a param
+    return this.http.get<BlogPage>('http://localhost:8000/api/v1/blog/', {
       headers: this.getAuthHeaders(this.authService.getToken())
     });
   }
