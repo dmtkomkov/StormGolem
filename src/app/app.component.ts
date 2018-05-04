@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry, MatDialog } from '@angular/material';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { LoginDialogComponent } from './dialogs/login-dialog/login-dialog.component';
 
@@ -37,19 +38,19 @@ export class AppComponent implements OnInit {
     this.readUser(); // Read user first time on Init
 
     // Subscribe on user change
-    this.authService.loggedIn$.subscribe(res => {
-      this.readUser();
+    this.authService.loggedIn$.subscribe((loggedIn: boolean) => {
+      loggedIn? this.readUser(): this.user = null;
     });
   }
 
   readUser() {
     this.userService.getUser().subscribe(
-      data => {
-        console.log('New User: ', data),
-        this.user = data;
+      (user: User) => {
+        console.log('New User: ', user),
+        this.user = user;
       },
-      error => {
-        console.log('Failing at getting User: ', error),
+      (error: HttpErrorResponse) => {
+        console.log('Error User: ', error.message),
         this.user = null;
       }
     );
