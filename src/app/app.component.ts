@@ -5,6 +5,7 @@ import { MatIconRegistry, MatDialog } from '@angular/material';
 import { LoginDialogComponent } from './dialogs/login-dialog/login-dialog.component';
 
 import { UserService } from './services/user.service';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'sg-root',
@@ -19,14 +20,24 @@ export class AppComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private dialog: MatDialog,
     private userService: UserService,
+    private authService: AuthService,
   ) {
     iconRegistry.addSvgIcon(
       'lightning',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/lightning.svg')
+      sanitizer.bypassSecurityTrustResourceUrl('assets/lightning.svg'),
     )
   }
 
   ngOnInit() {
+    this.readUser(); // Read user first time on Init
+
+    // Subscribe on user change
+    this.authService.loggedIn$.subscribe(res => {
+      this.readUser();
+    });
+  }
+
+  readUser() {
     this.userService.getUser().subscribe(
       res => console.log(res),
       error => console.log(error),

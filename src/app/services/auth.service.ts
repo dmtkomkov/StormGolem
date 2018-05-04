@@ -2,18 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/do';
 
 import { LoginUser, Token } from '../interfaces';
 
 @Injectable()
 export class AuthService {
-  loggedIn: boolean;
+  private loggedInSource:  Subject<boolean>
+  loggedIn$: Observable<boolean>
 
   constructor(
     private http: HttpClient,
   ) {
-    this.loggedIn = this.getToken()? true: false;
+    this.loggedInSource = new Subject<boolean>();
+    this.loggedIn$ = this.loggedInSource.asObservable();
   }
 
   // Send authentication request
@@ -21,11 +24,11 @@ export class AuthService {
     return this.http.post<Token>('http://localhost:8000/auth/', loginUser).do(
       data => {
         this.setToken(data.token);
-        this.loggedIn = true;
+        this.loggedInSource.next(true);
       },
       error => {
         this.setToken(null);
-        this.loggedIn = false;
+        this.loggedInSource.next(false);
       },
     );
   }
