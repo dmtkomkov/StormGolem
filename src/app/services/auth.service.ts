@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/do';
+import { Observable, Subject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { LoginUser, Token } from '../interfaces';
 
@@ -21,9 +20,11 @@ export class AuthService {
 
   // Send authentication request
   auth(loginUser: LoginUser): Observable<Token> {
-    return this.http.post<Token>('http://localhost:8000/auth/', loginUser).do(
-      data => this.logIn(data.token),
-      error => this.logOut(),
+    return this.http.post<Token>('http://localhost:8000/auth/', loginUser).pipe(
+      tap(
+        data => this.logIn(data.token),
+        error => this.logOut(),
+      )
     );
   }
 
