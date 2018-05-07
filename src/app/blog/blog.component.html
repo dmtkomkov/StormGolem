@@ -1,13 +1,10 @@
 <mat-card *ngFor="let post of posts">
   <mat-card-header>
+    <div [ngStyle]="{'background-color': '#BCBCBC'}" mat-card-avatar> </div>
     <mat-card-title>{{ post.title }}</mat-card-title>
     <mat-card-subtitle>{{ post.created | date }}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
     {{ post.body }}
   </mat-card-content>
-  <mat-card-actions>
-    <button mat-button>LIKE</button>
-    <button mat-button>SHARE</button>
-  </mat-card-actions>
 </mat-card>
