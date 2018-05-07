@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { Routes, RouterModule } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -50,6 +51,7 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatCardModule,
   ],
   providers: [
     AuthService,
