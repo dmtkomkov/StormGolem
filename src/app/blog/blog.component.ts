@@ -7,7 +7,7 @@ import { Post, BlogPage } from '../interfaces';
 @Component({
   selector: 'sg-blog',
   templateUrl: 'blog.component.html',
-  styles: [],
+  styleUrls: ['blog.component.scss'],
 })
 export class BlogComponent implements OnInit {
   posts: Post[] = [];
