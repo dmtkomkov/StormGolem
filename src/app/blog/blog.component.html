@@ -1,3 +1,16 @@
+<mat-card>
+  <mat-card-header>
+    <div [ngStyle]="{'background-color': '#BCBCBC'}" mat-card-avatar> </div>
+    <mat-card-title>
+      <input matInput>
+    </mat-card-title>
+    <mat-card-subtitle>{{ newDate | date }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <input matInput>
+  </mat-card-content>
+</mat-card>
+
 <mat-card *ngFor="let post of posts">
   <mat-card-header>
     <div [ngStyle]="{'background-color': '#BCBCBC'}" mat-card-avatar> </div>

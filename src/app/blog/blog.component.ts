@@ -11,6 +11,7 @@ import { Post, BlogPage } from '../interfaces';
 })
 export class BlogComponent implements OnInit {
   posts: Post[] = [];
+  newDate: Date = new Date();
 
   constructor(
     private blogService: BlogService,
