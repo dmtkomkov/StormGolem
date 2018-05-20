@@ -1,14 +1,16 @@
 <mat-card>
-  <mat-card-header>
-    <div [ngStyle]="{'background-color': '#BCBCBC'}" mat-card-avatar> </div>
-    <mat-card-title>
-      <input matInput>
-    </mat-card-title>
-    <mat-card-subtitle>{{ newDate | date }}</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    <input matInput>
-  </mat-card-content>
+  <form [formGroup]="postForm">
+    <mat-card-header>
+      <div [ngStyle]="{'background-color': '#BCBCBC'}" mat-card-avatar> </div>
+      <mat-card-title>
+        <input formControlName="title" matInput>
+      </mat-card-title>
+      <mat-card-subtitle>{{ newDate | date }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <input formControlName="body" matInput>
+    </mat-card-content>
+  </form>
 </mat-card>
 
 <mat-card *ngFor="let post of posts">
