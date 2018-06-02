@@ -1,15 +1,14 @@
 <mat-card>
   <form [formGroup]="postForm">
-    <mat-card-header>
-      <div [ngStyle]="{'background-color': '#BCBCBC'}" mat-card-avatar> </div>
-      <mat-card-title>
-        <input formControlName="title" matInput>
-      </mat-card-title>
-      <mat-card-subtitle>{{ newDate | date }}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <input formControlName="body" matInput>
-    </mat-card-content>
+    <mat-form-field appearance="standard">
+      <mat-label>Title</mat-label>
+      <input formControlName="title" matInput>
+    </mat-form-field>
+    <mat-form-field appearance="standard">
+      <mat-label>Post</mat-label>
+      <textarea formControlName="body" matInput></textarea>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="submit()" [disabled]="postForm.invalid">Post</button>
   </form>
 </mat-card>
 

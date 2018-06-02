@@ -17,7 +17,7 @@ export interface Token {
 export interface Post {
   title: string;
   body: string;
-  created: Date;
+  created?: Date;
 }
 
 export interface BlogPage {

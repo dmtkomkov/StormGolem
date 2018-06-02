@@ -36,4 +36,13 @@ export class BlogComponent implements OnInit {
       },
     )
   }
+
+  submit() {
+    this.blogService.createPost(this.postForm.value).subscribe(
+      (post: Post) => console.log('created', post),
+      (error: HttpErrorResponse) => {
+        console.log('Create post failed: ', error.status, error.message);
+      }
+    );
+  }
 }
