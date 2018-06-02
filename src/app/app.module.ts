@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexLayoutModule } from "@angular/flex-layout";
@@ -23,6 +23,7 @@ import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { BlogService } from './services/blog.service';
 import { GuardService } from './services/guard.service';
+import { InterceptorService } from './services/interceptor.service';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -54,6 +55,11 @@ const appRoutes: Routes = [
     MatCardModule,
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorService,
+      multi: true,
+    },
     AuthService,
     UserService,
     BlogService,
