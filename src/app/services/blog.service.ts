@@ -26,10 +26,10 @@ export class BlogService {
     });
   }
 
-  createPost(post: Post): Observable<any> {
+  createPost(post: Post): Observable<Post> {
     // FIXME: any response?
     console.log('create post', post);
-    return this.http.post('http://localhost:8000/api/v1/blog/', post, {
+    return this.http.post<Post>('http://localhost:8000/api/v1/blog/', post, {
       headers: this.getAuthHeaders(this.authService.getToken())
     });
   }
