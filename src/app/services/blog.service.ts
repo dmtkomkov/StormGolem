@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { AuthService } from './auth.service'
 
@@ -14,23 +14,12 @@ export class BlogService {
     private authService: AuthService,
   ) { }
 
-  private getAuthHeaders(token: string): HttpHeaders {
-    // Inject JWT token to request
-    return new HttpHeaders({ Authorization: `JWT ${token}`});
-  }
-
   getBlogPage(): Observable<BlogPage> {
-    // FIXME: add pagenumber as a param
-    return this.http.get<BlogPage>('http://localhost:8000/api/v1/blog/', {
-      headers: this.getAuthHeaders(this.authService.getToken())
-    });
+    // FIXME: add page number as a param
+    return this.http.get<BlogPage>('http://localhost:8000/api/v1/blog/');
   }
 
   createPost(post: Post): Observable<Post> {
-    // FIXME: any response?
-    console.log('create post', post);
-    return this.http.post<Post>('http://localhost:8000/api/v1/blog/', post, {
-      headers: this.getAuthHeaders(this.authService.getToken())
-    });
+    return this.http.post<Post>('http://localhost:8000/api/v1/blog/', post);
   }
 }

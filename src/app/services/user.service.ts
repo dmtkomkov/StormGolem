@@ -14,14 +14,7 @@ export class UserService {
     private authService: AuthService,
   ) { }
 
-  private getAuthHeaders(token: string): HttpHeaders {
-    // Inject JWT token to request
-    return new HttpHeaders({ Authorization: `JWT ${token}`});
-  }
-
   getUser(): Observable<User> {
-    return this.http.get<User>('http://localhost:8000/api/v1/user/', {
-      headers: this.getAuthHeaders(this.authService.getToken())
-    });
+    return this.http.get<User>('http://localhost:8000/api/v1/user/');
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -22,9 +22,9 @@ export class AuthService {
   auth(loginUser: LoginUser): Observable<Token> {
     return this.http.post<Token>('http://localhost:8000/auth/', loginUser).pipe(
       tap(
-        data => this.logIn(data.token),
-        error => this.logOut(),
-      )
+        (data: Token) => this.logIn(data.token),
+        (error: HttpErrorResponse) => this.logOut(),
+      ),
     );
   }
 
@@ -40,9 +40,5 @@ export class AuthService {
 
   setToken(token: string) {
     sessionStorage.setItem('token', token);
-  }
-
-  getToken(): string {
-    return sessionStorage.getItem('token');
   }
 }

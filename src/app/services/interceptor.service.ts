@@ -6,19 +6,19 @@ import {
   HttpErrorResponse,
   HttpHandler,
   HttpEvent,
+  HttpHeaders,
 } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class InterceptorService implements HttpInterceptor {
+  constructor() { }
+
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const modifiedRequest = request.clone({
-      //headers: request.headers.set('testheader', 'hi'),
-    });
+    // Add auth header
+    const modifiedRequest = request.clone({ headers: this.getAuthHeaders() });
 
     return next.handle(modifiedRequest).pipe(
       tap(
@@ -26,5 +26,10 @@ export class InterceptorService implements HttpInterceptor {
         (error: HttpErrorResponse) => console.log('IERROR', error),
       ),
     );
+  }
+
+  private getAuthHeaders(): HttpHeaders {
+    let token: string = sessionStorage.getItem('token');
+    return new HttpHeaders({ Authorization: `JWT ${token}`});
   }
 }
