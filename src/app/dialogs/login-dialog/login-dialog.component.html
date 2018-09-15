@@ -1,12 +1,12 @@
 <div flexLayout="column" >
   <form [formGroup]="loginForm">
     <div fxFlex>
-      <mat-form-field fxFlex color="accent">
+      <mat-form-field color="accent">
         <input formControlName="username" matInput>
       </mat-form-field>
     </div>
     <div fxFlex>
-      <mat-form-field fxFlex color="accent">
+      <mat-form-field color="accent">
         <input formControlName="password" matInput>
       </mat-form-field>
     </div>
@@ -14,7 +14,7 @@
       <button mat-raised-button color="warn" (click)="close()">CANCEL</button>
       <button mat-raised-button color="primary" (click)="submit()" [disabled]="loginForm.invalid">OK</button>
     </div>
-    <div class="error" *ngIf="loginErrMsg">
+    <div *ngIf="loginErrMsg">
       {{ loginErrMsg }}
     </div>
   </form>
