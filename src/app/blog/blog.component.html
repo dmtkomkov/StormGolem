@@ -1,32 +1,36 @@
-<mat-card>
-  <form fxLayout="column" [formGroup]="postForm">
-    <mat-form-field fxFlex appearance="outline">
-      <mat-label>Title</mat-label>
-      <input formControlName="title" matInput>
-    </mat-form-field>
-    <mat-form-field fxFlex appearance="outline">
-      <mat-label>Post</mat-label>
-      <textarea
-        matInput
-        formControlName="body"
-        matTextareaAutosize
-        matAutosizeMinRows=1
-        matAutosizeMaxRows=10>
-      </textarea>
-    </mat-form-field>
-    <button fxFlexAlign="end" mat-raised-button color="primary" (click)="submit()" [disabled]="postForm.invalid">
-      Post
-    </button>
-  </form>
-</mat-card>
+<div fxLayout="column" fxLayoutGap="10px">
 
-<mat-card *ngFor="let post of posts">
-  <mat-card-header>
-    <div [ngStyle]="{'background-color': '#BCBCBC'}" mat-card-avatar> </div>
-    <mat-card-title>{{ post.title }}</mat-card-title>
-    <mat-card-subtitle>{{ post.created | date }}</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    {{ post.body }}
-  </mat-card-content>
-</mat-card>
+  <mat-card fxFlexAlign="center">
+    <form fxLayout="column" [formGroup]="postForm">
+      <mat-form-field fxFlex appearance="outline">
+        <mat-label>Title</mat-label>
+        <input formControlName="title" matInput>
+      </mat-form-field>
+      <mat-form-field fxFlex appearance="outline">
+        <mat-label>Post</mat-label>
+        <textarea
+          matInput
+          formControlName="body"
+          matTextareaAutosize
+          matAutosizeMinRows=1
+          matAutosizeMaxRows=10>
+        </textarea>
+      </mat-form-field>
+      <button fxFlexAlign="end" mat-raised-button color="primary" (click)="submit()" [disabled]="postForm.invalid">
+        Post
+      </button>
+    </form>
+  </mat-card>
+
+  <mat-card fxFlexAlign="center" *ngFor="let post of posts">
+    <mat-card-header>
+      <div [ngStyle]="{'background-color': '#BCBCBC'}" mat-card-avatar> </div>
+      <mat-card-title>{{ post.title }}</mat-card-title>
+      <mat-card-subtitle>{{ post.created | date }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      {{ post.body }}
+    </mat-card-content>
+  </mat-card>
+
+</div>
