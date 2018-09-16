@@ -1,6 +1,10 @@
 <div fxLayout="column" fxLayoutGap="10px">
 
-  <mat-card fxFlexAlign="center">
+  <mat-card *ngIf="!isOpenedForm" class="form-panel" fxFlexAlign="center" (click)="showPostForm()">
+    Add new post
+  </mat-card>
+
+  <mat-card *ngIf="isOpenedForm" fxFlexAlign="center">
     <form fxLayout="column" [formGroup]="postForm">
       <mat-form-field fxFlex appearance="outline">
         <mat-label>Title</mat-label>
@@ -16,9 +20,14 @@
           matAutosizeMaxRows=10>
         </textarea>
       </mat-form-field>
-      <button fxFlexAlign="end" mat-raised-button color="primary" (click)="submit()" [disabled]="postForm.invalid">
-        Post
-      </button>
+      <div fxFlexAlign="end">
+        <button mat-raised-button color="warn" (click)="hidePostForm()">
+          Hide
+        </button>
+        <button mat-raised-button color="primary" (click)="submit()" [disabled]="postForm.invalid">
+          Post
+        </button>
+      </div>
     </form>
   </mat-card>
 

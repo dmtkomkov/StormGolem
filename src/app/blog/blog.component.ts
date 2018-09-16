@@ -14,11 +14,14 @@ export class BlogComponent implements OnInit {
   posts: Post[] = [];
   newDate: Date = new Date();
   postForm: FormGroup;
+  isOpenedForm: boolean;
 
   constructor(
     private blogService: BlogService,
     private fb: FormBuilder,
-  ) { }
+  ) {
+    this.isOpenedForm = false;
+  }
 
   ngOnInit() {
     this.postForm = this.fb.group({
@@ -44,5 +47,13 @@ export class BlogComponent implements OnInit {
         console.log('Create post failed: ', error.status, error.message);
       }
     );
+  }
+
+  showPostForm() {
+    this.isOpenedForm = true;
+  }
+
+  hidePostForm() {
+    this.isOpenedForm = false;
   }
 }
