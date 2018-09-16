@@ -1,14 +1,22 @@
 <mat-card>
-  <form [formGroup]="postForm">
-    <mat-form-field appearance="standard">
+  <form fxLayout="column" [formGroup]="postForm">
+    <mat-form-field fxFlex appearance="outline">
       <mat-label>Title</mat-label>
       <input formControlName="title" matInput>
     </mat-form-field>
-    <mat-form-field appearance="standard">
+    <mat-form-field fxFlex appearance="outline">
       <mat-label>Post</mat-label>
-      <input formControlName="body" matInput>
+      <textarea
+        matInput
+        formControlName="body"
+        matTextareaAutosize
+        matAutosizeMinRows=1
+        matAutosizeMaxRows=10>
+      </textarea>
     </mat-form-field>
-    <button mat-raised-button color="primary" (click)="submit()" [disabled]="postForm.invalid">Post</button>
+    <button fxFlexAlign="end" mat-raised-button color="primary" (click)="submit()" [disabled]="postForm.invalid">
+      Post
+    </button>
   </form>
 </mat-card>
 
