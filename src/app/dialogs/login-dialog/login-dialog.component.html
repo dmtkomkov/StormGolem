@@ -1,21 +1,19 @@
-<div flexLayout="column" >
-  <form [formGroup]="loginForm">
-    <div fxFlex>
-      <mat-form-field color="accent">
-        <input formControlName="username" matInput>
-      </mat-form-field>
-    </div>
-    <div fxFlex>
-      <mat-form-field color="accent">
-        <input formControlName="password" matInput>
-      </mat-form-field>
-    </div>
-    <div fxFlexAlign="center">
-      <button mat-raised-button color="warn" (click)="close()">CANCEL</button>
-      <button mat-raised-button color="primary" (click)="submit()" [disabled]="loginForm.invalid">OK</button>
-    </div>
-    <div *ngIf="loginErrMsg">
-      {{ loginErrMsg }}
-    </div>
-  </form>
-</div>
+<form fxLayout="column" [formGroup]="loginForm">
+  <mat-form-field fxFlex color="accent">
+    <input formControlName="username" matInput>
+  </mat-form-field>
+  <mat-form-field fxFlex color="accent">
+    <input formControlName="password" matInput>
+  </mat-form-field>
+  <div fxFlexAlign="center">
+    <button mat-raised-button color="warn" (click)="close()">
+      CANCEL
+    </button>
+    <button mat-raised-button color="primary" (click)="submit()" [disabled]="loginForm.invalid">
+      OK
+    </button>
+  </div>
+  <div fxFlex *ngIf="loginErrMsg">
+    {{ loginErrMsg }}
+  </div>
+</form>
