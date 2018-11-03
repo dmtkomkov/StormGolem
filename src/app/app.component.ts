@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MatIconRegistry, MatDialog } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
 
 import { LoginDialogComponent } from './dialogs/login-dialog/login-dialog.component';
 
@@ -26,7 +25,6 @@ export class AppComponent implements OnInit {
     private dialog: MatDialog,
     private userService: UserService,
     private authService: AuthService,
-    private router: Router,
   ) {
     this.title = 'Storm Golem';
     this.user = null;
@@ -66,6 +64,5 @@ export class AppComponent implements OnInit {
   logout() {
     this.user = null;
     this.authService.logOut();
-    this.router.navigate(['/']);
   }
 }
