@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutGap="10px">
+<div fxLayout="column" fxLayoutGap="10px" *ngIf="blogPage$ | async as blogPage">
 
   <mat-card *ngIf="!isOpenedForm" class="form-panel" fxFlexAlign="center" (click)="showPostForm()">
     Add new post
@@ -31,7 +31,7 @@
     </form>
   </mat-card>
 
-  <mat-card fxFlexAlign="center" *ngFor="let post of posts">
+  <mat-card fxFlexAlign="center" *ngFor="let post of blogPage.results">
     <mat-card-header>
       <div [ngStyle]="{'background-color': '#BCBCBC'}" mat-card-avatar> </div>
       <mat-card-title>{{ post.title }}</mat-card-title>
