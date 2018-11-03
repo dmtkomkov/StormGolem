@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MatIconRegistry, MatDialog } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -28,14 +28,16 @@ export class AppComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
   ) {
-    for (let icon of ['lightning', 'user']) iconRegistry.addSvgIcon(icon,
-      sanitizer.bypassSecurityTrustResourceUrl(`assets/${icon}.svg`),
-    );
     this.title = 'Storm Golem';
     this.user = null;
   }
 
   ngOnInit() {
+    for (let icon of ['lightning', 'user']) {
+      const safeResourceUrl: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`assets/${icon}.svg`);
+      this.iconRegistry.addSvgIcon(icon, safeResourceUrl);
+    }
+
     this.readUser(); // Read user first time on Init
 
     // Subscribe on user change
