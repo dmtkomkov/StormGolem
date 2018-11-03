@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { AuthService } from './auth.service'
-
 import { Observable } from 'rxjs';
 
 import { Post, BlogPage } from '../interfaces';
@@ -11,7 +9,6 @@ import { Post, BlogPage } from '../interfaces';
 export class BlogService {
   constructor(
     private http: HttpClient,
-    private authService: AuthService,
   ) { }
 
   getBlogPage(): Observable<BlogPage> {
