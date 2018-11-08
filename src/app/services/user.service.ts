@@ -12,6 +12,6 @@ export class UserService {
   ) { }
 
   getUser(): Observable<User> {
-    return this.http.get<User>('http://localhost:8000/api/v1/user/');
+    return this.http.get<User>('/api/v1/user/');
   }
 }

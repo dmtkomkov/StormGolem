@@ -13,10 +13,10 @@ export class BlogService {
 
   getBlogPage(): Observable<BlogPage> {
     // FIXME: add page number as a param
-    return this.http.get<BlogPage>('http://localhost:8000/api/v1/blog/');
+    return this.http.get<BlogPage>('/api/v1/blog/');
   }
 
   createPost(post: Post): Observable<Post> {
-    return this.http.post<Post>('http://localhost:8000/api/v1/blog/', post);
+    return this.http.post<Post>('/api/v1/blog/', post);
   }
 }

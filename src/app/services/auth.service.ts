@@ -20,7 +20,7 @@ export class AuthService {
 
   // Send authentication request
   auth(loginUser: LoginUser): Observable<Token> {
-    return this.http.post<Token>('http://localhost:8000/auth/', loginUser).pipe(
+    return this.http.post<Token>('/auth/', loginUser).pipe(
       tap(
         (data: Token) => this.logIn(data.token),
         (error: HttpErrorResponse) => this.logOut(),
