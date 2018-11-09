@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { Post, BlogPage } from '../interfaces';
+import { Post, BlogPage } from '@interfaces';
 
 @Injectable()
 export class BlogService {

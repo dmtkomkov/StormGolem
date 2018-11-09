@@ -1,10 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '@services/auth.service';
 
-import { LoginUser } from '../../interfaces';
+import { LoginUser } from '@interfaces';
 
 @Component({
   selector: 'sg-login-dialog',
@@ -38,7 +38,7 @@ export class LoginDialogComponent implements OnInit {
   submit() {
     this.loginUser = <LoginUser>this.loginForm.value;
     this.authService.auth(this.loginUser).subscribe(
-      data => {
+      () => {
         this.loginErrMsg = null;
         this.dialogRef.close();
       },

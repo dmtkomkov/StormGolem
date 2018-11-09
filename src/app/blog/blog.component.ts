@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { BlogService } from '../services/blog.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { AuthService } from '../services/auth.service';
+import { BlogService } from '@services/blog.service';
+import { AuthService } from '@services/auth.service';
 
 import { Observable } from 'rxjs';
 
-import { Post, BlogPage } from '../interfaces';
+import { Post, BlogPage } from '@interfaces';
 
 @Component({
   selector: 'sg-blog',

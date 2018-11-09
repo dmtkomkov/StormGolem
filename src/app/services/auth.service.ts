@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { LoginUser, Token } from '../interfaces';
+import { LoginUser, Token } from '@interfaces';
 
 @Injectable()
 export class AuthService {

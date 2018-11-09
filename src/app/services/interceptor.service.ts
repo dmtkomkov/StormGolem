@@ -9,7 +9,7 @@ import {
 
 import { Observable } from 'rxjs';
 
-import { environment } from '../../environments/environment';
+import { environment } from '@environments';
 
 @Injectable()
 export class InterceptorService implements HttpInterceptor {

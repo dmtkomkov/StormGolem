@@ -3,12 +3,12 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MatIconRegistry, MatDialog } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { LoginDialogComponent } from './dialogs/login-dialog/login-dialog.component';
+import { LoginDialogComponent } from '@dialogs/login-dialog/login-dialog.component';
 
-import { UserService } from './services/user.service';
-import { AuthService } from './services/auth.service';
+import { UserService } from '@services/user.service';
+import { AuthService } from '@services/auth.service';
 
-import { User } from './interfaces';
+import { User } from '@interfaces';
 
 @Component({
   selector: 'sg-root',
