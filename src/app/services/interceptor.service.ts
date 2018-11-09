@@ -9,12 +9,14 @@ import {
 
 import { Observable } from 'rxjs';
 
+import { environment } from '../../environments/environment';
+
 @Injectable()
 export class InterceptorService implements HttpInterceptor {
   baseUrl: string;
 
   constructor() {
-    this.baseUrl = 'http://localhost:8000';
+    this.baseUrl = environment.backend;
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -28,7 +30,7 @@ export class InterceptorService implements HttpInterceptor {
   }
 
   private getAuthHeaders(): HttpHeaders {
-    let token: string = sessionStorage.getItem('token');
+    const token: string = sessionStorage.getItem('token');
     return new HttpHeaders({ Authorization: `JWT ${token}`});
   }
 
