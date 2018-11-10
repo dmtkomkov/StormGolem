@@ -14,14 +14,14 @@ export interface Token {
   token: string;
 }
 
-export interface Post {
+export interface BlogPost {
   title: string;
   body: string;
   created?: Date;
 }
 
 export interface BlogPage {
-  results: Post[];
+  results: BlogPost[];
   page_size: number;
   count: number;
   page_count: number;

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { Post, BlogPage } from '@interfaces';
+import { BlogPost, BlogPage } from '@interfaces';
 
 @Injectable()
 export class BlogService {
@@ -16,7 +16,7 @@ export class BlogService {
     return this.http.get<BlogPage>('/api/v1/blog/');
   }
 
-  createPost(post: Post): Observable<Post> {
-    return this.http.post<Post>('/api/v1/blog/', post);
+  createBlogPost(blogPost: BlogPost): Observable<BlogPost> {
+    return this.http.post<BlogPost>('/api/v1/blog/', blogPost);
   }
 }

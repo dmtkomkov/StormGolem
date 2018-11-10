@@ -7,7 +7,7 @@ import { AuthService } from '@services/auth.service';
 
 import { Observable } from 'rxjs';
 
-import { Post, BlogPage } from '@interfaces';
+import { BlogPost, BlogPage } from '@interfaces';
 
 @Component({
   selector: 'sg-blog',
@@ -17,19 +17,19 @@ import { Post, BlogPage } from '@interfaces';
 export class BlogComponent implements OnInit {
   blogPage$: Observable<BlogPage>;
   newDate: Date = new Date();
-  postForm: FormGroup;
+  blogPostForm: FormGroup;
   isOpenedForm: boolean;
 
   constructor(
     private authService: AuthService,
     private blogService: BlogService,
-    private fb: FormBuilder,
+    private formBuilder: FormBuilder,
   ) {
     this.isOpenedForm = false;
   }
 
   ngOnInit() {
-    this.postForm = this.fb.group({
+    this.blogPostForm = this.formBuilder.group({
       title: ['', Validators.required ],
       body: ['', Validators.required ],
     });
@@ -40,14 +40,14 @@ export class BlogComponent implements OnInit {
   }
 
   readBlogPage() {
-    this.blogPage$ = this.blogService.getBlogPage();
+    this.blogPage$ = this.blogService.getBlogPage()
     this.hidePostForm();
   }
 
   submit() {
-    this.blogService.createPost(this.postForm.value).subscribe(
-      (post: Post) => {
-        console.log('created', post);
+    this.blogService.createBlogPost(this.blogPostForm.value).subscribe(
+      (blogPost: BlogPost) => {
+        console.log('created', blogPost);
         this.readBlogPage();
       },
       (error: HttpErrorResponse) => {
