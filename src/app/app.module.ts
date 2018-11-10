@@ -13,17 +13,18 @@ import { MatInputModule } from '@angular/material/input';
 import { Routes, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 
-import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { BlogComponent } from './blog/blog.component';
-import { LoginDialogComponent } from './dialogs/login-dialog/login-dialog.component';
-import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
+import { AppComponent } from '@app';
+import { HomeComponent } from '@home/home.component';
+import { BlogComponent } from '@blog/blog.component';
+import { PostComponent } from '@blog/post/post.component';
+import { LoginDialogComponent } from '@dialogs/login-dialog/login-dialog.component';
+import { PageNotFoundComponent } from '@errors/page-not-found/page-not-found.component';
 
-import { AuthService } from './services/auth.service';
-import { UserService } from './services/user.service';
-import { BlogService } from './services/blog.service';
-import { GuardService } from './services/guard.service';
-import { InterceptorService } from './services/interceptor.service';
+import { AuthService } from '@services/auth.service';
+import { UserService } from '@services/user.service';
+import { BlogService } from '@services/blog.service';
+import { GuardService } from '@services/guard.service';
+import { InterceptorService } from '@services/interceptor.service';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -38,6 +39,7 @@ const appRoutes: Routes = [
     HomeComponent,
     BlogComponent,
     PageNotFoundComponent,
+    PostComponent,
   ],
   imports: [
     BrowserModule,
