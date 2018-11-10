@@ -45,7 +45,11 @@ export class BlogComponent implements OnInit {
   }
 
   submit() {
+<<<<<<< HEAD
     this.blogService.createBlogPost(this.blogPostForm.value).subscribe(
+=======
+    this.blogService.createPost(this.blogPostForm.value).subscribe(
+>>>>>>> 8a6264ad1b3d1bb893e083da67777369db398234
       (blogPost: BlogPost) => {
         console.log('created', blogPost);
         this.readBlogPage();
