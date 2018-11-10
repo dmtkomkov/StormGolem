@@ -17,9 +17,10 @@
     ],
     "baseUrl": "src",
     "paths": {
-      "@environments" : ["environments/environment"],
+      "@app": ["app/app.component"],
+      "@environments": ["environments/environment"],
       "@home/*": ["app/home/*"],
-      "@blog/*": ["app/home/blog"],
+      "@blog/*": ["app/blog/*"],
       "@interfaces": ["app/interfaces"],
       "@dialogs/*": ["app/dialogs/*"],
       "@services/*": ["app/services/*"],
