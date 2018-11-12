@@ -1,15 +1,14 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { BlogPost } from '@interfaces';
+// import { BlogPost } from '@interfaces';
 
 @Component({
-  selector: 'sg-post',
-  templateUrl: 'post.component.html',
-  styleUrls: ['post.component.scss'],
+  selector: 'sg-new-post',
+  templateUrl: 'new-post.component.html',
+  styleUrls: ['new-post.component.scss'],
 })
-export class PostComponent implements OnInit {
-  @Input() blogPost: BlogPost;
+export class NewPostComponent implements OnInit {
   @Input() editMode: boolean;
   @Output() selectedBlogPost: EventEmitter<number> = new EventEmitter<number>();
   blogPostForm: FormGroup;
@@ -20,8 +19,8 @@ export class PostComponent implements OnInit {
 
   ngOnInit() {
     this.blogPostForm = this.formBuilder.group({
-      title: [this.blogPost.title, Validators.required ],
-      body: [this.blogPost.body, Validators.required ],
+      title: ['', Validators.required ],
+      body: ['', Validators.required ],
     });
   }
 
@@ -30,6 +29,6 @@ export class PostComponent implements OnInit {
   }
 
   submit() {
-    console.log('Update post!');
+    console.log('Create post!');
   }
 }

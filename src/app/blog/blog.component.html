@@ -1,40 +1,17 @@
 <div fxLayout="column" fxLayoutGap="10px" *ngIf="blogPage$ | async as blogPage">
 
-  <mat-card *ngIf="!isOpenedForm" class="form-panel" fxFlexAlign="center" (click)="showPostForm()">
-    Add new post
-  </mat-card>
-
-  <mat-card *ngIf="isOpenedForm" fxFlexAlign="center">
-    <form fxLayout="column" [formGroup]="blogPostForm">
-      <mat-form-field fxFlex appearance="outline">
-        <mat-label>Title</mat-label>
-        <input formControlName="title" matInput>
-      </mat-form-field>
-      <mat-form-field fxFlex appearance="outline">
-        <mat-label>Post</mat-label>
-        <textarea
-          matInput
-          formControlName="body"
-          matTextareaAutosize
-          matAutosizeMinRows=3
-          matAutosizeMaxRows=10>
-        </textarea>
-      </mat-form-field>
-      <div fxFlexAlign="end">
-        <button mat-raised-button type="button" color="warn" (click)="hidePostForm()">
-          Hide
-        </button>
-        <button mat-raised-button type="submit" color="primary" (click)="submit()" [disabled]="blogPostForm.invalid">
-          Post
-        </button>
-      </div>
-    </form>
-  </mat-card>
+  <sg-new-post
+    fxFlexAlign="center"
+    [editMode]="selectedBlogPost === 0"
+    (selectedBlogPost)="selectBlogPost($event)">
+  </sg-new-post>
 
   <sg-post
     fxFlexAlign="center"
     *ngFor="let blogPost of blogPage.results"
-    [blogPost]="blogPost">
+    [editMode]="selectedBlogPost === blogPost.id"
+    [blogPost]="blogPost"
+    (selectedBlogPost)="selectBlogPost($event)">
   </sg-post>
 
 </div>

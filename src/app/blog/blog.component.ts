@@ -19,6 +19,7 @@ export class BlogComponent implements OnInit {
   newDate: Date = new Date();
   blogPostForm: FormGroup;
   isOpenedForm: boolean;
+  selectedBlogPost: number;
 
   constructor(
     private authService: AuthService,
@@ -62,5 +63,9 @@ export class BlogComponent implements OnInit {
 
   hidePostForm() {
     this.isOpenedForm = false;
+  }
+
+  selectBlogPost(blogPostId: number) {
+    this.selectedBlogPost = blogPostId;
   }
 }
