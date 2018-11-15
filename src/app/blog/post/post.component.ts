@@ -35,9 +35,9 @@ export class PostComponent implements OnInit {
 
   submit() {
     if (this.blogPost.id === 0) {
-      this.create()
+      this.create();
     } else {
-      console.log('update post');
+      this.update();
     }
   }
 
@@ -51,5 +51,9 @@ export class PostComponent implements OnInit {
         console.log('Create post failed: ', error.status, error.message);
       }
     );
+  }
+
+  update() {
+    console.log('update post');
   }
 }
