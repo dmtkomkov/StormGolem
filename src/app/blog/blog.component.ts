@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { BlogService } from '@services/blog.service';
@@ -42,18 +41,6 @@ export class BlogComponent implements OnInit {
 
   readBlogPage() {
     this.blogPage$ = this.blogService.getBlogPage();
-  }
-
-  submit() {
-    this.blogService.createBlogPost(this.blogPostForm.value).subscribe(
-      (blogPost: BlogPost) => {
-        console.log('created', blogPost);
-        this.readBlogPage();
-      },
-      (error: HttpErrorResponse) => {
-        console.log('Create post failed: ', error.status, error.message);
-      }
-    );
   }
 
   selectBlogPost(blogPostId: number) {
