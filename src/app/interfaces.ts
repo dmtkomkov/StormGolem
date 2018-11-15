@@ -15,6 +15,7 @@ export interface Token {
 }
 
 export interface BlogPost {
+  id?: number;
   title: string;
   body: string;
   created?: Date;
