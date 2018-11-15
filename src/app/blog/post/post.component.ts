@@ -1,5 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
+
+import { BlogService } from '@services/blog.service';
 
 import { BlogPost } from '@interfaces';
 
@@ -16,6 +19,7 @@ export class PostComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private blogService: BlogService,
   ) { }
 
   ngOnInit() {
@@ -30,6 +34,22 @@ export class PostComponent implements OnInit {
   }
 
   submit() {
-    console.log('Update post!');
+    if (this.blogPost.id === 0) {
+      this.create()
+    } else {
+      console.log('update post');
+    }
+  }
+
+  create() {
+    this.blogService.createBlogPost(this.blogPostForm.value).subscribe(
+      (blogPost: BlogPost) => {
+        console.log('created', blogPost);
+        this.selectBlogPost(null);
+      },
+      (error: HttpErrorResponse) => {
+        console.log('Create post failed: ', error.status, error.message);
+      }
+    );
   }
 }
