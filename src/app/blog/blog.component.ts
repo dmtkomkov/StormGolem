@@ -18,15 +18,15 @@ export class BlogComponent implements OnInit {
   blogPage$: Observable<BlogPage>;
   newDate: Date = new Date();
   blogPostForm: FormGroup;
-  isOpenedForm: boolean;
   selectedBlogPost: number;
+  emptyBlogPost: BlogPost;
 
   constructor(
     private authService: AuthService,
     private blogService: BlogService,
     private formBuilder: FormBuilder,
   ) {
-    this.isOpenedForm = false;
+    this.emptyBlogPost = {id: 0, title: '', body: ''};
   }
 
   ngOnInit() {
@@ -41,8 +41,7 @@ export class BlogComponent implements OnInit {
   }
 
   readBlogPage() {
-    this.blogPage$ = this.blogService.getBlogPage()
-    this.hidePostForm();
+    this.blogPage$ = this.blogService.getBlogPage();
   }
 
   submit() {
@@ -55,14 +54,6 @@ export class BlogComponent implements OnInit {
         console.log('Create post failed: ', error.status, error.message);
       }
     );
-  }
-
-  showPostForm() {
-    this.isOpenedForm = true;
-  }
-
-  hidePostForm() {
-    this.isOpenedForm = false;
   }
 
   selectBlogPost(blogPostId: number) {
