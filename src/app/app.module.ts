@@ -17,7 +17,6 @@ import { AppComponent } from '@app';
 import { HomeComponent } from '@home/home.component';
 import { BlogComponent } from '@blog/blog.component';
 import { PostComponent } from '@blog/post/post.component';
-import { NewPostComponent } from '@blog/new-post/new-post.component';
 import { LoginDialogComponent } from '@dialogs/login-dialog/login-dialog.component';
 import { PageNotFoundComponent } from '@errors/page-not-found/page-not-found.component';
 
@@ -41,7 +40,6 @@ const appRoutes: Routes = [
     BlogComponent,
     PageNotFoundComponent,
     PostComponent,
-    NewPostComponent,
   ],
   imports: [
     BrowserModule,
