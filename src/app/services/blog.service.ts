@@ -19,4 +19,10 @@ export class BlogService {
   createBlogPost(blogPost: BlogPost): Observable<BlogPost> {
     return this.http.post<BlogPost>('/api/v1/blog/', blogPost);
   }
+
+  updateBlogPost(blogPostId: number, blogPost: BlogPost): Observable<BlogPost> {
+    blogPost.id = blogPostId;
+    // FIXME: find lib to join url
+    return this.http.put<BlogPost>('/api/v1/blog/' + blogPostId + '/', blogPost);
+  }
 }

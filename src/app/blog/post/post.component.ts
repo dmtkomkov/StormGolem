@@ -54,6 +54,14 @@ export class PostComponent implements OnInit {
   }
 
   update() {
-    console.log('update post');
+    this.blogService.updateBlogPost(this.blogPost.id, this.blogPostForm.value).subscribe(
+      (blogPost: BlogPost) => {
+        console.log('updated', blogPost);
+        this.selectBlogPost(null);
+      },
+      (error: HttpErrorResponse) => {
+        console.log('Update post failed: ', error.status, error.message);
+      }
+    );
   }
 }
