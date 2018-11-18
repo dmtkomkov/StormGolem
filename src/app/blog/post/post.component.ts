@@ -47,7 +47,10 @@ export class PostComponent implements OnInit {
 
   create() {
     this.blogService.createBlogPost(this.blogPostForm.value).subscribe(
-      () => this.unselect(),
+      () => {
+        this.unselect();
+        this.blogService.emitAction();
+      },
       (error: HttpErrorResponse) => {
         console.log('Create post failed: ', error.status, error.message);
       }
@@ -56,7 +59,10 @@ export class PostComponent implements OnInit {
 
   update() {
     this.blogService.updateBlogPost(this.blogPost.id, this.blogPostForm.value).subscribe(
-      () => this.unselect(),
+      () => {
+        this.unselect();
+        this.blogService.emitAction();
+      },
       (error: HttpErrorResponse) => {
         console.log('Update post failed: ', error.status, error.message);
       }
@@ -65,7 +71,10 @@ export class PostComponent implements OnInit {
 
   delete() {
     this.blogService.deleteBlogPost(this.blogPost.id).subscribe(
-      () => this.unselect(),
+      () => {
+        this.unselect();
+        this.blogService.emitAction();
+      },
       (error: HttpErrorResponse) => {
         console.log('Delete post failed: ', error.status, error.message);
       }

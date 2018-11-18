@@ -4,6 +4,7 @@ import { BlogService } from '@services/blog.service';
 import { AuthService } from '@services/auth.service';
 
 import { Observable } from 'rxjs';
+import { merge } from 'rxjs';
 
 import { BlogPost, BlogPage } from '@interfaces';
 
@@ -26,7 +27,7 @@ export class BlogComponent implements OnInit {
 
   ngOnInit() {
     this.readBlogPage();
-    this.authService.loggedIn$.subscribe(() => {
+    merge(this.authService.loggedIn$, this.blogService.action$).subscribe(() => {
       this.readBlogPage();
     });
   }

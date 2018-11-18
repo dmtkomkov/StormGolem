@@ -1,15 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 import { BlogPost, BlogPage } from '@interfaces';
 
 @Injectable()
 export class BlogService {
+  private actionSource: Subject<boolean>
+  action$: Observable<boolean>
+
   constructor(
     private http: HttpClient,
-  ) { }
+  ) {
+    this.actionSource = new Subject<boolean>();
+    this.action$ = this.actionSource.asObservable();
+  }
 
   getBlogPage(): Observable<BlogPage> {
     // FIXME: add page number as a param
@@ -28,5 +34,9 @@ export class BlogService {
 
   deleteBlogPost(blogPostId: number) {
     return this.http.delete('/api/v1/blog/' + blogPostId + '/');
+  }
+
+  emitAction() {
+    this.actionSource.next(true);
   }
 }
