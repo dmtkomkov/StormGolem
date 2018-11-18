@@ -64,4 +64,16 @@ export class PostComponent implements OnInit {
       }
     );
   }
+
+  deleteBlogPost() {
+    this.blogService.deleteBlogPost(this.blogPost.id).subscribe(
+      (blogPost: BlogPost) => {
+        console.log('delete', blogPost);
+        this.selectBlogPost(null);
+      },
+      (error: HttpErrorResponse) => {
+        console.log('Delete post failed: ', error.status, error.message);
+      }
+    );
+  }
 }

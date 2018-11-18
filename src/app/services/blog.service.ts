@@ -25,4 +25,8 @@ export class BlogService {
     // FIXME: find lib to join url
     return this.http.put<BlogPost>('/api/v1/blog/' + blogPostId + '/', blogPost);
   }
+
+  deleteBlogPost(blogPostId: number) {
+    return this.http.delete<BlogPost>('/api/v1/blog/' + blogPostId + '/');
+  }
 }
