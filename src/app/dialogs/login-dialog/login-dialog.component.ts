@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from '@services/auth.service';
 
-import { LoginUser } from '@interfaces';
+import { LoginUser, Token } from '@interfaces';
 
 @Component({
   selector: 'sg-login-dialog',
@@ -38,11 +38,13 @@ export class LoginDialogComponent implements OnInit {
   submit() {
     this.loginUser = <LoginUser>this.loginForm.value;
     this.authService.auth(this.loginUser).subscribe(
-      () => {
+      (data: Token) => {
+        this.authService.logIn(data.token),
         this.loginErrMsg = null;
         this.dialogRef.close();
       },
       error => {
+        this.authService.logOut();
         this.loginErrMsg = `Login failed (${error.status})`;
         setTimeout(() => this.loginErrMsg = null, 2000);
       }

@@ -2,13 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable, Subject } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 import { LoginUser, Token } from '@interfaces';
 
 @Injectable()
 export class AuthService {
-  private loggedInSource:  Subject<boolean>
+  private loggedInSource: Subject<boolean>
   loggedIn$: Observable<boolean>
 
   constructor(
@@ -20,12 +19,7 @@ export class AuthService {
 
   // Send authentication request
   auth(loginUser: LoginUser): Observable<Token> {
-    return this.http.post<Token>('/auth/', loginUser).pipe(
-      tap(
-        (data: Token) => this.logIn(data.token),
-        () => this.logOut(),
-      ),
-    );
+    return this.http.post<Token>('/auth/', loginUser);
   }
 
   logIn(token: string) {
