@@ -27,6 +27,6 @@ export class BlogService {
   }
 
   deleteBlogPost(blogPostId: number) {
-    return this.http.delete<BlogPost>('/api/v1/blog/' + blogPostId + '/');
+    return this.http.delete('/api/v1/blog/' + blogPostId + '/');
   }
 }

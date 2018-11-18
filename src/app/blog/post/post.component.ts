@@ -29,8 +29,12 @@ export class PostComponent implements OnInit {
     });
   }
 
-  selectBlogPost(blogPostId: number) {
-    this.selectedBlogPost.emit(blogPostId);
+  select() {
+    this.selectedBlogPost.emit(this.blogPost.id);
+  }
+
+  unselect() {
+    this.selectedBlogPost.emit(null);
   }
 
   submit() {
@@ -43,10 +47,7 @@ export class PostComponent implements OnInit {
 
   create() {
     this.blogService.createBlogPost(this.blogPostForm.value).subscribe(
-      (blogPost: BlogPost) => {
-        console.log('created', blogPost);
-        this.selectBlogPost(null);
-      },
+      () => this.unselect(),
       (error: HttpErrorResponse) => {
         console.log('Create post failed: ', error.status, error.message);
       }
@@ -55,22 +56,16 @@ export class PostComponent implements OnInit {
 
   update() {
     this.blogService.updateBlogPost(this.blogPost.id, this.blogPostForm.value).subscribe(
-      (blogPost: BlogPost) => {
-        console.log('updated', blogPost);
-        this.selectBlogPost(null);
-      },
+      () => this.unselect(),
       (error: HttpErrorResponse) => {
         console.log('Update post failed: ', error.status, error.message);
       }
     );
   }
 
-  deleteBlogPost() {
+  delete() {
     this.blogService.deleteBlogPost(this.blogPost.id).subscribe(
-      (blogPost: BlogPost) => {
-        console.log('delete', blogPost);
-        this.selectBlogPost(null);
-      },
+      () => this.unselect(),
       (error: HttpErrorResponse) => {
         console.log('Delete post failed: ', error.status, error.message);
       }
