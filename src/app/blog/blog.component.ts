@@ -26,10 +26,15 @@ export class BlogComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.readBlogPage();
+    this.refreshBlogPage()
     merge(this.authService.loggedIn$, this.blogService.action$).subscribe(() => {
-      this.readBlogPage();
+      this.refreshBlogPage();
     });
+  }
+
+  refreshBlogPage() {
+    this.selectBlogPost(NaN);
+    this.readBlogPage();
   }
 
   readBlogPage() {

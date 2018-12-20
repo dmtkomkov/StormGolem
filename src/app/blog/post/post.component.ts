@@ -34,7 +34,7 @@ export class PostComponent implements OnInit {
   }
 
   unselect() {
-    this.selectedBlogPost.emit(null);
+    this.selectedBlogPost.emit(NaN);
   }
 
   submit() {
@@ -48,7 +48,6 @@ export class PostComponent implements OnInit {
   create() {
     this.blogService.createBlogPost(this.blogPostForm.value).subscribe(
       () => {
-        this.unselect();
         this.blogService.emitAction();
       },
       (error: HttpErrorResponse) => {
@@ -60,7 +59,6 @@ export class PostComponent implements OnInit {
   update() {
     this.blogService.updateBlogPost(this.blogPost.id, this.blogPostForm.value).subscribe(
       () => {
-        this.unselect();
         this.blogService.emitAction();
       },
       (error: HttpErrorResponse) => {
@@ -72,7 +70,6 @@ export class PostComponent implements OnInit {
   delete() {
     this.blogService.deleteBlogPost(this.blogPost.id).subscribe(
       () => {
-        this.unselect();
         this.blogService.emitAction();
       },
       (error: HttpErrorResponse) => {
