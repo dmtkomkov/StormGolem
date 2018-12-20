@@ -4,12 +4,14 @@
   <ng-template *ngIf="blogPost.id === 0; then newBlogPost else exitedBlogPost"></ng-template>
 </ng-template>
 
+<!-- Clickable panel for creating new post -->
 <ng-template #newBlogPost>
   <mat-card (click)="select()">
     Add new post
   </mat-card>
 </ng-template>
 
+<!-- Existed post -->
 <ng-template #exitedBlogPost>
   <mat-card (click)="select()">
     <mat-card-header>
@@ -23,34 +25,14 @@
   </mat-card>
 </ng-template>
 
+<!-- Post form -->
 <ng-template #blogPostFormTemplate>
   <mat-card>
-    <form fxLayout="column" [formGroup]="blogPostForm">
-      <mat-form-field fxFlex appearance="outline">
-        <mat-label>Title</mat-label>
-        <input formControlName="title" matInput>
-      </mat-form-field>
-      <mat-form-field fxFlex appearance="outline">
-        <mat-label>Post</mat-label>
-        <textarea
-          matInput
-          formControlName="body"
-          matTextareaAutosize
-          matAutosizeMinRows=3
-          matAutosizeMaxRows=10>
-        </textarea>
-      </mat-form-field>
-      <div fxFlexAlign="end">
-        <button mat-raised-button type="button" (click)="delete()">
-          Delete
-        </button>
-        <button mat-raised-button type="button" color="warn" (click)="unselect()">
-          Hide
-        </button>
-        <button mat-raised-button type="submit" color="primary" (click)="submit()" [disabled]="blogPostForm.invalid">
-          Submit
-        </button>
-      </div>
-    </form>
+    <sg-post-form [id]="blogPost.id" [title]="blogPost.title" [body]=blogPost.body>
+      <!-- Post select/unselect functional is not related to form -->
+      <button mat-raised-button type="button" color="warn" (click)="unselect()">
+        Hide
+      </button>
+    </sg-post-form>
   </mat-card>
 </ng-template>
