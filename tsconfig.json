@@ -24,7 +24,7 @@
       "@interfaces": ["app/interfaces"],
       "@dialogs/*": ["app/dialogs/*"],
       "@services/*": ["app/services/*"],
-      "@errors/*": ["app/errors/*"],
-    },
+      "@errors/*": ["app/errors/*"]
+    }
   }
 }
