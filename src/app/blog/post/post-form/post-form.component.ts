@@ -4,6 +4,17 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { BlogService } from '@services/blog.service';
 
+import { BlogPost } from '@interfaces';
+
+import { Observable } from 'rxjs';
+
+// FIXME: Action into global enums
+enum Action {
+  CREATE = 'create',
+  UPDATE = 'update',
+  DELETE = 'delete',
+}
+
 @Component({
   selector: 'sg-post-form',
   templateUrl: 'post-form.component.html',
@@ -27,44 +38,37 @@ export class PostFormComponent implements OnInit {
     });
   }
 
-  create() {
-    this.blogService.createBlogPost(this.blogPostForm.value).subscribe(
+  private get_method(action: Action): Observable<BlogPost|{}> {
+    switch(action) {
+      case Action.CREATE:
+        return this.blogService.createBlogPost(this.blogPostForm.value)
+      case Action.UPDATE:
+        return this.blogService.updateBlogPost(this.id, this.blogPostForm.value)
+      case Action.DELETE:
+        return this.blogService.deleteBlogPost(this.id)
+    }
+  }
+
+  private perform_action(action: Action) {
+    this.get_method(action).subscribe(
       () => {
         this.blogService.emitAction();
       },
       (error: HttpErrorResponse) => {
-        console.log('Create post failed: ', error.status, error.message);
+        console.log(`${action} post failed: `, error.status, error.message);
       }
     );
+  }
+
+  create() {
+    this.perform_action(Action.CREATE);
   }
 
   update() {
-    this.blogService.updateBlogPost(this.id, this.blogPostForm.value).subscribe(
-      () => {
-        this.blogService.emitAction();
-      },
-      (error: HttpErrorResponse) => {
-        console.log('Update post failed: ', error.status, error.message);
-      }
-    );
+    this.perform_action(Action.UPDATE);
   }
 
   delete() {
-    this.blogService.deleteBlogPost(this.id).subscribe(
-      () => {
-        this.blogService.emitAction();
-      },
-      (error: HttpErrorResponse) => {
-        console.log('Delete post failed: ', error.status, error.message);
-      }
-    );
-  }
-
-  submit() {
-    if (this.id === 0) {
-      this.create();
-    } else {
-      this.update();
-    }
+    this.perform_action(Action.DELETE);
   }
 }

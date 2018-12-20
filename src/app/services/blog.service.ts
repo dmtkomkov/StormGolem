@@ -7,7 +7,9 @@ import { BlogPost, BlogPage } from '@interfaces';
 
 @Injectable()
 export class BlogService {
+  // FIXME: Get rid of Subject
   private actionSource: Subject<boolean>
+  // FIXME: action should be string and processed
   action$: Observable<boolean>
 
   constructor(
@@ -32,8 +34,8 @@ export class BlogService {
     return this.http.put<BlogPost>('/api/v1/blog/' + blogPostId + '/', blogPost);
   }
 
-  deleteBlogPost(blogPostId: number) {
-    return this.http.delete('/api/v1/blog/' + blogPostId + '/');
+  deleteBlogPost(blogPostId: number): Observable<{}> {
+    return this.http.delete<{}>('/api/v1/blog/' + blogPostId + '/');
   }
 
   emitAction() {
