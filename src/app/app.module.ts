@@ -17,6 +17,7 @@ import { AppComponent } from '@app';
 import { HomeComponent } from '@home/home.component';
 import { BlogComponent } from '@blog/blog.component';
 import { PostComponent } from '@blog/post/post.component';
+import { PostFormComponent } from './blog/post/post-form/post-form.component';
 import { LoginDialogComponent } from '@dialogs/login-dialog/login-dialog.component';
 import { PageNotFoundComponent } from '@errors/page-not-found/page-not-found.component';
 
@@ -40,6 +41,7 @@ const appRoutes: Routes = [
     BlogComponent,
     PageNotFoundComponent,
     PostComponent,
+    PostFormComponent,
   ],
   imports: [
     BrowserModule,
