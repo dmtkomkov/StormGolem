@@ -14,9 +14,11 @@ import { environment } from '@environments';
 @Injectable()
 export class InterceptorService implements HttpInterceptor {
   baseUrl: string;
+  apiUrl: string;
 
   constructor() {
     this.baseUrl = environment.backend;
+    this.apiUrl = environment.backend + environment.api
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -35,6 +37,8 @@ export class InterceptorService implements HttpInterceptor {
   }
 
   private getModifiedUrl(url: string): string {
-    return url.startsWith('assets')? url: this.baseUrl + url;
+    if (url.startsWith('assets')) return url // Do not modify assets url
+    else if (url === 'auth') return this.baseUrl + url; // Use base url for auth
+    else return this.apiUrl + url; // Use api url for all other requests
   }
 }

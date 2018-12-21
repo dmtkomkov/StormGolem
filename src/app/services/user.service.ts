@@ -7,11 +7,13 @@ import { User } from '@interfaces';
 
 @Injectable()
 export class UserService {
+  private baseUrl: string = 'user';
+
   constructor(
     private http: HttpClient,
   ) { }
 
   getUser(): Observable<User> {
-    return this.http.get<User>('/api/v1/user/');
+    return this.http.get<User>(this.baseUrl);
   }
 }

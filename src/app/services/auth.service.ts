@@ -7,29 +7,28 @@ import { LoginUser, Token } from '@interfaces';
 
 @Injectable()
 export class AuthService {
-  private loggedInSource: Subject<boolean>
-  loggedIn$: Observable<boolean>
+  private baseUrl: string = 'auth';
+  loggedIn$: Subject<boolean>
 
   constructor(
     private http: HttpClient,
   ) {
-    this.loggedInSource = new Subject<boolean>();
-    this.loggedIn$ = this.loggedInSource.asObservable();
+    this.loggedIn$ = new Subject<boolean>();
   }
 
   // Send authentication request
   auth(loginUser: LoginUser): Observable<Token> {
-    return this.http.post<Token>('/auth/', loginUser);
+    return this.http.post<Token>(this.baseUrl, loginUser);
   }
 
   logIn(token: string) {
     this.setToken(token);
-    this.loggedInSource.next(true);
+    this.loggedIn$.next(true);
   }
 
   logOut() {
     this.setToken(null);
-    this.loggedInSource.next(false);
+    this.loggedIn$.next(false);
   }
 
   setToken(token: string) {
