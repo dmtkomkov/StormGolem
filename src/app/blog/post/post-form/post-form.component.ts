@@ -52,7 +52,7 @@ export class PostFormComponent implements OnInit {
   private perform_action(action: Action) {
     this.get_method(action).subscribe(
       () => {
-        this.blogService.emitAction();
+        this.blogService.emitAction(action);
       },
       (error: HttpErrorResponse) => {
         console.log(`${action} post failed: `, error.status, error.message);
