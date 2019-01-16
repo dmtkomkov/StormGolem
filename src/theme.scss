@@ -2,27 +2,27 @@
 
 @include mat-core();
 
-$my-custom-primary-color: (
-  50 : #e8edf1,
-  100 : #c5d1dd,
-  200 : #9eb3c6,
-  300 : #7794af,
-  400 : #5a7d9e,
-  500 : #3d668d,
-  600 : #375e85,
-  700 : #2f537a,
-  800 : #274970,
-  900 : #1a385d,
-  A100 : #9ac4ff,
-  A200 : #67a6ff,
-  A400 : #3488ff,
-  A700 : #1a79ff,
+$primary: (
+  50 : #e2f0fc,
+  100 : #b8d9f8,
+  200 : #88c0f3,
+  300 : #58a7ee,
+  400 : #3594eb,
+  500 : #1181e7,
+  600 : #0f79e4,
+  700 : #0c6ee0,
+  800 : #0a64dd,
+  900 : #0551d7,
+  A100 : #ffffff,
+  A200 : #ccdcff,
+  A400 : #99b8ff,
+  A700 : #80a7ff,
   contrast: (
     50 : #000000,
     100 : #000000,
     200 : #000000,
     300 : #000000,
-    400 : #ffffff,
+    400 : #000000,
     500 : #ffffff,
     600 : #ffffff,
     700 : #ffffff,
@@ -30,14 +30,15 @@ $my-custom-primary-color: (
     900 : #ffffff,
     A100 : #000000,
     A200 : #000000,
-    A400 : #ffffff,
-    A700 : #ffffff,
-  ),
+    A400 : #000000,
+    A700 : #000000,
+  )
 );
 
-$my-app-primary: mat-palette($my-custom-primary-color);
-$my-app-accent: mat-palette($mat-pink);
-$my-app-warn: mat-palette($mat-deep-orange);
-$my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
 
-@include angular-material-theme($my-app-theme);
+$app-primary: mat-palette($primary);
+$app-accent: mat-palette($mat-pink);
+$app-warn: mat-palette($mat-deep-orange);
+$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+
+@include angular-material-theme($app-theme);

@@ -15,7 +15,7 @@
 <ng-template #exitedBlogPost>
   <mat-card (click)="select()">
     <mat-card-header>
-      <div [ngStyle]="{'background-color': '#BCBCBC'}" mat-card-avatar></div>
+      <div mat-card-avatar></div>
       <mat-card-title>{{ blogPost.title }}</mat-card-title>
       <mat-card-subtitle>{{ blogPost.created | date }}</mat-card-subtitle>
     </mat-card-header>

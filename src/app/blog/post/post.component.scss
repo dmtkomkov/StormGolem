@@ -1,1 +1,13 @@
+@import '~@angular/material/theming';
+@import 'src/theme';
 
+//@include mat-core();
+
+.mat-card {
+  background-color: mat-color($app-primary, lighter);
+  color: mat-contrast($app-primary, lighter);
+}
+
+.mat-card-avatar {
+  background-color: mat-color($app-primary, A400);
+}
