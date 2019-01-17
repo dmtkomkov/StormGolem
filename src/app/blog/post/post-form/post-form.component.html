@@ -1,24 +1,23 @@
-<form fxLayout="column" [formGroup]="blogPostForm">
+<form fxLayout="column" [formGroup]="blogPostForm" novalidate>
 
   <!-- Fields -->
   <mat-form-field fxFlex>
     <mat-label>Title</mat-label>
-    <input formControlName="title" matInput>
+    <input matInput autocomplete="off" spellcheck="false"
+      formControlName="title">
   </mat-form-field>
   <mat-form-field fxFlex>
     <mat-label>Post</mat-label>
-    <textarea
-      matInput
-      formControlName="body"
-      matTextareaAutosize
-      matAutosizeMinRows=1
-      matAutosizeMaxRows=10>
+    <textarea matInput autocomplete="off" spellcheck="false"
+      formControlName="body" matTextareaAutosize
+      matAutosizeMinRows=1 matAutosizeMaxRows=10>
     </textarea>
   </mat-form-field>
 
   <!-- Buttons -->
   <div fxFlexAlign="end">
     <button
+      *ngIf="id !== 0"
       mat-raised-button
       color="accent"
       type="button"
@@ -26,14 +25,13 @@
       Delete
     </button>
     <!-- Button to hide the post -->
-    <ng-content></ng-content>
     <button
       *ngIf="id === 0"
       mat-raised-button
       color="primary"
       (click)="create()"
       [disabled]="blogPostForm.invalid">
-      Create
+      Save
     </button>
     <button
       *ngIf="id !== 0"
@@ -41,7 +39,7 @@
       color="primary"
       (click)="update()"
       [disabled]="blogPostForm.invalid">
-      Update
+      Save
     </button>
   </div>
 

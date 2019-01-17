@@ -1,23 +1,37 @@
-<ng-template *ngIf="!editMode; then blogPostTemplate else blogPostFormTemplate"></ng-template>
+<ng-template *ngIf="!editMode; then blogPostTemplate else blogPostFormTemplate">
+</ng-template>
 
 <ng-template #blogPostTemplate>
-  <ng-template *ngIf="blogPost.id === 0; then newBlogPost else exitedBlogPost"></ng-template>
+  <ng-template *ngIf="blogPost.id === 0; then newBlogPost else exitedBlogPost">
+  </ng-template>
 </ng-template>
 
 <!-- Clickable panel for creating new post -->
 <ng-template #newBlogPost>
-  <mat-card (click)="select()">
-    Add new post
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="no-margin">
+        Add new post
+      </mat-card-title>
+      <mat-icon class="toggle-button expand-button" svgIcon="lightning"
+        (click)="select()">
+      </mat-icon>
+    </mat-card-header>
   </mat-card>
 </ng-template>
 
 <!-- Existed post -->
 <ng-template #exitedBlogPost>
-  <mat-card (click)="select()">
+  <mat-card>
     <mat-card-header>
       <div mat-card-avatar></div>
       <mat-card-title>{{ blogPost.title }}</mat-card-title>
-      <mat-card-subtitle>{{ blogPost.created | date }}</mat-card-subtitle>
+      <mat-card-subtitle>
+        {{ blogPost.created | date }}
+      </mat-card-subtitle>
+      <mat-icon class="toggle-button expand-button" svgIcon="lightning"
+        (click)="select()">
+      </mat-icon>
     </mat-card-header>
     <mat-card-content>
       {{ blogPost.body }}
@@ -28,11 +42,20 @@
 <!-- Post form -->
 <ng-template #blogPostFormTemplate>
   <mat-card>
-    <sg-post-form [id]="blogPost.id" [title]="blogPost.title" [body]=blogPost.body>
-      <!-- Post select/unselect functional is not related to form -->
-      <button mat-raised-button type="button" color="warn" (click)="unselect()">
-        Hide
-      </button>
+    <mat-card-header>
+      <!-- <div mat-card-avatar></div> -->
+      <mat-card-title *ngIf="blogPost.id === 0">
+        Add new post
+      </mat-card-title>
+      <mat-card-title *ngIf="blogPost.id !== 0">
+        Update post
+      </mat-card-title>
+      <mat-icon class="toggle-button collapse-button" svgIcon="lightning"
+        (click)=unselect()>
+      </mat-icon>
+    </mat-card-header>
+    <sg-post-form [id]="blogPost.id" [title]="blogPost.title"
+      [body]=blogPost.body>
     </sg-post-form>
   </mat-card>
 </ng-template>
