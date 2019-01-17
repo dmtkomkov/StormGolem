@@ -7,5 +7,6 @@ body {
   height: calc(100% - 48px);
   margin: 0;
   overflow: scroll;
+  -webkit-overflow-scrolling: touch;
   padding-top: 48px;
 }
