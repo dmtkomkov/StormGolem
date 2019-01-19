@@ -5,6 +5,8 @@ import { Observable, Subject } from 'rxjs';
 
 import { LoginUser, Token } from '@interfaces';
 
+import * as decode from "jwt-decode";
+
 @Injectable()
 export class AuthService {
   private baseUrl: string = 'auth';
@@ -23,6 +25,7 @@ export class AuthService {
 
   logIn(token: string) {
     this.setToken(token);
+    console.log(decode(token));
     this.loggedIn$.next(true);
   }
 
