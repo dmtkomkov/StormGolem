@@ -17,15 +17,6 @@
   <!-- Buttons -->
   <div fxFlexAlign="end">
     <button
-      *ngIf="id !== 0"
-      mat-raised-button
-      color="accent"
-      type="button"
-      (click)="delete()">
-      Delete
-    </button>
-    <!-- Button to hide the post -->
-    <button
       *ngIf="id === 0"
       mat-raised-button
       color="primary"
