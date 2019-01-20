@@ -38,8 +38,8 @@ export class LoginDialogComponent implements OnInit {
   submit() {
     this.loginUser = <LoginUser>this.loginForm.value;
     this.authService.auth(this.loginUser).subscribe(
-      (data: Token) => {
-        this.authService.logIn(data.token),
+      (token: Token) => {
+        this.authService.logIn(token),
         this.loginErrMsg = null;
         this.dialogRef.close();
       },

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { StorageService } from '@services/storage.service';
+
 import { Observable, Subject } from 'rxjs';
 
 import { LoginUser, Token } from '@interfaces';
@@ -11,6 +13,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
+    private storageService: StorageService,
   ) {
     this.loggedIn$ = new Subject<boolean>();
   }
@@ -22,23 +25,19 @@ export class AuthService {
 
   // Refresh token
   refresh() {
-    const token: string = sessionStorage.getItem('token');
-    this.http.post<Token>('refresh', {'token': token}).subscribe((data: Token) => {
-      this.setToken(data.token);
+    const token: Token = this.storageService.getToken();
+    this.http.post<Token>('refresh', token).subscribe((new_token: Token) => {
+      this.storageService.setToken(new_token);
     });
   }
 
-  logIn(token: string) {
-    this.setToken(token);
+  logIn(token: Token) {
+    this.storageService.setToken(token);
     this.loggedIn$.next(true);
   }
 
   logOut() {
-    this.setToken(null);
+    this.storageService.setToken(null);
     this.loggedIn$.next(false);
-  }
-
-  setToken(token: string) {
-    sessionStorage.setItem('token', token);
   }
 }

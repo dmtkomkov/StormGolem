@@ -7,9 +7,11 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 
+import { Token } from '@interfaces';
 import { TokenDto } from '@interfaces';
 
 import { AuthService } from '@services/auth.service';
+import { StorageService } from '@services/storage.service';
 
 import { Observable } from 'rxjs';
 
@@ -24,6 +26,7 @@ export class InterceptorService implements HttpInterceptor {
 
   constructor(
     private authService: AuthService,
+    private storageService: StorageService,
   ) {
     this.baseUrl = environment.backend;
     this.apiUrl = environment.backend + environment.api
@@ -37,10 +40,10 @@ export class InterceptorService implements HttpInterceptor {
     });
 
     if (request.url !== 'auth' && request.url !== 'refresh') {
-      const token: string = sessionStorage.getItem('token');
+      const token: Token = this.storageService.getToken();
       const current = Math.round(+new Date()/1000);
       if (token) {
-        const tokenDto: TokenDto = decode(token);
+        const tokenDto: TokenDto = decode(token.token);
         if (tokenDto.exp - current < 600) {
           this.authService.refresh();
         }
@@ -51,8 +54,11 @@ export class InterceptorService implements HttpInterceptor {
   }
 
   private getAuthHeaders(): HttpHeaders {
-    const token: string = sessionStorage.getItem('token');
-    return new HttpHeaders({ Authorization: `JWT ${token}`});
+    const token: Token = this.storageService.getToken();
+    const headers: HttpHeaders = token?
+      new HttpHeaders({ Authorization: `JWT ${token.token}`}):
+      new HttpHeaders({});
+    return headers;
   }
 
   private getModifiedUrl(url: string): string {

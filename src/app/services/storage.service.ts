@@ -1,9 +1,19 @@
 import { Injectable } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root'
-})
+import { Token } from '@interfaces';
+
+
+@Injectable()
 export class StorageService {
+  private token: Token = null
 
   constructor() { }
+
+  getToken(): Token {
+    return this.token;
+  }
+
+  setToken(token: Token) {
+    this.token = token;
+  }
 }
