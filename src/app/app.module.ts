@@ -26,6 +26,7 @@ import { UserService } from '@services/user.service';
 import { BlogService } from '@services/blog.service';
 import { GuardService } from '@services/guard.service';
 import { InterceptorService } from '@services/interceptor.service';
+import { StorageService } from '@services/storage.service';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -68,6 +69,7 @@ const appRoutes: Routes = [
     UserService,
     BlogService,
     GuardService,
+    StorageService,
   ],
   entryComponents: [
     LoginDialogComponent,
