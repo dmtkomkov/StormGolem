@@ -20,9 +20,12 @@ export class AuthService {
     return this.http.post<Token>('auth', loginUser);
   }
 
-  // Send refresh token request
-  refresh(token: Token): Observable<Token> {
-    return this.http.post<Token>('refresh', token);
+  // Refresh token
+  refresh() {
+    const token: string = sessionStorage.getItem('token');
+    this.http.post<Token>('refresh', {'token': token}).subscribe((data: Token) => {
+      this.setToken(data.token);
+    });
   }
 
   logIn(token: string) {
