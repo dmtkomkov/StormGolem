@@ -28,3 +28,11 @@ export interface BlogPage {
   page_count: number;
   page_number: number;
 }
+
+export interface TokenDto {
+  username: string;
+  user_id: number;
+  email: string;
+  orig_iat: number;
+  exp: number;
+}
