@@ -4,7 +4,7 @@ import { BlogService } from '@services/blog.service';
 import { AuthService } from '@services/auth.service';
 
 import { BehaviorSubject, Observable, Subscription, merge, of } from 'rxjs';
-import { catchError, map, switchMap } from "rxjs/operators";
+import {catchError, map, switchMap, take} from "rxjs/operators";
 
 import { BlogPost, BlogPage } from '@interfaces';
 
@@ -30,27 +30,20 @@ export class BlogComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.blogPageContent$ = this.blogPageNumber$.asObservable().pipe(
-        switchMap(() => this.blogService.getBlogPage().pipe(
-            catchError(() => of({results: []})), // Return page with empty results on error
-        )),
-        map((blogPage: BlogPage): BlogPost[] => blogPage.results),
+      switchMap(() => this.blogService.getBlogPage().pipe(
+        catchError(() => of({results: null})), // Return page with null results on error
+        take(1),
+      )),
+      map((blogPage: BlogPage): BlogPost[] => blogPage.results),
     );
     this.pageRefresh = merge(this.authService.loggedIn$, this.blogService.action$).subscribe(() => {
-      this.refreshBlogPage();
+      this.selectBlogPost(NaN);
+      this.blogPageNumber$.next(0);
     });
   }
 
   ngOnDestroy(): void {
     this.pageRefresh.unsubscribe()
-  }
-
-  refreshBlogPage() {
-    this.selectBlogPost(NaN);
-    this.readBlogPage(0);
-  }
-
-  readBlogPage(pageNumber: number) {
-    this.blogPageNumber$.next(pageNumber);
   }
 
   selectBlogPost(blogPostId: number) {
