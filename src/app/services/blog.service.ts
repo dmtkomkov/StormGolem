@@ -9,7 +9,7 @@ import { BlogPost, BlogPage } from '@interfaces';
 @Injectable()
 export class BlogService {
   private baseUrl: string = 'blog';
-  action$: Subject<string>
+  action$: Subject<string>;
 
   constructor(
     private http: HttpClient,
@@ -38,6 +38,7 @@ export class BlogService {
 
   emitAction(action: string) {
     // Show snackbar
+    console.log(action);
     this.action$.next(action);
   }
 }
