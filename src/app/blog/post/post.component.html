@@ -10,7 +10,7 @@
 <ng-template #newBlogPost>
   <mat-card>
     <mat-card-header>
-      <mat-card-title class="no-margin">
+      <mat-card-title class="single no-avatar">
         Add new post
       </mat-card-title>
       <mat-icon class="toggle-button expand-button" svgIcon="lightning"
@@ -43,11 +43,10 @@
 <ng-template #blogPostFormTemplate>
   <mat-card>
     <mat-card-header>
-      <!-- <div mat-card-avatar></div> -->
-      <mat-card-title *ngIf="blogPost.id === 0">
+      <mat-card-title *ngIf="blogPost.id === 0" class="no-avatar">
         Add new post
       </mat-card-title>
-      <mat-card-title *ngIf="blogPost.id !== 0">
+      <mat-card-title *ngIf="blogPost.id !== 0" class="no-avatar">
         Update post
       </mat-card-title>
       <mat-icon class="toggle-button collapse-button" svgIcon="lightning"
