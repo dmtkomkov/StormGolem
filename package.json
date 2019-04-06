@@ -21,9 +21,12 @@
     "@angular/platform-browser-dynamic": "7.0.1",
     "@angular/platform-server": "7.0.1",
     "@angular/router": "7.0.1",
+    "@ngrx/core": "^1.2.0",
+    "@ngrx/effects": "^7.4.0",
+    "@ngrx/store": "^7.4.0",
     "@types/jwt-decode": "2.2.1",
-    "jwt-decode": "2.2.0",
     "core-js": "2.5.7",
+    "jwt-decode": "2.2.0",
     "rxjs": "6.3.3",
     "tslint": "5.11.0",
     "zone.js": "0.8.26"
