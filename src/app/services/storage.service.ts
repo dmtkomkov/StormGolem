@@ -5,7 +5,7 @@ import { Token } from '@interfaces';
 
 @Injectable()
 export class StorageService {
-  private token: Token = null
+  private token: Token = null;
 
   constructor() { }
 

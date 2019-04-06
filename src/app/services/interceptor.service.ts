@@ -55,14 +55,13 @@ export class InterceptorService implements HttpInterceptor {
 
   private getAuthHeaders(): HttpHeaders {
     const token: Token = this.storageService.getToken();
-    const headers: HttpHeaders = token?
+    return token?
       new HttpHeaders({ Authorization: `JWT ${token.token}`}):
       new HttpHeaders({});
-    return headers;
   }
 
   private getModifiedUrl(url: string): string {
-    if (url.startsWith('assets')) return url // Do not modify assets url
+    if (url.startsWith('assets')) return url; // Do not modify assets url
     else if (url === 'auth' || url === 'refresh') return this.baseUrl + url; // Use base url for auth
     else return this.apiUrl + url; // Use api url for all other requests
   }
