@@ -7,11 +7,9 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 
-import { Token } from '@interfaces';
-import { TokenDto } from '@interfaces';
+import { ITokenDto } from '@interfaces';
 
 import { AuthService } from '@services/auth.service';
-import { StorageService } from '@services/storage.service';
 
 import { Observable } from 'rxjs';
 
@@ -26,7 +24,6 @@ export class InterceptorService implements HttpInterceptor {
 
   constructor(
     private authService: AuthService,
-    private storageService: StorageService,
   ) {
     this.baseUrl = environment.backend;
     this.apiUrl = environment.backend + environment.api
@@ -34,30 +31,24 @@ export class InterceptorService implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Add auth header and set new url
+    const token: string = localStorage.getItem('token');
     const modifiedRequest = request.clone({
-      headers: this.getAuthHeaders(),
+      headers: token?
+        new HttpHeaders({ Authorization: `JWT ${token}`}):
+        new HttpHeaders({}),
       url: this.getModifiedUrl(request.url),
     });
 
-    if (request.url !== 'auth' && request.url !== 'refresh') {
-      const token: Token = this.storageService.getToken();
+    // Check and refresh token if needed
+    if (token && request.url !== 'auth' && request.url !== 'refresh') {
       const current = Math.round(+new Date()/1000);
-      if (token) {
-        const tokenDto: TokenDto = decode(token.token);
-        if (tokenDto.exp - current < 600) {
-          this.authService.refresh();
-        }
+      const tokenDto: ITokenDto = decode(token);
+      if (tokenDto.exp - current < 600) {
+        this.authService.refresh();
       }
     }
 
     return next.handle(modifiedRequest);
-  }
-
-  private getAuthHeaders(): HttpHeaders {
-    const token: Token = this.storageService.getToken();
-    return token?
-      new HttpHeaders({ Authorization: `JWT ${token.token}`}):
-      new HttpHeaders({});
   }
 
   private getModifiedUrl(url: string): string {

@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 
 import { Observable, Subject } from 'rxjs';
 
-import { BlogPost, BlogPage } from '@interfaces';
+import { IBlogPost, IBlogPage } from '@interfaces';
 
 @Injectable()
 export class BlogService {
@@ -17,18 +17,18 @@ export class BlogService {
     this.action$ = new Subject<string>();
   }
 
-  getBlogPage(): Observable<BlogPage> {
+  getBlogPage(): Observable<IBlogPage> {
     // FIXME: add page number as a param
-    return this.http.get<BlogPage>(this.baseUrl);
+    return this.http.get<IBlogPage>(this.baseUrl);
   }
 
-  createBlogPost(blogPost: BlogPost): Observable<BlogPost> {
-    return this.http.post<BlogPost>(this.baseUrl, blogPost);
+  createBlogPost(blogPost: IBlogPost): Observable<IBlogPost> {
+    return this.http.post<IBlogPost>(this.baseUrl, blogPost);
   }
 
-  updateBlogPost(blogPostId: number, blogPost: BlogPost): Observable<BlogPost> {
+  updateBlogPost(blogPostId: number, blogPost: IBlogPost): Observable<IBlogPost> {
     const url = Location.joinWithSlash(this.baseUrl, blogPostId.toString());
-    return this.http.put<BlogPost>(url, blogPost);
+    return this.http.put<IBlogPost>(url, blogPost);
   }
 
   deleteBlogPost(blogPostId: number): Observable<{}> {

@@ -6,7 +6,7 @@ import { AuthService } from '@services/auth.service';
 import { BehaviorSubject, Observable, Subscription, merge, of } from 'rxjs';
 import {catchError, map, switchMap, take} from "rxjs/operators";
 
-import { BlogPost, BlogPage } from '@interfaces';
+import { IBlogPost, IBlogPage } from '@interfaces';
 
 @Component({
   selector: 'sg-blog',
@@ -15,9 +15,9 @@ import { BlogPost, BlogPage } from '@interfaces';
 })
 export class BlogComponent implements OnInit, OnDestroy {
   blogPageNumber$: BehaviorSubject<number>;
-  blogPageContent$: Observable<BlogPost[]>;
+  blogPageContent$: Observable<IBlogPost[]>;
   selectedBlogPost: number;
-  emptyBlogPost: BlogPost;
+  emptyBlogPost: IBlogPost;
   pageRefresh: Subscription;
 
   constructor(
@@ -34,7 +34,7 @@ export class BlogComponent implements OnInit, OnDestroy {
         catchError(() => of({results: null})), // Return page with null results on error
         take(1),
       )),
-      map((blogPage: BlogPage): BlogPost[] => blogPage.results),
+      map((blogPage: IBlogPage): IBlogPost[] => blogPage.results),
     );
     this.pageRefresh = merge(this.authService.loggedIn$, this.blogService.action$).subscribe(() => {
       this.selectBlogPost(NaN);
@@ -50,7 +50,7 @@ export class BlogComponent implements OnInit, OnDestroy {
     this.selectedBlogPost = blogPostId;
   }
 
-  trackByPostId(index: number, blogPost: BlogPost): number {
+  trackByPostId(index: number, blogPost: IBlogPost): number {
     return blogPost.id;
   }
 }

@@ -1,35 +1,35 @@
-export interface User {
+export interface IUser {
   username: string;
   first_name: string;
   last_name: string;
   email: string;
 }
 
-export interface LoginUser {
+export interface ILoginUser {
   username: string;
   password: string;
 }
 
-export interface Token {
+export interface IToken {
   token: string;
 }
 
-export interface BlogPost {
+export interface IBlogPost {
   id?: number;
   title: string;
   body: string;
   created?: Date;
 }
 
-export interface BlogPage {
-  results: BlogPost[];
+export interface IBlogPage {
+  results: IBlogPost[];
   page_size: number;
   count: number;
   page_count: number;
   page_number: number;
 }
 
-export interface TokenDto {
+export interface ITokenDto {
   username: string;
   user_id: number;
   email: string;

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { User } from '@interfaces';
+import { IUser } from '@interfaces';
 
 @Injectable()
 export class UserService {
@@ -13,7 +13,7 @@ export class UserService {
     private http: HttpClient,
   ) { }
 
-  getUser(): Observable<User> {
-    return this.http.get<User>(this.baseUrl);
+  getUser(): Observable<IUser> {
+    return this.http.get<IUser>(this.baseUrl);
   }
 }

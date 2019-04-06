@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-import { BlogPost } from '@interfaces';
+import { IBlogPost } from '@interfaces';
 
 @Component({
   selector: 'sg-post',
@@ -8,7 +8,7 @@ import { BlogPost } from '@interfaces';
   styleUrls: ['post.component.scss'],
 })
 export class PostComponent {
-  @Input() blogPost: BlogPost;
+  @Input() blogPost: IBlogPost;
   @Input() editMode: boolean;
   @Output() selectedBlogPost: EventEmitter<number> = new EventEmitter<number>();
 

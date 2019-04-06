@@ -4,7 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { BlogService } from '@services/blog.service';
 
-import { BlogPost } from '@interfaces';
+import { IBlogPost } from '@interfaces';
 
 import { Observable } from 'rxjs';
 
@@ -38,12 +38,12 @@ export class PostFormComponent implements OnInit {
     });
   }
 
-  private get_method(action: Action): Observable<BlogPost|{}> {
+  private get_method(action: Action): Observable<IBlogPost|{}> {
     switch(action) {
       case Action.CREATE:
-        return this.blogService.createBlogPost(this.blogPostForm.value)
+        return this.blogService.createBlogPost(this.blogPostForm.value);
       case Action.UPDATE:
-        return this.blogService.updateBlogPost(this.id, this.blogPostForm.value)
+        return this.blogService.updateBlogPost(this.id, this.blogPostForm.value);
       case Action.DELETE:
         return this.blogService.deleteBlogPost(this.id)
     }

@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MatIconRegistry, MatDialog } from '@angular/material';
-import { HttpErrorResponse } from '@angular/common/http';
 
 import { LoginDialogComponent } from '@dialogs/login-dialog/login-dialog.component';
 
 import { UserService } from '@services/user.service';
 import { AuthService } from '@services/auth.service';
 
-import { User } from '@interfaces';
+import { IUser } from '@interfaces';
 
 @Component({
   selector: 'sg-root',
@@ -17,7 +16,7 @@ import { User } from '@interfaces';
 })
 export class AppComponent implements OnInit {
   title: string;
-  user: User;
+  user: IUser;
 
   constructor(
     private iconRegistry: MatIconRegistry,
@@ -46,12 +45,10 @@ export class AppComponent implements OnInit {
 
   readUser() {
     this.userService.getUser().subscribe(
-      (user: User) => {
-        console.log('New User: ', user),
+      (user: IUser) => {
         this.user = user;
       },
-      (error: HttpErrorResponse) => {
-        console.log('Error User: ', error.message),
+      () => {
         this.user = null;
       }
     );
