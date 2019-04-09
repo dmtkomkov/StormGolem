@@ -52,11 +52,7 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "storm-golem:build:production",
-              "styles": [
-                "src/styles.scss",
-                "src/theme.scss"
-              ],
+              "browserTarget": "storm-golem:build:production"
             }
           }
         },

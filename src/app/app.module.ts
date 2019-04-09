@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexLayoutModule } from "@angular/flex-layout";
@@ -10,14 +11,13 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { Routes, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 
 import { AppComponent } from '@app';
 import { HomeComponent } from '@home/home.component';
 import { BlogComponent } from '@blog/blog.component';
 import { PostComponent } from '@blog/post/post.component';
-import { PostFormComponent } from './blog/post/post-form/post-form.component';
+import { PostFormComponent } from '@blog/post/post-form/post-form.component';
 import { LoginDialogComponent } from '@dialogs/login-dialog/login-dialog.component';
 import { PageNotFoundComponent } from '@errors/page-not-found/page-not-found.component';
 
@@ -26,13 +26,20 @@ import { UserService } from '@services/user.service';
 import { BlogService } from '@services/blog.service';
 import { GuardService } from '@services/guard.service';
 import { InterceptorService } from '@services/interceptor.service';
-import { StorageService } from '@services/storage.service';
+
+import { StoreModule } from "@ngrx/store";
+import { Routes, RouterModule } from '@angular/router';
+import { blogReducers } from "./reducers/blog.reducers";
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'blog', component: BlogComponent, canActivate: [ GuardService ] },
   { path: '**', component: PageNotFoundComponent }
 ];
+
+const appStore = {
+  blog: blogReducers,
+};
 
 @NgModule({
   declarations: [
@@ -48,6 +55,7 @@ const appRoutes: Routes = [
     BrowserModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes),
+    StoreModule.forRoot(appStore),
     HttpClientModule,
     MatIconModule,
     MatToolbarModule,
@@ -69,7 +77,6 @@ const appRoutes: Routes = [
     UserService,
     BlogService,
     GuardService,
-    StorageService,
   ],
   entryComponents: [
     LoginDialogComponent,
