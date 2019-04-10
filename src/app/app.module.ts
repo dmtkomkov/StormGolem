@@ -29,7 +29,9 @@ import { InterceptorService } from '@services/interceptor.service';
 
 import { StoreModule } from "@ngrx/store";
 import { Routes, RouterModule } from '@angular/router';
-import { blogReducers } from "./reducers/blog.reducers";
+import { blogReducer } from "./reducers/blog.reducer";
+import { EffectsModule } from "@ngrx/effects";
+import { BlogEffect } from "./effects/blog.effect";
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -38,8 +40,12 @@ const appRoutes: Routes = [
 ];
 
 const appStore = {
-  blog: blogReducers,
+  blog: blogReducer,
 };
+
+const appEffects = [
+  BlogEffect,
+];
 
 @NgModule({
   declarations: [
@@ -56,6 +62,7 @@ const appStore = {
     BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes),
     StoreModule.forRoot(appStore),
+    EffectsModule.forRoot(appEffects),
     HttpClientModule,
     MatIconModule,
     MatToolbarModule,
