@@ -4,6 +4,7 @@ import { IBlogPost } from "@interfaces";
 export enum EBlogAction {
   GetBlogPosts = '[Blog] Get Blog Posts',
   GetBlogPostsSuccess = '[Blog] Get Blog Posts Success',
+  GetBlogPostsError = '[Blog] Get Blog Posts Error',
 }
 
 export class GetBlogPosts implements Action {
@@ -15,4 +16,8 @@ export class GetBlogPostsSuccess implements Action {
   constructor(public payload: IBlogPost[]) { }
 }
 
-export type BlogAction = GetBlogPosts  | GetBlogPostsSuccess;
+export class GetBlogPostsError implements Action {
+  public readonly type = EBlogAction.GetBlogPostsError;
+}
+
+export type BlogAction = GetBlogPosts  | GetBlogPostsSuccess | GetBlogPostsError;
