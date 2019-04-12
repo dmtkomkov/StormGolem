@@ -7,7 +7,7 @@ export enum EBlogAction {
   GetBlogPostsError = '[Blog] Get Blog Posts Error',
 }
 
-export class GetBlogPosts implements Action {
+export class LoadBlogPosts implements Action {
   public readonly type = EBlogAction.GetBlogPosts;
 }
 
@@ -20,4 +20,4 @@ export class GetBlogPostsError implements Action {
   public readonly type = EBlogAction.GetBlogPostsError;
 }
 
-export type BlogAction = GetBlogPosts  | GetBlogPostsSuccess | GetBlogPostsError;
+export type BlogAction = LoadBlogPosts  | GetBlogPostsSuccess | GetBlogPostsError;

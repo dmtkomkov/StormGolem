@@ -11,6 +11,7 @@ import { IAppState } from "../states/app.state";
 import { EBlogAction } from "../actions/blog.actions";
 import { select } from "@ngrx/store";
 import { takeUntil, tap } from "rxjs/operators";
+import { LoadBlogPosts } from "../actions/blog.actions";
 
 @Component({
   selector: 'sg-blog',
@@ -21,7 +22,7 @@ export class BlogComponent implements OnInit, OnDestroy {
   public blogPageContent$: Observable<IBlogPost[]>;
   public selectedBlogPost: number;
   public emptyBlogPost: IBlogPost;
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private unsubsriber: Subject<void> = new Subject<void>();
 
   constructor(
     private authService: AuthService,
@@ -33,24 +34,24 @@ export class BlogComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.blogPageContent$ = this.store.pipe(
-      takeUntil(this.ngUnsubscribe),
+      takeUntil(this.unsubsriber),
       select((state: IAppState) => state.blog.blogPosts),
       tap(result => console.log(result)),
     );
 
-    this.store.dispatch({ type: EBlogAction.GetBlogPosts });
+    this.store.dispatch(new LoadBlogPosts());
 
     merge(this.authService.loggedIn$, this.blogService.action$).pipe(
-      takeUntil(this.ngUnsubscribe),
+      takeUntil(this.unsubsriber),
     ).subscribe(() => {
-      this.store.dispatch({ type: EBlogAction.GetBlogPosts });
+      this.store.dispatch(new LoadBlogPosts());
       this.selectBlogPost(NaN);
     });
   }
 
   ngOnDestroy(): void {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.unsubsriber.next();
+    this.unsubsriber.complete();
   }
 
   selectBlogPost(blogPostId: number) {
