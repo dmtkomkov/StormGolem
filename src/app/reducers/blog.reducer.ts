@@ -6,24 +6,23 @@ export const blogReducer = (
   action: BlogAction
 ): IBlogState => {
   switch (action.type) {
-    case EBlogAction.GetBlogPosts: {
-      console.log(EBlogAction.GetBlogPosts);
+    case EBlogAction.LoadBlogPosts: {
+      console.log(EBlogAction.LoadBlogPosts);
       return {
         ...state,
-        blogPosts: null,
         selectedBlogPost: NaN,
       }
     }
-    case EBlogAction.GetBlogPostsSuccess: {
-      console.log(EBlogAction.GetBlogPostsSuccess);
+    case EBlogAction.LoadBlogPostsSuccess: {
+      console.log(EBlogAction.LoadBlogPostsSuccess);
       return {
         ...state,
         blogPosts: action.payload,
         selectedBlogPost: NaN,
       }
     }
-    case EBlogAction.GetBlogPostsError: {
-      console.log(EBlogAction.GetBlogPostsError);
+    case EBlogAction.LoadBlogPostsError: {
+      console.log(EBlogAction.LoadBlogPostsError);
       return {
         ...state,
         blogPosts: null,

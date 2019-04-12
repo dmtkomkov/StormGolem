@@ -2,22 +2,22 @@ import { Action } from "@ngrx/store/src/models";
 import { IBlogPost } from "@interfaces";
 
 export enum EBlogAction {
-  GetBlogPosts = '[Blog] Get Blog Posts',
-  GetBlogPostsSuccess = '[Blog] Get Blog Posts Success',
-  GetBlogPostsError = '[Blog] Get Blog Posts Error',
+  LoadBlogPosts = '[Blog] Load Blog Posts',
+  LoadBlogPostsSuccess = '[Blog] Load Blog Posts Success',
+  LoadBlogPostsError = '[Blog] Load Blog Posts Error',
 }
 
 export class LoadBlogPosts implements Action {
-  public readonly type = EBlogAction.GetBlogPosts;
+  public readonly type = EBlogAction.LoadBlogPosts;
 }
 
-export class GetBlogPostsSuccess implements Action {
-  public readonly type = EBlogAction.GetBlogPostsSuccess;
+export class LoadBlogPostsSuccess implements Action {
+  public readonly type = EBlogAction.LoadBlogPostsSuccess;
   constructor(public payload: IBlogPost[]) { }
 }
 
-export class GetBlogPostsError implements Action {
-  public readonly type = EBlogAction.GetBlogPostsError;
+export class LoadBlogPostsError implements Action {
+  public readonly type = EBlogAction.LoadBlogPostsError;
 }
 
-export type BlogAction = LoadBlogPosts  | GetBlogPostsSuccess | GetBlogPostsError;
+export type BlogAction = LoadBlogPosts  | LoadBlogPostsSuccess | LoadBlogPostsError;

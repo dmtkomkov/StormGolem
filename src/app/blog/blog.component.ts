@@ -8,9 +8,8 @@ import { Observable, merge, Subject} from 'rxjs';
 import { IBlogPost } from '@interfaces';
 import { Store } from '@ngrx/store';
 import { IAppState } from "../states/app.state";
-import { EBlogAction } from "../actions/blog.actions";
 import { select } from "@ngrx/store";
-import { takeUntil, tap } from "rxjs/operators";
+import { takeUntil } from "rxjs/operators";
 import { LoadBlogPosts } from "../actions/blog.actions";
 
 @Component({
@@ -36,7 +35,6 @@ export class BlogComponent implements OnInit, OnDestroy {
     this.blogPageContent$ = this.store.pipe(
       takeUntil(this.unsubsriber),
       select((state: IAppState) => state.blog.blogPosts),
-      tap(result => console.log(result)),
     );
 
     this.store.dispatch(new LoadBlogPosts());
