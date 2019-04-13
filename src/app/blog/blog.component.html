@@ -2,8 +2,6 @@
   <sg-post class="sg-post"
            fxFlexAlign="center"
            *ngFor="let blogPost of blogPageContent; trackBy: trackByPostId"
-           [editMode]="selectedBlogPost === blogPost.id"
-           [blogPost]="blogPost"
-           (selectedBlogPost)="selectBlogPost($event)">
+           [blogPost]="blogPost">
   </sg-post>
 </div>

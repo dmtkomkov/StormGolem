@@ -10,7 +10,7 @@ import { Store } from '@ngrx/store';
 import { IAppState } from "../states/app.state";
 import { select } from "@ngrx/store";
 import { takeUntil } from "rxjs/operators";
-import { LoadBlogPosts, SelectBlogPost } from "../actions/blog.actions";
+import { LoadBlogPosts } from "../actions/blog.actions";
 
 @Component({
   selector: 'sg-blog',
@@ -19,7 +19,6 @@ import { LoadBlogPosts, SelectBlogPost } from "../actions/blog.actions";
 })
 export class BlogComponent implements OnInit, OnDestroy {
   public blogPageContent$: Observable<IBlogPost[]>;
-  public selectedBlogPost: number;
   private unsubsriber: Subject<void> = new Subject<void>();
 
   constructor(
@@ -40,17 +39,12 @@ export class BlogComponent implements OnInit, OnDestroy {
       takeUntil(this.unsubsriber),
     ).subscribe(() => {
       this.store.dispatch(new LoadBlogPosts());
-      this.selectBlogPost(NaN);
     });
   }
 
   ngOnDestroy(): void {
     this.unsubsriber.next();
     this.unsubsriber.complete();
-  }
-
-  selectBlogPost(blogPostId: number) {
-    this.store.dispatch(new SelectBlogPost(blogPostId));
   }
 
   trackByPostId(index: number, blogPost: IBlogPost): number {

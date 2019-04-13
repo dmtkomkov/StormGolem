@@ -1,6 +1,9 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { IBlogPost } from '@interfaces';
+import {SelectBlogPost} from "../../actions/blog.actions";
+import {Store} from "@ngrx/store";
+import {IAppState} from "../../states/app.state";
 
 @Component({
   selector: 'sg-post',
@@ -9,14 +12,16 @@ import { IBlogPost } from '@interfaces';
 })
 export class PostComponent {
   @Input() blogPost: IBlogPost;
-  @Input() editMode: boolean;
-  @Output() selectedBlogPost: EventEmitter<number> = new EventEmitter<number>();
+
+  constructor(
+    private store: Store<IAppState>,
+  ) { }
 
   select() {
-    this.selectedBlogPost.emit(this.blogPost.id);
+    this.store.dispatch(new SelectBlogPost(this.blogPost.id));
   }
 
   unselect() {
-    this.selectedBlogPost.emit(NaN);
+    this.store.dispatch(new SelectBlogPost(NaN));
   }
 }
