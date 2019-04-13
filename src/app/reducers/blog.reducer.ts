@@ -1,5 +1,7 @@
 import {BlogAction, EBlogAction} from "../actions/blog.actions";
 import {IBlogState, initialBlogState} from "../states/blog.state";
+import {selectBlogPost} from "../helpers/blog.helpers";
+import {IBlogPost} from "@interfaces";
 
 export const blogReducer = (
   state: IBlogState = initialBlogState,
@@ -7,26 +9,30 @@ export const blogReducer = (
 ): IBlogState => {
   switch (action.type) {
     case EBlogAction.LoadBlogPosts: {
-      console.log(EBlogAction.LoadBlogPosts);
       return {
         ...state,
-        selectedBlogPost: NaN,
+        loading: true,
       }
     }
     case EBlogAction.LoadBlogPostsSuccess: {
-      console.log(EBlogAction.LoadBlogPostsSuccess);
       return {
         ...state,
         blogPosts: action.payload,
-        selectedBlogPost: NaN,
+        loading: false,
       }
     }
     case EBlogAction.LoadBlogPostsError: {
-      console.log(EBlogAction.LoadBlogPostsError);
       return {
         ...state,
         blogPosts: null,
-        selectedBlogPost: NaN,
+        loading: false,
+      }
+    }
+    case EBlogAction.SelectBlogPost: {
+      const newBlogPosts: IBlogPost[] = state.blogPosts? selectBlogPost(state.blogPosts, action.payload): null;
+      return {
+        ...state,
+        blogPosts: newBlogPosts,
       }
     }
     default:

@@ -1,4 +1,4 @@
-<ng-template *ngIf="!editMode; then blogPostTemplate else blogPostFormTemplate">
+<ng-template *ngIf="!blogPost.selected; then blogPostTemplate else blogPostFormTemplate">
 </ng-template>
 
 <ng-template #blogPostTemplate>
@@ -43,11 +43,8 @@
 <ng-template #blogPostFormTemplate>
   <mat-card>
     <mat-card-header>
-      <mat-card-title *ngIf="blogPost.id === 0" class="no-avatar">
-        Add new post
-      </mat-card-title>
-      <mat-card-title *ngIf="blogPost.id !== 0" class="no-avatar">
-        Update post
+      <mat-card-title class="no-avatar">
+        {{ blogPost.id === 0 ? 'Add new post' : 'Update post' }}
       </mat-card-title>
       <mat-icon class="toggle-button collapse-button" svgIcon="lightning"
         (click)=unselect()>

@@ -10,7 +10,7 @@ import { Store } from '@ngrx/store';
 import { IAppState } from "../states/app.state";
 import { select } from "@ngrx/store";
 import { takeUntil } from "rxjs/operators";
-import { LoadBlogPosts } from "../actions/blog.actions";
+import { LoadBlogPosts, SelectBlogPost } from "../actions/blog.actions";
 
 @Component({
   selector: 'sg-blog',
@@ -20,16 +20,13 @@ import { LoadBlogPosts } from "../actions/blog.actions";
 export class BlogComponent implements OnInit, OnDestroy {
   public blogPageContent$: Observable<IBlogPost[]>;
   public selectedBlogPost: number;
-  public emptyBlogPost: IBlogPost;
   private unsubsriber: Subject<void> = new Subject<void>();
 
   constructor(
     private authService: AuthService,
     private blogService: BlogService,
     private store: Store<IAppState>,
-  ) {
-    this.emptyBlogPost = {id: 0, title: '', body: ''};
-  }
+  ) { }
 
   ngOnInit() {
     this.blogPageContent$ = this.store.pipe(
@@ -53,7 +50,7 @@ export class BlogComponent implements OnInit, OnDestroy {
   }
 
   selectBlogPost(blogPostId: number) {
-    this.selectedBlogPost = blogPostId;
+    this.store.dispatch(new SelectBlogPost(blogPostId));
   }
 
   trackByPostId(index: number, blogPost: IBlogPost): number {

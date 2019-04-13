@@ -1,13 +1,4 @@
 <div fxLayout="column" fxLayoutGap="10px" *ngIf="blogPageContent$ | async as blogPageContent">
-
-  <sg-post class="sg-post"
-           fxFlexAlign="center"
-           *ngIf="blogPageContent !== null"
-           [editMode]="selectedBlogPost === 0"
-           [blogPost]="emptyBlogPost"
-           (selectedBlogPost)="selectBlogPost($event)">
-  </sg-post>
-
   <sg-post class="sg-post"
            fxFlexAlign="center"
            *ngFor="let blogPost of blogPageContent; trackBy: trackByPostId"
@@ -15,5 +6,4 @@
            [blogPost]="blogPost"
            (selectedBlogPost)="selectBlogPost($event)">
   </sg-post>
-
 </div>

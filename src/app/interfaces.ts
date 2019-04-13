@@ -19,6 +19,7 @@ export interface IBlogPost {
   title: string;
   body: string;
   created?: Date;
+  selected?: boolean;
 }
 
 export interface IBlogPage {
