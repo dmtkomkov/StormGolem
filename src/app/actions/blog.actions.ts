@@ -6,6 +6,7 @@ export enum EBlogAction {
   LoadBlogPostsSuccess = '[Blog] Load Blog Posts Success',
   LoadBlogPostsError = '[Blog] Load Blog Posts Error',
   SelectBlogPost = '[Blog] Select Blog Post',
+  ResetBlog = '[Blog] Reset Blog',
 }
 
 export class LoadBlogPosts implements Action {
@@ -26,4 +27,8 @@ export class SelectBlogPost implements Action {
   constructor(public payload: number) { }
 }
 
-export type BlogAction = LoadBlogPosts  | LoadBlogPostsSuccess | LoadBlogPostsError | SelectBlogPost;
+export class ResetBlog implements Action {
+  public readonly type = EBlogAction.ResetBlog;
+}
+
+export type BlogAction = LoadBlogPosts  | LoadBlogPostsSuccess | LoadBlogPostsError | SelectBlogPost | ResetBlog;
