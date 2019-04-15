@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BlogService } from '@services/blog.service';
 import { AuthService } from '@services/auth.service';
 
-import { Observable, merge, Subject} from 'rxjs';
+import { Observable, Subject} from 'rxjs';
 
 import { IBlogPost } from '@interfaces';
 import { Store } from '@ngrx/store';
@@ -35,7 +35,7 @@ export class BlogComponent implements OnInit, OnDestroy {
 
     this.store.dispatch(new LoadBlogPosts());
 
-    merge(this.authService.loggedIn$, this.blogService.action$).pipe(
+    this.authService.loggedIn$.pipe(
       takeUntil(this.unsubsriber),
     ).subscribe(() => {
       this.store.dispatch(new LoadBlogPosts());

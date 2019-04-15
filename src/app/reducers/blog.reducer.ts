@@ -12,6 +12,12 @@ export const blogReducer = (state: IBlogState = initialBlogState, action: BlogAc
 
     case EBlogAction.LoadBlogPostsError: return {...state, blogPosts: null, loading: false};
 
+    case EBlogAction.CreateBlogPost: return {...state, loading: true};
+
+    case EBlogAction.CreateBlogPostSuccess: return {...state, loading: true};
+
+    case EBlogAction.CreateBlogPostError: return {...state, loading: false};
+
     case EBlogAction.SelectBlogPost: return {...state, blogPosts: selectBlogPost(state.blogPosts, action.payload)};
 
     case EBlogAction.ResetBlog: return initialBlogState;

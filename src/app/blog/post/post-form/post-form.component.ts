@@ -1,19 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
 
 import { BlogService } from '@services/blog.service';
 
-import { IBlogPost } from '@interfaces';
-
-import { Observable } from 'rxjs';
-
-// FIXME: Action into global enums
-enum Action {
-  CREATE = 'create',
-  UPDATE = 'update',
-  DELETE = 'delete',
-}
+import {CreateBlogPost, DeleteBlogPost, UpdateBlogPost} from "../../../actions/blog.actions";
+import { IAppState } from "../../../states/app.state";
+import { Store } from "@ngrx/store";
 
 @Component({
   selector: 'sg-post-form',
@@ -29,6 +21,7 @@ export class PostFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private blogService: BlogService,
+    private store: Store<IAppState>,
   ) { }
 
   ngOnInit() {
@@ -38,37 +31,15 @@ export class PostFormComponent implements OnInit {
     });
   }
 
-  private get_method(action: Action): Observable<IBlogPost|{}> {
-    switch(action) {
-      case Action.CREATE:
-        return this.blogService.createBlogPost(this.blogPostForm.value);
-      case Action.UPDATE:
-        return this.blogService.updateBlogPost(this.id, this.blogPostForm.value);
-      case Action.DELETE:
-        return this.blogService.deleteBlogPost(this.id)
-    }
-  }
-
-  private perform_action(action: Action) {
-    this.get_method(action).subscribe(
-      () => {
-        this.blogService.emitAction(action);
-      },
-      (error: HttpErrorResponse) => {
-        console.log(`${action} post failed: `, error.status, error.message);
-      }
-    );
-  }
-
   create() {
-    this.perform_action(Action.CREATE);
+    this.store.dispatch(new CreateBlogPost(this.blogPostForm.value));
   }
 
   update() {
-    this.perform_action(Action.UPDATE);
+    this.store.dispatch(new UpdateBlogPost({id: this.id, ...this.blogPostForm.value}));
   }
 
   delete() {
-    this.perform_action(Action.DELETE);
+    this.store.dispatch(new DeleteBlogPost(this.id));
   }
 }

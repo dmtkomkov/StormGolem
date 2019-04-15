@@ -27,6 +27,13 @@
     <button
       *ngIf="id !== 0"
       mat-raised-button
+      color="warn"
+      (click)="delete()">
+      Delete
+    </button>
+    <button
+      *ngIf="id !== 0"
+      mat-raised-button
       color="primary"
       (click)="update()"
       [disabled]="blogPostForm.invalid">
