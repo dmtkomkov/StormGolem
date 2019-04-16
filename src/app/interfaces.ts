@@ -1,8 +1,9 @@
 export interface IUser {
-  username: string;
+  username?: string;
   first_name: string;
   last_name: string;
-  email: string;
+  email?: string;
+  user_icon? : string;
 }
 
 export interface ILoginUser {
@@ -20,6 +21,7 @@ export interface IBlogPost {
   body: string;
   created?: Date;
   selected?: boolean;
+  user?: IUser;
 }
 
 export interface IBlogPage {
