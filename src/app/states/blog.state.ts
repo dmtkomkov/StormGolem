@@ -1,7 +1,7 @@
 import { IBlogPost } from "@interfaces";
 
 export interface IBlogState {
-  blogPosts: IBlogPost[],
+  blogPosts: IBlogPost[];
   loading: boolean;
 }
 
