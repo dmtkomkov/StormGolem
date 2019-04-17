@@ -21,11 +21,9 @@ export class AuthService {
   }
 
   // Refresh token
-  refresh() {
+  refresh(): Observable<IToken> {
     const old_token: IToken = {'token': localStorage.getItem('token')};
-    this.http.post<IToken>('refresh', old_token).subscribe((new_token: IToken) => {
-      localStorage.setItem('token', new_token.token);
-    });
+    return this.http.post<IToken>('refresh', old_token);
   }
 
   logIn(token: IToken) {

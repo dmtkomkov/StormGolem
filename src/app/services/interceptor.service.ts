@@ -7,7 +7,7 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 
-import { ITokenDto } from '@interfaces';
+import {IToken, ITokenDto} from '@interfaces';
 
 import { AuthService } from '@services/auth.service';
 
@@ -44,7 +44,9 @@ export class InterceptorService implements HttpInterceptor {
       const current = Math.round(+new Date()/1000);
       const tokenDto: ITokenDto = decode(token);
       if (tokenDto.exp - current < 600) {
-        this.authService.refresh();
+        this.authService.refresh().subscribe(
+          (new_token: IToken) => localStorage.setItem('token', new_token.token),
+        );
       }
     }
 
