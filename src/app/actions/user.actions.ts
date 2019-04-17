@@ -19,7 +19,7 @@ export enum EUserAction {
 
 export class LogIn implements Action {
   public readonly type = EUserAction.LogIn;
-  constructor(public loginUser: ILoginUser) { }
+  constructor(public payload: ILoginUser) { }
 }
 
 export class LogInSuccess implements Action {
@@ -36,7 +36,7 @@ export class LoadUser implements Action {
 
 export class LoadUserSuccess implements Action {
   public readonly type = EUserAction.LoadUserSuccess;
-  constructor(public user: IUser) { }
+  constructor(public payload: IUser) { }
 }
 
 export class LoadUserError implements Action {
