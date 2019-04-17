@@ -37,7 +37,7 @@ export class BlogEffect {
       .pipe(
         map((blogPage: IBlogPage) => blogPage.results),
         map((blogPosts: IBlogPost[]) => [EMPTY_BLOG_POST].concat(selectBlogPost(blogPosts, NaN))),
-        map((blogPosts: IBlogPost[]) => (new LoadBlogPostsSuccess(blogPosts))),
+        map((blogPosts: IBlogPost[]) => new LoadBlogPostsSuccess(blogPosts)),
         catchError(() => of(new LoadBlogPostsError())),
       )
     ),
@@ -47,7 +47,7 @@ export class BlogEffect {
     ofType<BlogAction>(EBlogAction.CreateBlogPost),
     concatMap((action: CreateBlogPost) => this.blogService.createBlogPost(action.payload)
       .pipe(
-        map(() => (new CreateBlogPostSuccess())),
+        map(() => new CreateBlogPostSuccess()),
         catchError(() => of(new CreateBlogPostError())),
       )
     ),
@@ -57,7 +57,7 @@ export class BlogEffect {
     ofType<BlogAction>(EBlogAction.UpdateBlogPost),
     concatMap((action: UpdateBlogPost) => this.blogService.updateBlogPost(action.payload)
       .pipe(
-        map(() => (new UpdateBlogPostSuccess())),
+        map(() => new UpdateBlogPostSuccess()),
         catchError(() => of(new UpdateBlogPostError())),
       )
     ),
@@ -67,7 +67,7 @@ export class BlogEffect {
     ofType<BlogAction>(EBlogAction.DeleteBlogPost),
     concatMap((action: DeleteBlogPost) => this.blogService.deleteBlogPost(action.payload)
       .pipe(
-        map(() => (new DeleteBlogPostSuccess())),
+        map(() => new DeleteBlogPostSuccess()),
         catchError(() => of(new DeleteBlogPostError())),
       )
     ),
@@ -79,6 +79,6 @@ export class BlogEffect {
       EBlogAction.UpdateBlogPostSuccess,
       EBlogAction.DeleteBlogPostSuccess,
     ),
-    map(() => (new LoadBlogPosts())),
+    map(() => new LoadBlogPosts()),
   );
 }
