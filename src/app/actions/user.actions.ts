@@ -59,3 +59,8 @@ export class RefreshTokenError implements Action {
 export class LogOut implements Action {
   public readonly type = EUserAction.LogOut;
 }
+
+export type UserAction = LogIn | LogInSuccess | LogInError |
+  LoadUser | LoadUserSuccess | LoadUserError |
+  RefreshToken | RefreshTokenSuccess | RefreshTokenError |
+  LogOut
