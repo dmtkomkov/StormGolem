@@ -7,7 +7,11 @@ import { LoginDialogComponent } from '@dialogs/login-dialog/login-dialog.compone
 import { UserService } from '@services/user.service';
 import { AuthService } from '@services/auth.service';
 
-import { IUser } from '@interfaces';
+import {IUser} from '@interfaces';
+import {select, Store} from "@ngrx/store";
+import {IAppState} from "./states/app.state";
+import {LoadUser} from "./actions/access.actions";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'sg-root',
@@ -15,7 +19,8 @@ import { IUser } from '@interfaces';
   styleUrls: [ 'app.component.scss' ],
 })
 export class AppComponent implements OnInit {
-  title: string;
+  public user$: Observable<IUser>;
+  public title: string;
   user: IUser;
 
   constructor(
@@ -24,6 +29,7 @@ export class AppComponent implements OnInit {
     private dialog: MatDialog,
     private userService: UserService,
     private authService: AuthService,
+    private store: Store<IAppState>,
   ) {
     this.title = 'Storm Golem';
     this.user = null;
@@ -35,12 +41,13 @@ export class AppComponent implements OnInit {
       this.iconRegistry.addSvgIcon(icon, safeResourceUrl);
     }
 
-    this.readUser(); // Read user first time on Init
+    this.user$ = this.store.pipe(select((state: IAppState) => state.access.user));
+    this.store.dispatch(new LoadUser());
 
-    // Subscribe on user change
-    this.authService.loggedIn$.subscribe((loggedIn: boolean) => {
-      loggedIn? this.readUser(): this.user = null;
-    });
+    this.readUser(); // Read access first time on Init
+
+    // Subscribe on access change
+    this.authService.loggedIn$.subscribe(() => this.readUser());
   }
 
   readUser() {

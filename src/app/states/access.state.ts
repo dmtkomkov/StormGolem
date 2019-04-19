@@ -1,6 +1,6 @@
 import { IUser } from "@interfaces";
 
-export enum EUserStatus {
+export enum EAccessStatus {
   LoggedOut = 'loggedOut',
   Authorization = 'authorization',
   LoggedIn = 'loggedIn',
@@ -8,12 +8,12 @@ export enum EUserStatus {
   Loading = 'loading',
 }
 
-export interface IUserState {
+export interface IAccessState {
   user: IUser;
-  status: EUserStatus;
+  status: EAccessStatus;
 }
 
-export const initialUserState: IUserState = {
+export const initialUserState: IAccessState = {
   user: null,
-  status: EUserStatus.LoggedOut,
+  status: EAccessStatus.LoggedOut,
 };

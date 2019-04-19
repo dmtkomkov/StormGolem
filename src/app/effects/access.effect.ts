@@ -4,19 +4,19 @@ import { catchError, concatMap, map, tap } from 'rxjs/operators';
 import { UserService } from "@services/user.service";
 import { AuthService } from "@services/auth.service";
 import {
-  EUserAction,
+  EAccessAction,
   LoadUserError,
   LoadUserSuccess,
   LogIn,
   LogInError,
   LogInSuccess, RefreshTokenError, RefreshTokenSuccess,
   UserAction
-} from "../actions/user.actions";
+} from "../actions/access.actions";
 import { IToken, IUser } from "@interfaces";
 import { of } from "rxjs";
 
 @Injectable()
-export class UserEffect {
+export class AccessEffect {
   constructor(
     private actions$: Actions,
     private userService: UserService,
@@ -24,9 +24,10 @@ export class UserEffect {
   ) { }
 
   @Effect() loadUser$ = this.actions$.pipe(
-    ofType<UserAction>(EUserAction.LoadUser),
+    ofType<UserAction>(EAccessAction.LoadUser),
     concatMap(() => this.userService.getUser()
       .pipe(
+        tap(ret => console.log(ret)),
         map((user: IUser) => new LoadUserSuccess(user)),
         catchError(() => of(new LoadUserError())),
       )
@@ -34,7 +35,7 @@ export class UserEffect {
   );
 
   @Effect() authUser$ = this.actions$.pipe(
-    ofType<UserAction>(EUserAction.LogIn),
+    ofType<UserAction>(EAccessAction.LogIn),
     concatMap((action: LogIn) => this.authService.auth(action.payload)
       .pipe(
         map(() => new LogInSuccess()),
@@ -44,7 +45,7 @@ export class UserEffect {
   );
 
   @Effect() refreshUser$ = this.actions$.pipe(
-    ofType<UserAction>(EUserAction.RefreshToken),
+    ofType<UserAction>(EAccessAction.RefreshToken),
     concatMap(() => this.authService.refresh()
       .pipe(
         tap((new_token: IToken) => localStorage.setItem('token', new_token.token)),
