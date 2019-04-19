@@ -8,7 +8,7 @@ export const accessReducer = (state: IAccessState = initialUserState, action: Us
     case EAccessAction.LogInSuccess: return {...state, status: EAccessStatus.LoggedIn};
     case EAccessAction.LogInError: return initialUserState;
 
-    case EAccessAction.LoadUser: return {...state, status: EAccessStatus.Loading};
+    case EAccessAction.LoadUser: return {...state, status: EAccessStatus.Identification};
     case EAccessAction.LoadUserSuccess: return {user: action.payload, status: EAccessStatus.LoggedIn};
     case EAccessAction.LoadUserError: return initialUserState;
 

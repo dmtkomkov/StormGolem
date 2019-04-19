@@ -5,7 +5,7 @@ export enum EAccessStatus {
   Authorization = 'authorization',
   LoggedIn = 'loggedIn',
   Refresh = 'refresh',
-  Loading = 'loading',
+  Identification = 'identification',
 }
 
 export interface IAccessState {
