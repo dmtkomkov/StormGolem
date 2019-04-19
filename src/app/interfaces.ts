@@ -32,7 +32,7 @@ export interface IBlogPage {
   page_number: number;
 }
 
-export interface ITokenDto {
+export interface ITokenData {
   username: string;
   user_id: number;
   email: string;

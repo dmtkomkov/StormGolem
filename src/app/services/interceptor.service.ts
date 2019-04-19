@@ -7,9 +7,7 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 
-import {IToken, ITokenDto} from '@interfaces';
-
-import { AuthService } from '@services/auth.service';
+import {ITokenData} from '@interfaces';
 
 import { Observable } from 'rxjs';
 
@@ -22,9 +20,7 @@ export class InterceptorService implements HttpInterceptor {
   baseUrl: string;
   apiUrl: string;
 
-  constructor(
-    private authService: AuthService,
-  ) {
+  constructor() {
     this.baseUrl = environment.backend;
     this.apiUrl = environment.backend + environment.api
   }
@@ -42,11 +38,9 @@ export class InterceptorService implements HttpInterceptor {
     // Check and refresh token if needed
     if (token && request.url !== 'auth' && request.url !== 'refresh') {
       const current = Math.round(+new Date()/1000);
-      const tokenDto: ITokenDto = decode(token);
+      const tokenDto: ITokenData = decode(token);
       if (tokenDto.exp - current < 600) {
-        this.authService.refresh().subscribe(
-          (new_token: IToken) => localStorage.setItem('token', new_token.token),
-        );
+        // REFRESH
       }
     }
 

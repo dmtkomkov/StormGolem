@@ -45,7 +45,7 @@ export class LoadUserError implements Action {
 
 export class RefreshToken implements Action {
   public readonly type = EAccessAction.RefreshToken;
-  constructor(public token: IToken) { }
+  constructor(public payload: IToken) { }
 }
 
 export class RefreshTokenSuccess implements Action {
@@ -60,7 +60,7 @@ export class LogOut implements Action {
   public readonly type = EAccessAction.LogOut;
 }
 
-export type UserAction = LogIn | LogInSuccess | LogInError |
+export type AccessAction = LogIn | LogInSuccess | LogInError |
   LoadUser | LoadUserSuccess | LoadUserError |
   RefreshToken | RefreshTokenSuccess | RefreshTokenError |
   LogOut

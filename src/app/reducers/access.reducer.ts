@@ -1,7 +1,7 @@
-import {EAccessAction, UserAction} from "../actions/access.actions";
+import {EAccessAction, AccessAction} from "../actions/access.actions";
 import {EAccessStatus, initialUserState, IAccessState} from "../states/access.state";
 
-export const accessReducer = (state: IAccessState = initialUserState, action: UserAction): IAccessState => {
+export const accessReducer = (state: IAccessState = initialUserState, action: AccessAction): IAccessState => {
   switch (action.type) {
 
     case EAccessAction.LogIn: return {user: null, status: EAccessStatus.Authorization};

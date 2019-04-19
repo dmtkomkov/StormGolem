@@ -9,8 +9,8 @@ import {
   LoadUserSuccess,
   LogIn,
   LogInError,
-  LogInSuccess, RefreshTokenError, RefreshTokenSuccess,
-  UserAction
+  LogInSuccess, RefreshToken, RefreshTokenError, RefreshTokenSuccess,
+  AccessAction
 } from "../actions/access.actions";
 import { IToken, IUser } from "@interfaces";
 import { of } from "rxjs";
@@ -24,7 +24,7 @@ export class AccessEffect {
   ) { }
 
   @Effect() loadUser$ = this.actions$.pipe(
-    ofType<UserAction>(EAccessAction.LoadUser),
+    ofType<AccessAction>(EAccessAction.LoadUser),
     concatMap(() => this.userService.getUser()
       .pipe(
         tap(ret => console.log(ret)),
@@ -35,22 +35,34 @@ export class AccessEffect {
   );
 
   @Effect() authUser$ = this.actions$.pipe(
-    ofType<UserAction>(EAccessAction.LogIn),
+    ofType<AccessAction>(EAccessAction.LogIn),
     concatMap((action: LogIn) => this.authService.auth(action.payload)
       .pipe(
-        map(() => new LogInSuccess()),
-        catchError(() => of(new LogInError())),
+        map((token: IToken) => {
+          localStorage.setItem('token', token.token);
+          return new LogInSuccess();
+        }),
+        catchError(() => {
+          localStorage.setItem('token', null);
+          return of(new LogInError());
+        }),
       )
     ),
   );
 
   @Effect() refreshUser$ = this.actions$.pipe(
-    ofType<UserAction>(EAccessAction.RefreshToken),
-    concatMap(() => this.authService.refresh()
+    ofType<AccessAction>(EAccessAction.RefreshToken),
+    concatMap((action: RefreshToken) => this.authService.refresh(action.payload)
       .pipe(
         tap((new_token: IToken) => localStorage.setItem('token', new_token.token)),
-        map(() => new RefreshTokenSuccess()),
-        catchError(() => of(new RefreshTokenError())),
+        map((new_token: IToken) => {
+          localStorage.setItem('token', new_token.token);
+          return new RefreshTokenSuccess();
+        }),
+        catchError(() => {
+          localStorage.setItem('token', null);
+          return of(new RefreshTokenError());
+        }),
       )
     ),
   );

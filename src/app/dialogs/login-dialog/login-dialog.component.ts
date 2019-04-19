@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from '@services/auth.service';
 
-import { ILoginUser, IToken } from '@interfaces';
+import { ILoginUser } from '@interfaces';
 import {LogIn} from "../../actions/access.actions";
 import {Store} from "@ngrx/store";
 import {IAppState} from "../../states/app.state";
@@ -42,17 +42,17 @@ export class LoginDialogComponent implements OnInit {
   submit() {
     this.loginUser = <ILoginUser>this.loginForm.value;
     this.store.dispatch(new LogIn(this.loginUser));
-    this.authService.auth(this.loginUser).subscribe(
-      (token: IToken) => {
-        this.authService.logIn(token);
-        this.loginErrMsg = null;
-        this.dialogRef.close();
-      },
-      error => {
-        this.authService.logOut();
-        this.loginErrMsg = `Login failed (${error.status})`;
-        setTimeout(() => this.loginErrMsg = null, 2000);
-      }
-    );
+    // this.authService.auth(this.loginUser).subscribe(
+    //   (token: IToken) => {
+    //     this.authService.logIn(token);
+    //     this.loginErrMsg = null;
+    //     this.dialogRef.close();
+    //   },
+    //   error => {
+    //     this.authService.logOut();
+    //     this.loginErrMsg = `Login failed (${error.status})`;
+    //     setTimeout(() => this.loginErrMsg = null, 2000);
+    //   }
+    // );
   }
 }
