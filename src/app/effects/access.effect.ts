@@ -54,7 +54,6 @@ export class AccessEffect {
     ofType<AccessAction>(EAccessAction.RefreshToken),
     concatMap((action: RefreshToken) => this.authService.refresh(action.payload)
       .pipe(
-        tap((new_token: IToken) => localStorage.setItem('token', new_token.token)),
         map((new_token: IToken) => {
           localStorage.setItem('token', new_token.token);
           return new RefreshTokenSuccess();

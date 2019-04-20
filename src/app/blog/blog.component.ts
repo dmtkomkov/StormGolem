@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { BlogService } from '@services/blog.service';
-import { AuthService } from '@services/auth.service';
 
 import { Observable, Subject} from 'rxjs';
 
@@ -19,10 +18,9 @@ import { LoadBlogPosts, ResetBlog } from "../actions/blog.actions";
 })
 export class BlogComponent implements OnInit, OnDestroy {
   public blogPageContent$: Observable<IBlogPost[]>;
-  private unsubsriber: Subject<void> = new Subject<void>();
+  private unsubsriber: Subject<void> = new Subject();
 
   constructor(
-    private authService: AuthService,
     private blogService: BlogService,
     private store: Store<IAppState>,
   ) { }
@@ -34,12 +32,6 @@ export class BlogComponent implements OnInit, OnDestroy {
     );
 
     this.store.dispatch(new LoadBlogPosts());
-
-    this.authService.loggedIn$.pipe(
-      takeUntil(this.unsubsriber),
-    ).subscribe(() => {
-      this.store.dispatch(new LoadBlogPosts());
-    });
   }
 
   ngOnDestroy(): void {

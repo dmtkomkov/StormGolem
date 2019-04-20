@@ -1,34 +1,50 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {MatDialogRef} from '@angular/material';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
-import { AuthService } from '@services/auth.service';
-
-import { ILoginUser } from '@interfaces';
 import {LogIn} from "../../actions/access.actions";
-import {Store} from "@ngrx/store";
+import {select, Store} from "@ngrx/store";
 import {IAppState} from "../../states/app.state";
+import {Subject} from "rxjs";
+import {takeUntil, tap} from "rxjs/operators";
+import {EAccessStatus} from "../../states/access.state";
 
 @Component({
   selector: 'sg-login-dialog',
   templateUrl: 'login-dialog.component.html',
-  styles: [ ]
+  styles: [ ],
 })
-export class LoginDialogComponent implements OnInit {
-  loginForm: FormGroup;
-  loginUser: ILoginUser;
-  loginErrMsg: string;
+export class LoginDialogComponent implements OnInit, OnDestroy {
+  public loginForm: FormGroup;
+  public loginErrMsg: string;
+  private unsubsriber: Subject<void> = new Subject();
+  private currentStatus: EAccessStatus;
 
   constructor(
     private dialogRef: MatDialogRef<LoginDialogComponent>,
     private fb: FormBuilder,
-    private authService: AuthService,
     private store: Store<IAppState>,
   ) {
+    this.currentStatus = null;
     this.loginErrMsg = null;
   }
 
   ngOnInit() {
+    this.store.pipe(
+      takeUntil(this.unsubsriber),
+      select((state: IAppState) => state.access.status),
+      tap((newStatus: EAccessStatus) => {
+        if (this.currentStatus === EAccessStatus.Authorization && newStatus === EAccessStatus.LoggedIn) {
+          this.loginErrMsg = null;
+          this.dialogRef.close();
+        } else if (this.currentStatus === EAccessStatus.Authorization && newStatus === EAccessStatus.LoggedOut) {
+          this.loginErrMsg = `Login failed`;
+          setTimeout(() => this.loginErrMsg = null, 2000);
+        }
+        this.currentStatus = newStatus;
+      }),
+    ).subscribe();
+
     this.loginForm = this.fb.group({
       username: ['', Validators.required ],
       password: ['', Validators.required ],
@@ -40,19 +56,11 @@ export class LoginDialogComponent implements OnInit {
   }
 
   submit() {
-    this.loginUser = <ILoginUser>this.loginForm.value;
-    this.store.dispatch(new LogIn(this.loginUser));
-    // this.authService.auth(this.loginUser).subscribe(
-    //   (token: IToken) => {
-    //     this.authService.logIn(token);
-    //     this.loginErrMsg = null;
-    //     this.dialogRef.close();
-    //   },
-    //   error => {
-    //     this.authService.logOut();
-    //     this.loginErrMsg = `Login failed (${error.status})`;
-    //     setTimeout(() => this.loginErrMsg = null, 2000);
-    //   }
-    // );
+    this.store.dispatch(new LogIn(this.loginForm.value));
+  }
+
+  ngOnDestroy(): void {
+    this.unsubsriber.next();
+    this.unsubsriber.complete();
   }
 }
