@@ -2,14 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { BlogService } from '@services/blog.service';
 
-import { Observable, Subject} from 'rxjs';
+import { Observable } from 'rxjs';
 
-import { IBlogPost } from '@interfaces';
+import { IBlogPost} from '@interfaces';
 import { Store } from '@ngrx/store';
 import { IAppState } from "../states/app.state";
-import { select } from "@ngrx/store";
-import { takeUntil } from "rxjs/operators";
 import { LoadBlogPosts, ResetBlog } from "../actions/blog.actions";
+import { blogPostsSlice } from "../states/blog.state";
 
 @Component({
   selector: 'sg-blog',
@@ -18,7 +17,6 @@ import { LoadBlogPosts, ResetBlog } from "../actions/blog.actions";
 })
 export class BlogComponent implements OnInit, OnDestroy {
   public blogPageContent$: Observable<IBlogPost[]>;
-  private unsubsriber: Subject<void> = new Subject();
 
   constructor(
     private blogService: BlogService,
@@ -26,17 +24,11 @@ export class BlogComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.blogPageContent$ = this.store.pipe(
-      takeUntil(this.unsubsriber),
-      select((state: IAppState) => state.blog.blogPosts),
-    );
-
+    this.blogPageContent$ = this.store.select(blogPostsSlice);
     this.store.dispatch(new LoadBlogPosts());
   }
 
-  ngOnDestroy(): void {
-    this.unsubsriber.next();
-    this.unsubsriber.complete();
+  ngOnDestroy() {
     this.store.dispatch(new ResetBlog());
   }
 
