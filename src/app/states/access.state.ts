@@ -1,4 +1,5 @@
 import { IUser } from "@interfaces";
+import {createFeatureSelector, createSelector} from "@ngrx/store";
 
 export enum EAccessStatus {
   LoggedOut = 'loggedOut',
@@ -15,5 +16,12 @@ export interface IAccessState {
 
 export const initialUserState: IAccessState = {
   user: null,
-  status: EAccessStatus.LoggedOut,
+  status: null,
 };
+
+export const accessSlice = createFeatureSelector<IAccessState>('access');
+
+export const statusSlice = createSelector(
+  accessSlice,
+  (accessState: IAccessState) => accessState.status,
+);
