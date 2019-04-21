@@ -6,24 +6,22 @@ import {
   HttpEvent,
   HttpHeaders,
 } from '@angular/common/http';
-
 import {ITokenData} from '@interfaces';
-
 import { Observable } from 'rxjs';
-
 import { environment } from '@environments';
-
 import * as decode from "jwt-decode";
+import {RefreshToken} from "../actions/auth.actions";
+import {Store} from "@ngrx/store";
+import {IAppState} from "../states/app.state";
 
 @Injectable()
 export class InterceptorService implements HttpInterceptor {
-  baseUrl: string;
-  apiUrl: string;
+  readonly baseUrl = environment.backend;
+  readonly apiUrl = environment.backend + environment.api;
 
-  constructor() {
-    this.baseUrl = environment.backend;
-    this.apiUrl = environment.backend + environment.api
-  }
+  constructor(
+    private store: Store<IAppState>,
+  ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Add auth header and set new url
@@ -36,11 +34,11 @@ export class InterceptorService implements HttpInterceptor {
     });
 
     // Check and refresh token if needed
-    if (token && request.url !== 'auth' && request.url !== 'refresh') {
+    if (token && request.url !== 'auth' && request.url !== 'refresh' && !request.url.startsWith('assets')) {
       const current = Math.round(+new Date()/1000);
-      const tokenDto: ITokenData = decode(token);
-      if (tokenDto.exp - current < 600) {
-        // REFRESH
+      const tokenData: ITokenData = decode(token);
+      if (tokenData.exp - current < 600) {
+        this.store.dispatch(new RefreshToken({token: token}));
       }
     }
 

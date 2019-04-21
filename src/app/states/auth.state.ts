@@ -4,7 +4,6 @@ export enum EAuthStatus {
   LoggedOut = 'loggedOut',
   Authorization = 'authorization',
   LoggedIn = 'loggedIn',
-  Refresh = 'refresh',
 }
 
 export interface IAuthState {
