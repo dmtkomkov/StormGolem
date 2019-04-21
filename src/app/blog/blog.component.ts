@@ -9,7 +9,8 @@ import {Store} from '@ngrx/store';
 import {IAppState} from "../states/app.state";
 import {LoadBlogPosts, ResetBlog} from "../actions/blog.actions";
 import {blogPostsSlice} from "../states/blog.state";
-import {EAccessStatus, statusSlice} from "../states/access.state";
+import {EAuthStatus, authSlice, IAuthState} from "../states/auth.state";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'sg-blog',
@@ -18,7 +19,7 @@ import {EAccessStatus, statusSlice} from "../states/access.state";
 })
 export class BlogComponent implements OnInit, OnDestroy {
   public blogPageContent$: Observable<IBlogPost[]>;
-  private userSubscription: Subscription;
+  private statusSubscription: Subscription;
 
   constructor(
     private blogService: BlogService,
@@ -27,10 +28,12 @@ export class BlogComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.blogPageContent$ = this.store.select(blogPostsSlice);
-    this.userSubscription = this.store.select(statusSlice).subscribe((status: EAccessStatus) => {
+    this.statusSubscription = this.store.select(authSlice).pipe(
+      map((authState: IAuthState) => authState.authStatus)
+    ).subscribe((status: EAuthStatus) => {
       switch (status) {
-        case EAccessStatus.LoggedIn: { this.store.dispatch(new LoadBlogPosts()); break; }
-        case EAccessStatus.LoggedOut: { this.store.dispatch(new ResetBlog()); break; }
+        case EAuthStatus.LoggedIn: { this.store.dispatch(new LoadBlogPosts()); break; }
+        case EAuthStatus.LoggedOut: { this.store.dispatch(new ResetBlog()); break; }
       }
     });
     this.store.dispatch(new LoadBlogPosts());
@@ -38,7 +41,7 @@ export class BlogComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.store.dispatch(new ResetBlog());
-    this.userSubscription.unsubscribe();
+    this.statusSubscription.unsubscribe();
 
   }
 

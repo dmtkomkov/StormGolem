@@ -1,41 +1,24 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, map, tap } from 'rxjs/operators';
-import { UserService } from "@services/user.service";
+import { catchError, concatMap, map } from 'rxjs/operators';
 import { AuthService } from "@services/auth.service";
 import {
-  EAccessAction,
-  LoadUserError,
-  LoadUserSuccess,
-  LogIn,
-  LogInError,
-  LogInSuccess, RefreshToken, RefreshTokenError, RefreshTokenSuccess,
-  AccessAction
-} from "../actions/access.actions";
-import { IToken, IUser } from "@interfaces";
+  EAuthAction, AuthAction,
+  LogIn, LogInError, LogInSuccess,
+  RefreshToken, RefreshTokenError, RefreshTokenSuccess,
+} from "../actions/auth.actions";
+import { IToken } from "@interfaces";
 import { of } from "rxjs";
 
 @Injectable()
-export class AccessEffect {
+export class AuthEffect {
   constructor(
     private actions$: Actions,
-    private userService: UserService,
     private authService: AuthService,
   ) { }
 
-  @Effect() loadUser$ = this.actions$.pipe(
-    ofType<AccessAction>(EAccessAction.LoadUser),
-    concatMap(() => this.userService.getUser()
-      .pipe(
-        tap(ret => console.log(ret)),
-        map((user: IUser) => new LoadUserSuccess(user)),
-        catchError(() => of(new LoadUserError())),
-      )
-    ),
-  );
-
   @Effect() authUser$ = this.actions$.pipe(
-    ofType<AccessAction>(EAccessAction.LogIn),
+    ofType<AuthAction>(EAuthAction.LogIn),
     concatMap((action: LogIn) => this.authService.auth(action.payload)
       .pipe(
         map((token: IToken) => {
@@ -51,7 +34,7 @@ export class AccessEffect {
   );
 
   @Effect() refreshUser$ = this.actions$.pipe(
-    ofType<AccessAction>(EAccessAction.RefreshToken),
+    ofType<AuthAction>(EAuthAction.RefreshToken),
     concatMap((action: RefreshToken) => this.authService.refresh(action.payload)
       .pipe(
         map((new_token: IToken) => {

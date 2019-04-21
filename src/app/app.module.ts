@@ -33,8 +33,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { blogReducer } from "./reducers/blog.reducer";
 import { EffectsModule } from "@ngrx/effects";
 import { BlogEffect } from "./effects/blog.effect";
-import { accessReducer } from "./reducers/access.reducer";
-import {AccessEffect} from "./effects/access.effect";
+import { authReducer } from "./reducers/auth.reducer";
+import { AuthEffect } from "./effects/auth.effect";
+import { userReducer } from "./reducers/user.reducer";
+import { UserEffect } from "./effects/user.effect";
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -44,12 +46,14 @@ const appRoutes: Routes = [
 
 const appStore = {
   blog: blogReducer,
-  access: accessReducer,
+  auth: authReducer,
+  user: userReducer,
 };
 
 const appEffects = [
   BlogEffect,
-  AccessEffect,
+  AuthEffect,
+  UserEffect,
 ];
 
 @NgModule({

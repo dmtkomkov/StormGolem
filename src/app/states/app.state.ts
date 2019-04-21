@@ -1,7 +1,9 @@
 import { IBlogState } from "./blog.state";
-import { IAccessState } from "./access.state";
+import { IAuthState } from "./auth.state";
+import { IUserState } from "./user.state";
 
 export interface IAppState {
   blog: IBlogState;
-  access: IAccessState;
+  auth: IAuthState;
+  user: IUserState;
 }

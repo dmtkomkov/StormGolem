@@ -1,24 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MatIconRegistry, MatDialog } from '@angular/material';
 
 import { LoginDialogComponent } from '@dialogs/login-dialog/login-dialog.component';
 
 import {IUser} from '@interfaces';
-import {select, Store} from "@ngrx/store";
+import {Store} from "@ngrx/store";
 import {IAppState} from "./states/app.state";
-import {LoadUser, LogOut} from "./actions/access.actions";
-import {Observable} from "rxjs";
-import {ResetBlog} from "./actions/blog.actions";
+import {Observable, Subscription} from "rxjs";
+import {authSlice, EAuthStatus, IAuthState} from "./states/auth.state";
+import {IUserState, userSlice} from "./states/user.state";
+import {map} from "rxjs/operators";
+import {LoadUser, ResetUser} from "./actions/user.actions";
+import {LogOut} from "./actions/auth.actions";
 
 @Component({
   selector: 'sg-root',
   templateUrl: 'app.component.html',
   styleUrls: [ 'app.component.scss' ],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   public user$: Observable<IUser>;
   public title: string;
+  private statusSubscription: Subscription;
 
   constructor(
     private iconRegistry: MatIconRegistry,
@@ -35,8 +39,24 @@ export class AppComponent implements OnInit {
       this.iconRegistry.addSvgIcon(icon, safeResourceUrl);
     }
 
-    this.user$ = this.store.pipe(select((state: IAppState) => state.access.user));
+    this.user$ = this.store.select(userSlice).pipe(
+      map((userState: IUserState) => userState.user),
+    );
+
+    this.statusSubscription = this.store.select(authSlice).pipe(
+      map((authState: IAuthState) => authState.authStatus)
+    ).subscribe((status: EAuthStatus) => {
+      switch (status) {
+        case EAuthStatus.LoggedIn: { this.store.dispatch(new LoadUser()); break; }
+        case EAuthStatus.LoggedOut: { this.store.dispatch(new ResetUser()); break; }
+      }
+    });
+
     this.store.dispatch(new LoadUser());
+  }
+
+  ngOnDestroy() {
+    this.statusSubscription.unsubscribe();
   }
 
   openLoginDialog() {
@@ -45,7 +65,7 @@ export class AppComponent implements OnInit {
 
   logout() {
     localStorage.setItem('token', null);
+    this.store.dispatch(new ResetUser());
     this.store.dispatch(new LogOut());
-    this.store.dispatch(new ResetBlog());
   }
 }
