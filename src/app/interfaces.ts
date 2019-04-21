@@ -1,3 +1,11 @@
+interface Page<T> {
+  results: T[];
+  page_size: number;
+  count: number;
+  page_count: number;
+  page_number: number;
+}
+
 export interface IUser {
   username?: string;
   first_name: string;
@@ -24,13 +32,7 @@ export interface IBlogPost {
   user?: IUser;
 }
 
-export interface IBlogPage {
-  results: IBlogPost[];
-  page_size: number;
-  count: number;
-  page_count: number;
-  page_number: number;
-}
+export type IBlogPage = Page<IBlogPost>;
 
 export interface ITokenData {
   username: string;
