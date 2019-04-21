@@ -15,16 +15,6 @@
       "es2017",
       "dom"
     ],
-    "baseUrl": "src",
-    "paths": {
-      "@root": ["app/root/*"],
-      "@environments": ["environments/environment"],
-      "@home/*": ["app/home/*"],
-      "@blog/*": ["app/blog/*"],
-      "@interfaces": ["app/interfaces"],
-      "@dialogs/*": ["app/dialogs/*"],
-      "@services/*": ["app/services/*"],
-      "@errors/*": ["app/errors/*"]
-    }
+    "baseUrl": "src"
   }
 }
