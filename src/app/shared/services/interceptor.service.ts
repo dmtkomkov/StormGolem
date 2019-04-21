@@ -10,9 +10,9 @@ import {ITokenData} from '@interfaces';
 import { Observable } from 'rxjs';
 import { environment } from '@environments';
 import * as decode from "jwt-decode";
-import {RefreshToken} from "../actions/auth.actions";
+import {RefreshToken} from "../../store/actions/auth.actions";
 import {Store} from "@ngrx/store";
-import {IAppState} from "../states/app.state";
+import {IAppState} from "../../store/states/app.state";
 
 @Injectable()
 export class InterceptorService implements HttpInterceptor {

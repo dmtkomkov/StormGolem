@@ -17,7 +17,7 @@
     ],
     "baseUrl": "src",
     "paths": {
-      "@app": ["app/app.component"],
+      "@root": ["app/root/*"],
       "@environments": ["environments/environment"],
       "@home/*": ["app/home/*"],
       "@blog/*": ["app/blog/*"],

@@ -1,6 +1,6 @@
 import {BlogAction, EBlogAction} from "../actions/blog.actions";
 import {IBlogState, initialBlogState} from "../states/blog.state";
-import {selectBlogPost} from "../helpers/blog.helpers";
+import {selectBlogPost} from "../../shared/helpers/blog.helpers";
 
 export const blogReducer = (state: IBlogState = initialBlogState, action: BlogAction): IBlogState => {
   switch (action.type) {

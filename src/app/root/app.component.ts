@@ -2,17 +2,17 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MatIconRegistry, MatDialog } from '@angular/material';
 
-import { LoginDialogComponent } from '@dialogs/login-dialog/login-dialog.component';
+import { LoginDialogComponent } from '../shared/dialogs/login-dialog/login-dialog.component';
 
 import {IUser} from '@interfaces';
 import {Store} from "@ngrx/store";
-import {IAppState} from "./states/app.state";
+import {IAppState} from "../store/states/app.state";
 import {Observable, Subscription} from "rxjs";
-import {authSlice, EAuthStatus, IAuthState} from "./states/auth.state";
-import {IUserState, userSlice} from "./states/user.state";
+import {authSlice, EAuthStatus, IAuthState} from "../store/states/auth.state";
+import {IUserState, userSlice} from "../store/states/user.state";
 import {map, skip} from "rxjs/operators";
-import {LoadUser, ResetUser} from "./actions/user.actions";
-import {LogOut} from "./actions/auth.actions";
+import {LoadUser, ResetUser} from "../store/actions/user.actions";
+import {LogOut} from "../store/actions/auth.actions";
 
 @Component({
   selector: 'sg-root',

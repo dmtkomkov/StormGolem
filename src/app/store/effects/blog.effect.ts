@@ -18,9 +18,9 @@ import {
   DeleteBlogPostSuccess,
   DeleteBlogPostError,
 } from "../actions/blog.actions";
-import { BlogService } from "@services/blog.service";
+import { BlogService } from "../../shared/services/blog.service";
 import { IBlogPage, IBlogPost } from "@interfaces";
-import { selectBlogPost } from "../helpers/blog.helpers";
+import { selectBlogPost } from "../../shared/helpers/blog.helpers";
 
 const EMPTY_BLOG_POST: IBlogPost = {id: 0, title: '', body: '', selected: false};
 

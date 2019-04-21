@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ngrxLogger } from "./helpers/logger.helpers";
+import { ngrxLogger } from "./shared/helpers/logger.helpers";
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -14,29 +14,29 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 
-import { AppComponent } from '@app';
-import { HomeComponent } from '@home/home.component';
-import { BlogComponent } from '@blog/blog.component';
-import { PostComponent } from '@blog/post/post.component';
-import { PostFormComponent } from '@blog/post/post-form/post-form.component';
-import { LoginDialogComponent } from '@dialogs/login-dialog/login-dialog.component';
-import { PageNotFoundComponent } from '@errors/page-not-found/page-not-found.component';
+import { AppComponent } from './root/app.component'
+import { HomeComponent } from './root/home/home.component';
+import { BlogComponent } from './root/blog/blog.component';
+import { PostComponent } from './root/blog/post/post.component';
+import { PostFormComponent } from './root/blog/post/post-form/post-form.component';
+import { LoginDialogComponent } from './shared/dialogs/login-dialog/login-dialog.component';
+import { PageNotFoundComponent } from './shared/errors/page-not-found/page-not-found.component';
 
-import { AuthService } from '@services/auth.service';
-import { UserService } from '@services/user.service';
-import { BlogService } from '@services/blog.service';
-import { GuardService } from '@services/guard.service';
-import { InterceptorService } from '@services/interceptor.service';
+import { AuthService } from './shared/services/auth.service';
+import { UserService } from './shared/services/user.service';
+import { BlogService } from './shared/services/blog.service';
+import { GuardService } from './shared/services/guard.service';
+import { InterceptorService } from './shared/services/interceptor.service';
 
 import { StoreModule } from "@ngrx/store";
 import { Routes, RouterModule } from '@angular/router';
-import { blogReducer } from "./reducers/blog.reducer";
+import { blogReducer } from "./store/reducers/blog.reducer";
 import { EffectsModule } from "@ngrx/effects";
-import { BlogEffect } from "./effects/blog.effect";
-import { authReducer } from "./reducers/auth.reducer";
-import { AuthEffect } from "./effects/auth.effect";
-import { userReducer } from "./reducers/user.reducer";
-import { UserEffect } from "./effects/user.effect";
+import { BlogEffect } from "./store/effects/blog.effect";
+import { authReducer } from "./store/reducers/auth.reducer";
+import { AuthEffect } from "./store/effects/auth.effect";
+import { userReducer } from "./store/reducers/user.reducer";
+import { UserEffect } from "./store/effects/user.effect";
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },

@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 
 import { IBlogPost } from '@interfaces';
-import {SelectBlogPost} from "../../actions/blog.actions";
+import {SelectBlogPost} from "../../../store/actions/blog.actions";
 import {Store} from "@ngrx/store";
-import {IAppState} from "../../states/app.state";
+import {IAppState} from "../../../store/states/app.state";
 
 @Component({
   selector: 'sg-post',

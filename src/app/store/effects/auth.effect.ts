@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map } from 'rxjs/operators';
-import { AuthService } from "@services/auth.service";
+import { AuthService } from "../../shared/services/auth.service";
 import {
   EAuthAction, AuthAction,
   LogIn, LogInError, LogInSuccess,

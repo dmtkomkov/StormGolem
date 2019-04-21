@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map} from 'rxjs/operators';
-import { UserService } from "@services/user.service";
+import { UserService } from "../../shared/services/user.service";
 import {
   UserAction, EUserAction,
   LoadUserSuccess, LoadUserError,

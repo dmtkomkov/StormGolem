@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { BlogService } from '@services/blog.service';
+import { BlogService } from '../../../../shared/services/blog.service';
 
-import {CreateBlogPost, DeleteBlogPost, UpdateBlogPost} from "../../../actions/blog.actions";
-import { IAppState } from "../../../states/app.state";
+import {CreateBlogPost, DeleteBlogPost, UpdateBlogPost} from "../../../../store/actions/blog.actions";
+import { IAppState } from "../../../../store/states/app.state";
 import { Store } from "@ngrx/store";
 
 @Component({

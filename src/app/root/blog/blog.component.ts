@@ -1,15 +1,15 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 
-import {BlogService} from '@services/blog.service';
+import {BlogService} from '../../shared/services/blog.service';
 
 import {Observable, Subscription} from 'rxjs';
 
 import {IBlogPost} from '@interfaces';
 import {Store} from '@ngrx/store';
-import {IAppState} from "../states/app.state";
-import {LoadBlogPosts, ResetBlog} from "../actions/blog.actions";
-import {blogPostsSlice} from "../states/blog.state";
-import {EAuthStatus, authSlice, IAuthState} from "../states/auth.state";
+import {IAppState} from "../../store/states/app.state";
+import {LoadBlogPosts, ResetBlog} from "../../store/actions/blog.actions";
+import {blogPostsSlice} from "../../store/states/blog.state";
+import {EAuthStatus, authSlice, IAuthState} from "../../store/states/auth.state";
 import {map, skip} from "rxjs/operators";
 
 @Component({

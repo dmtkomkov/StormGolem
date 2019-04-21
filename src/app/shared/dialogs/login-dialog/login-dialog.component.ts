@@ -2,12 +2,12 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialogRef} from '@angular/material';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
-import {LogIn} from "../../actions/auth.actions";
+import {LogIn} from "../../../store/actions/auth.actions";
 import {Store} from "@ngrx/store";
-import {IAppState} from "../../states/app.state";
+import {IAppState} from "../../../store/states/app.state";
 import {Subscription} from "rxjs";
 import {map, skip} from "rxjs/operators";
-import {authSlice, EAuthStatus, IAuthState} from "../../states/auth.state";
+import {authSlice, EAuthStatus, IAuthState} from "../../../store/states/auth.state";
 
 @Component({
   selector: 'sg-login-dialog',
