@@ -10,7 +10,7 @@ import {IAppState} from "./states/app.state";
 import {Observable, Subscription} from "rxjs";
 import {authSlice, EAuthStatus, IAuthState} from "./states/auth.state";
 import {IUserState, userSlice} from "./states/user.state";
-import {map} from "rxjs/operators";
+import {map, skip} from "rxjs/operators";
 import {LoadUser, ResetUser} from "./actions/user.actions";
 import {LogOut} from "./actions/auth.actions";
 
@@ -44,14 +44,14 @@ export class AppComponent implements OnInit, OnDestroy {
     );
 
     this.statusSubscription = this.store.select(authSlice).pipe(
-      map((authState: IAuthState) => authState.authStatus)
+      skip(1),
+      map((authState: IAuthState) => authState.authStatus),
     ).subscribe((status: EAuthStatus) => {
       switch (status) {
         case EAuthStatus.LoggedIn: { this.store.dispatch(new LoadUser()); break; }
         case EAuthStatus.LoggedOut: { this.store.dispatch(new ResetUser()); break; }
       }
     });
-
     this.store.dispatch(new LoadUser());
   }
 
@@ -65,7 +65,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   logout() {
     localStorage.setItem('token', null);
-    this.store.dispatch(new ResetUser());
     this.store.dispatch(new LogOut());
   }
 }

@@ -3,11 +3,11 @@ import {MatDialogRef} from '@angular/material';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import {LogIn} from "../../actions/auth.actions";
-import {select, Store} from "@ngrx/store";
+import {Store} from "@ngrx/store";
 import {IAppState} from "../../states/app.state";
-import {Subject} from "rxjs";
-import {takeUntil, tap} from "rxjs/operators";
-import {EAuthStatus} from "../../states/auth.state";
+import {Subscription} from "rxjs";
+import {map, skip} from "rxjs/operators";
+import {authSlice, EAuthStatus, IAuthState} from "../../states/auth.state";
 
 @Component({
   selector: 'sg-login-dialog',
@@ -17,7 +17,7 @@ import {EAuthStatus} from "../../states/auth.state";
 export class LoginDialogComponent implements OnInit, OnDestroy {
   public loginForm: FormGroup;
   public loginErrMsg: string;
-  private unsubsriber: Subject<void> = new Subject();
+  private statusSubscription: Subscription;
 
   constructor(
     private dialogRef: MatDialogRef<LoginDialogComponent>,
@@ -28,19 +28,23 @@ export class LoginDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.store.pipe(
-      takeUntil(this.unsubsriber),
-      select((state: IAppState) => state.auth.authStatus),
-      tap((authStatus: EAuthStatus) => {
-        if (authStatus === EAuthStatus.LoggedIn) {
+    this.statusSubscription = this.store.select(authSlice).pipe(
+      skip(1),
+      map((authState: IAuthState) => authState.authStatus),
+    ).subscribe((status: EAuthStatus) => {
+      switch (status) {
+        case EAuthStatus.LoggedIn: {
           this.loginErrMsg = null;
           this.dialogRef.close();
-        } else if (authStatus === EAuthStatus.LoggedOut) {
+          break;
+        }
+        case EAuthStatus.LoggedOut: {
           this.loginErrMsg = `Login failed`;
           setTimeout(() => this.loginErrMsg = null, 2000);
+          break;
         }
-      }),
-    ).subscribe();
+      }
+    });
 
     this.loginForm = this.fb.group({
       username: ['', Validators.required ],
@@ -57,7 +61,6 @@ export class LoginDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.unsubsriber.next();
-    this.unsubsriber.complete();
+    this.statusSubscription.unsubscribe();
   }
 }

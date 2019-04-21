@@ -12,7 +12,7 @@ export interface IAuthState {
 }
 
 export const initialAuthState: IAuthState = {
-  authStatus: null,
+  authStatus: EAuthStatus.LoggedOut,
 };
 
 export const authSlice = createFeatureSelector<IAuthState>('auth');
