@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 
 import { IBlogPost, IBlogPage } from '@interfaces';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class BlogService {
   private baseUrl: string = 'blog';
 

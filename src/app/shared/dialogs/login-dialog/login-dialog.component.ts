@@ -1,13 +1,13 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {MatDialogRef} from '@angular/material';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import {LogIn} from "../../../store/actions/auth.actions";
-import {Store} from "@ngrx/store";
-import {IAppState} from "../../../store/states/app.state";
-import {Subscription} from "rxjs";
-import {map, skip} from "rxjs/operators";
-import {authSlice, EAuthStatus, IAuthState} from "../../../store/states/auth.state";
+import { Store } from "@ngrx/store";
+import { LogIn } from "@store/actions";
+import { IAppState, authSlice, EAuthStatus, IAuthState } from "@store/states";
+
+import { Subscription } from "rxjs";
+import { map, skip } from "rxjs/operators";
 
 @Component({
   selector: 'sg-login-dialog',

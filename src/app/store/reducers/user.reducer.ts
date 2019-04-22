@@ -1,5 +1,5 @@
-import {EUserAction, UserAction} from "../actions/user.actions";
-import {initialUserState, IUserState} from "../states/user.state";
+import { EUserAction, UserAction } from "@store/actions";
+import { initialUserState, IUserState } from "@store/states";
 
 export const userReducer = (state: IUserState = initialUserState, action: UserAction): IUserState => {
   switch (action.type) {

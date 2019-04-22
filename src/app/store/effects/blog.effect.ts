@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
+
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, map } from 'rxjs/operators';
-import { of } from "rxjs";
 import {
   EBlogAction,
   BlogAction,
@@ -17,10 +16,13 @@ import {
   DeleteBlogPost,
   DeleteBlogPostSuccess,
   DeleteBlogPostError,
-} from "../actions/blog.actions";
-import { BlogService } from "../../shared/services/blog.service";
+} from "@store/actions";
+import { BlogService } from "@shared/services";
 import { IBlogPage, IBlogPost } from "@interfaces";
-import { selectBlogPost } from "../../shared/helpers/blog.helpers";
+import { selectBlogPost } from "@shared/helpers";
+
+import { of } from "rxjs";
+import { catchError, concatMap, map } from 'rxjs/operators';
 
 const EMPTY_BLOG_POST: IBlogPost = {id: 0, title: '', body: '', selected: false};
 

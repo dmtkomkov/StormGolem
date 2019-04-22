@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 import { ILoginUser, IToken } from '@interfaces';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class AuthService {
   constructor(
     private http: HttpClient,

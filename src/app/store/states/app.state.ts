@@ -1,8 +1,5 @@
-import { IBlogState } from "./blog.state";
-import { IAuthState } from "./auth.state";
-import { IUserState } from "./user.state";
+import { IBlogState, IAuthState, IUserState } from "@store/states";
 
-// TODO: import from index.ts
 export interface IAppState {
   blog: IBlogState;
   auth: IAuthState;

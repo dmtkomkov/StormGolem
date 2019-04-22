@@ -1,20 +1,17 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpInterceptor,
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpHeaders,
-} from '@angular/common/http';
-import {ITokenData} from '@interfaces';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders } from '@angular/common/http';
+
+import { ITokenData } from '@interfaces';
 import { Observable } from 'rxjs';
 import { environment } from '@environments';
-import * as decode from "jwt-decode";
-import {RefreshToken} from "../../store/actions/auth.actions";
-import {Store} from "@ngrx/store";
-import {IAppState} from "../../store/states/app.state";
 
-@Injectable()
+import { Store } from "@ngrx/store";
+import { RefreshToken } from "@store/actions";
+import { IAppState } from "@store/states";
+
+import * as decode from "jwt-decode";
+
+@Injectable({providedIn: 'root'})
 export class InterceptorService implements HttpInterceptor {
   readonly baseUrl = environment.backend;
   readonly apiUrl = environment.backend + environment.api;

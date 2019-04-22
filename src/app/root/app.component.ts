@@ -2,17 +2,17 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MatIconRegistry, MatDialog } from '@angular/material';
 
-import { LoginDialogComponent } from '../shared/dialogs/login-dialog/login-dialog.component';
+import { LoginDialogComponent } from '@shared/dialogs/login-dialog/login-dialog.component';
 
-import {IUser} from '@interfaces';
-import {Store} from "@ngrx/store";
-import {IAppState} from "../store/states/app.state";
-import {Observable, Subscription} from "rxjs";
-import {authSlice, EAuthStatus, IAuthState} from "../store/states/auth.state";
-import {IUserState, userSlice} from "../store/states/user.state";
-import {map, skip} from "rxjs/operators";
-import {LoadUser, ResetUser} from "../store/actions/user.actions";
-import {LogOut} from "../store/actions/auth.actions";
+import { IUser } from '@interfaces';
+
+import { Store } from "@ngrx/store";
+import { IAppState, authSlice, EAuthStatus, IAuthState, IUserState, userSlice } from "@store/states";
+import { LoadUser, ResetUser } from "@store/actions";
+import { LogOut } from "@store/actions";
+
+import { Observable, Subscription } from "rxjs";
+import { map, skip } from "rxjs/operators";
 
 @Component({
   selector: 'sg-root',
@@ -43,6 +43,7 @@ export class AppComponent implements OnInit, OnDestroy {
       map((userState: IUserState) => userState.user),
     );
 
+    // FIXME remove code duplication
     this.statusSubscription = this.store.select(authSlice).pipe(
       skip(1),
       map((authState: IAuthState) => authState.authStatus),

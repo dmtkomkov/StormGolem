@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { BlogService } from '../../../../shared/services/blog.service';
+import { BlogService } from '@shared/services';
 
-import {CreateBlogPost, DeleteBlogPost, UpdateBlogPost} from "../../../../store/actions/blog.actions";
-import { IAppState } from "../../../../store/states/app.state";
 import { Store } from "@ngrx/store";
+import { CreateBlogPost, DeleteBlogPost, UpdateBlogPost } from "@store/actions";
+import { IAppState } from "@store/states";
 
 @Component({
   selector: 'sg-post-form',

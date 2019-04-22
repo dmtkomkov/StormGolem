@@ -1,16 +1,15 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 
-import {BlogService} from '../../shared/services/blog.service';
-
-import {Observable, Subscription} from 'rxjs';
+import { BlogService } from '@shared/services';
 
 import {IBlogPost} from '@interfaces';
-import {Store} from '@ngrx/store';
-import {IAppState} from "../../store/states/app.state";
-import {LoadBlogPosts, ResetBlog} from "../../store/actions/blog.actions";
-import {blogPostsSlice} from "../../store/states/blog.state";
-import {EAuthStatus, authSlice, IAuthState} from "../../store/states/auth.state";
-import {map, skip} from "rxjs/operators";
+
+import { Store } from '@ngrx/store';
+import { LoadBlogPosts, ResetBlog } from "@store/actions";
+import { IAppState, blogPostsSlice, EAuthStatus, authSlice, IAuthState } from "@store/states";
+
+import { Observable, Subscription } from 'rxjs';
+import { map, skip } from "rxjs/operators";
 
 @Component({
   selector: 'sg-blog',

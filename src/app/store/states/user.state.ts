@@ -1,5 +1,5 @@
-import {createFeatureSelector} from "@ngrx/store";
-import {IUser} from "@interfaces";
+import { createFeatureSelector } from "@ngrx/store";
+import { IUser } from "@interfaces";
 
 export interface IUserState {
   user: IUser;

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 import { IUser } from '@interfaces';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class UserService {
   private baseUrl: string = 'user';
 

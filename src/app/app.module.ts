@@ -2,7 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ngrxLogger } from "@shared/helpers/logger.helpers";
+import { GuardService, InterceptorService } from '@shared/services';
+import { ngrxLogger } from "@shared/helpers";
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -20,30 +21,20 @@ import { BlogComponent } from '@root/blog/blog.component';
 import { PostComponent } from '@root/blog/post/post.component';
 import { PostFormComponent } from '@root/blog/post/post-form/post-form.component';
 import { LoginDialogComponent } from '@shared/dialogs/login-dialog/login-dialog.component';
-import { PageNotFoundComponent } from '@shared/errors/page-not-found/page-not-found.component';
-
-import { AuthService } from '@shared/services/auth.service';
-import { UserService } from '@shared/services/user.service';
-import { BlogService } from '@shared/services/blog.service';
-import { GuardService } from '@shared/services/guard.service';
-import { InterceptorService } from '@shared/services/interceptor.service';
+import { PageNotFoundComponent } from '@shared/error-pages/page-not-found/page-not-found.component';
 
 import { StoreModule } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
 import { Routes, RouterModule } from '@angular/router';
 
-import { blogReducer } from "@store/reducers/blog.reducer";
-import { BlogEffect } from "@store/effects/blog.effect";
-import { authReducer } from "@store/reducers/auth.reducer";
-import { AuthEffect } from "@store/effects/auth.effect";
-import { userReducer } from "@store/reducers/user.reducer";
-import { UserEffect } from "@store/effects/user.effect";
+import { blogReducer, userReducer, authReducer } from "@store/reducers";
+import { BlogEffect, UserEffect, AuthEffect } from "@store/effects";
 
 // TODO: routers, store and effects into separate modules
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'blog', component: BlogComponent, canActivate: [ GuardService ] },
-  { path: '**', component: PageNotFoundComponent }
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 const appStore = {
@@ -91,10 +82,6 @@ const appEffects = [
       useClass: InterceptorService,
       multi: true,
     },
-    AuthService,
-    UserService,
-    BlogService,
-    GuardService,
   ],
   entryComponents: [
     LoginDialogComponent,

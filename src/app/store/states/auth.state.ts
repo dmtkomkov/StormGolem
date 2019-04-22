@@ -1,4 +1,4 @@
-import {createFeatureSelector} from "@ngrx/store";
+import { createFeatureSelector } from "@ngrx/store";
 
 export enum EAuthStatus {
   LoggedOut = 'loggedOut',

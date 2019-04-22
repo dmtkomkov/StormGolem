@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class GuardService implements CanActivate {
   canActivate() {
     return true;

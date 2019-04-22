@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
+
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { catchError, concatMap, map } from 'rxjs/operators';
-import { AuthService } from "../../shared/services/auth.service";
+import { AuthService } from "@shared/services";
 import {
   EAuthAction, AuthAction,
   LogIn, LogInError, LogInSuccess,
   RefreshToken, RefreshTokenError, RefreshTokenSuccess,
-} from "../actions/auth.actions";
+} from "@store/actions";
 import { IToken } from "@interfaces";
+
 import { of } from "rxjs";
+import { catchError, concatMap, map } from 'rxjs/operators';
 
 @Injectable()
 export class AuthEffect {
