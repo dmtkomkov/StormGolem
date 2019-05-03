@@ -6,10 +6,10 @@ import {IBlogPost} from '@interfaces';
 
 import { Store } from '@ngrx/store';
 import { LoadBlogPosts, ResetBlog } from "@store/actions";
-import { IAppState, blogPostsSlice, EAuthStatus, authSlice, IAuthState } from "@store/states";
+import { IAppState, blogPostsSlice, authSlice } from "@store/states";
 
 import { Observable, Subscription } from 'rxjs';
-import { map, skip } from "rxjs/operators";
+import { handleAuthStatus, waitNewAuthStatus } from "@shared/helpers/auth.helper";
 
 @Component({
   selector: 'sg-blog',
@@ -28,14 +28,12 @@ export class BlogComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.blogPageContent$ = this.store.select(blogPostsSlice);
     this.statusSubscription = this.store.select(authSlice).pipe(
-      skip(1),
-      map((authState: IAuthState) => authState.authStatus),
-    ).subscribe((status: EAuthStatus) => {
-      switch (status) {
-        case EAuthStatus.LoggedIn: { this.store.dispatch(new LoadBlogPosts()); break; }
-        case EAuthStatus.LoggedOut: { this.store.dispatch(new ResetBlog()); break; }
-      }
-    });
+      waitNewAuthStatus(),
+      handleAuthStatus(
+        () => this.store.dispatch(new LoadBlogPosts()),
+        () => this.store.dispatch(new ResetBlog()),
+      )
+    ).subscribe();
     this.store.dispatch(new LoadBlogPosts());
   }
 

@@ -4,10 +4,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Store } from "@ngrx/store";
 import { LogIn } from "@store/actions";
-import { IAppState, authSlice, EAuthStatus, IAuthState } from "@store/states";
+import { IAppState, authSlice } from "@store/states";
 
 import { Subscription } from "rxjs";
-import { map, skip } from "rxjs/operators";
+import { handleAuthStatus, waitNewAuthStatus } from "@shared/helpers/auth.helper";
 
 @Component({
   selector: 'sg-login-dialog',
@@ -29,22 +29,18 @@ export class LoginDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.statusSubscription = this.store.select(authSlice).pipe(
-      skip(1),
-      map((authState: IAuthState) => authState.authStatus),
-    ).subscribe((status: EAuthStatus) => {
-      switch (status) {
-        case EAuthStatus.LoggedIn: {
+      waitNewAuthStatus(),
+      handleAuthStatus(
+        () => {
           this.loginErrMsg = null;
-          this.dialogRef.close();
-          break;
-        }
-        case EAuthStatus.LoggedOut: {
+          this.close();
+        },
+        () => {
           this.loginErrMsg = `Login failed`;
           setTimeout(() => this.loginErrMsg = null, 2000);
-          break;
-        }
-      }
-    });
+        },
+      )
+    ).subscribe();
 
     this.loginForm = this.fb.group({
       username: ['', Validators.required ],

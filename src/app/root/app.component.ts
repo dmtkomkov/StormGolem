@@ -7,12 +7,13 @@ import { LoginDialogComponent } from '@shared/dialogs/login-dialog/login-dialog.
 import { IUser } from '@interfaces';
 
 import { Store } from "@ngrx/store";
-import { IAppState, authSlice, EAuthStatus, IAuthState, IUserState, userSlice } from "@store/states";
+import { IAppState, authSlice, IUserState, userSlice } from "@store/states";
 import { LoadUser, ResetUser } from "@store/actions";
 import { LogOut } from "@store/actions";
 
 import { Observable, Subscription } from "rxjs";
-import { map, skip } from "rxjs/operators";
+import { map } from "rxjs/operators";
+import { handleAuthStatus, waitNewAuthStatus } from "@shared/helpers/auth.helper";
 
 @Component({
   selector: 'sg-root',
@@ -43,16 +44,13 @@ export class AppComponent implements OnInit, OnDestroy {
       map((userState: IUserState) => userState.user),
     );
 
-    // FIXME remove code duplication
     this.statusSubscription = this.store.select(authSlice).pipe(
-      skip(1),
-      map((authState: IAuthState) => authState.authStatus),
-    ).subscribe((status: EAuthStatus) => {
-      switch (status) {
-        case EAuthStatus.LoggedIn: { this.store.dispatch(new LoadUser()); break; }
-        case EAuthStatus.LoggedOut: { this.store.dispatch(new ResetUser()); break; }
-      }
-    });
+      waitNewAuthStatus(),
+      handleAuthStatus(
+        () => this.store.dispatch(new LoadUser()),
+        () => this.store.dispatch(new ResetUser()),
+      )
+    ).subscribe();
     this.store.dispatch(new LoadUser());
   }
 
