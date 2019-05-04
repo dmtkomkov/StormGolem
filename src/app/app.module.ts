@@ -3,7 +3,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from '@shared/services';
-import { ngrxLogger } from "@shared/helpers";
 import { RoutingModule } from './routing.module';
 
 import { MatIconModule } from '@angular/material/icon';
@@ -24,17 +23,10 @@ import { PostFormComponent } from '@root/blog/post/post-form/post-form.component
 import { LoginDialogComponent } from '@shared/dialogs/login-dialog/login-dialog.component';
 import { PageNotFoundComponent } from '@shared/error-pages/page-not-found/page-not-found.component';
 
-import { StoreModule } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
 
-import { blogReducer, userReducer, authReducer } from "@store/reducers";
 import { BlogEffect, UserEffect, AuthEffect } from "@store/effects";
-
-const appStore = {
-  blog: blogReducer,
-  auth: authReducer,
-  user: userReducer,
-};
+import { AppStoreModule } from "./store.module";
 
 const appEffects = [
   BlogEffect,
@@ -56,7 +48,7 @@ const appEffects = [
     BrowserModule,
     BrowserAnimationsModule,
     RoutingModule,
-    StoreModule.forRoot(appStore, { metaReducers: [ ngrxLogger ] }),
+    AppStoreModule,
     EffectsModule.forRoot(appEffects),
     HttpClientModule,
     MatIconModule,
