@@ -2,8 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { GuardService, InterceptorService } from '@shared/services';
+import { InterceptorService } from '@shared/services';
 import { ngrxLogger } from "@shared/helpers";
+import { RoutingModule } from './routing.module';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -25,17 +26,9 @@ import { PageNotFoundComponent } from '@shared/error-pages/page-not-found/page-n
 
 import { StoreModule } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
-import { Routes, RouterModule } from '@angular/router';
 
 import { blogReducer, userReducer, authReducer } from "@store/reducers";
 import { BlogEffect, UserEffect, AuthEffect } from "@store/effects";
-
-// TODO: routers, store and effects into separate modules
-const appRoutes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'blog', component: BlogComponent, canActivate: [ GuardService ] },
-  { path: '**', component: PageNotFoundComponent },
-];
 
 const appStore = {
   blog: blogReducer,
@@ -62,8 +55,8 @@ const appEffects = [
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(appRoutes),
-    StoreModule.forRoot(appStore, {metaReducers: [ngrxLogger]}),
+    RoutingModule,
+    StoreModule.forRoot(appStore, { metaReducers: [ ngrxLogger ] }),
     EffectsModule.forRoot(appEffects),
     HttpClientModule,
     MatIconModule,
