@@ -10,7 +10,7 @@ const appStore = {
 };
 
 @NgModule({
-  imports: [ StoreModule.forRoot(appStore, { metaReducers: [ ngrxLogger ] }), ],
+  imports: [ StoreModule.forRoot(appStore, { metaReducers: [ ngrxLogger ] }) ],
   exports: [ StoreModule ],
 })
 export class AppStoreModule { }

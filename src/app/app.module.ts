@@ -14,9 +14,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 
-import { RoutingModule } from './routing.module';
-import { AppStoreModule } from "./store.module";
-import { AppEffectsModule } from "./effects.module";
+import { AppRouterModule } from './app-router.module';
+import { AppStoreModule } from "./app-store.module";
+import { AppEffectsModule } from "./app-effects.module";
 
 import { AppComponent } from '@root/app.component'
 import { HomeComponent } from '@root/home/home.component';
@@ -39,7 +39,7 @@ import { PageNotFoundComponent } from '@shared/error-pages/page-not-found/page-n
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    RoutingModule,
+    AppRouterModule,
     AppStoreModule,
     AppEffectsModule,
     HttpClientModule,
