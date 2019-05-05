@@ -1,36 +1,12 @@
-<form fxLayout="column" [formGroup]="blogPostForm" novalidate>
+<form [formGroup]="blogPostForm" novalidate>
 
   <!-- Fields -->
-  <mat-form-field fxFlex>
-    <mat-label>Title</mat-label>
-    <input matInput autocomplete="off" spellcheck="false"
-      formControlName="title">
-  </mat-form-field>
-  <mat-form-field fxFlex>
-    <mat-label>Post</mat-label>
-    <textarea matInput autocomplete="off" spellcheck="false"
-      formControlName="body" matTextareaAutosize
-      matAutosizeMinRows=1 matAutosizeMaxRows=10>
-    </textarea>
-  </mat-form-field>
+  <input formControlName="title" autocomplete="off" spellcheck="false">
+  <textarea formControlName="body" autocomplete="off" spellcheck="false"></textarea>
 
   <!-- Buttons -->
-  <div fxFlexAlign="end">
-    <sg-button
-      *ngIf="id === 0"
-      (click)="create()">
-      Save
-    </sg-button>
-    <sg-button
-      *ngIf="id !== 0"
-      (click)="delete()">
-      Delete
-    </sg-button>
-    <sg-button
-      *ngIf="id !== 0"
-      (click)="update()">
-      Save
-    </sg-button>
-  </div>
+  <sg-button *ngIf="id === 0" (click)="create()">Save</sg-button>
+  <sg-button *ngIf="id !== 0" (click)="delete()">Delete</sg-button>
+  <sg-button *ngIf="id !== 0" (click)="update()">Save</sg-button>
 
 </form>

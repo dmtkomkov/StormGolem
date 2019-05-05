@@ -6,9 +6,7 @@ import { InterceptorService } from '@shared/services';
 import { ModalModule } from "@modal/modal.module";
 
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 
 import { AppRouterModule } from './app-router.module';
@@ -45,9 +43,7 @@ import { ButtonComponent } from "@shared/button/button.component";
     AppEffectsModule,
     HttpClientModule,
     FlexLayoutModule,
-    MatFormFieldModule,
     ReactiveFormsModule,
-    MatInputModule,
     MatCardModule,
     ModalModule,
   ],

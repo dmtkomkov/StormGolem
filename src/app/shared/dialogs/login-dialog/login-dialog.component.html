@@ -1,15 +1,7 @@
-<form fxLayout="column" [formGroup]="loginForm">
-  <mat-form-field fxFlex color="accent">
-    <input formControlName="username" matInput>
-  </mat-form-field>
-  <mat-form-field fxFlex color="accent">
-    <input formControlName="password" matInput>
-  </mat-form-field>
-  <div fxFlexAlign="center">
-    <sg-button (click)="close()">CANCEL</sg-button>
-    <sg-button (click)="submit()">OK</sg-button>
-  </div>
-  <div fxFlex *ngIf="loginErrMsg">
-    {{ loginErrMsg }}
-  </div>
+<form [formGroup]="loginForm">
+  <input formControlName="username" spellcheck="false">
+  <input formControlName="password" spellcheck="false" type="password">
+  <sg-button (click)="close()">CANCEL</sg-button>
+  <sg-button (click)="submit()">OK</sg-button>
+  <div *ngIf="loginErrMsg">{{ loginErrMsg }}</div>
 </form>
