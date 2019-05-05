@@ -6,7 +6,6 @@ import { InterceptorService } from '@shared/services';
 import { ModalModule } from "@modal/modal.module";
 
 import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -45,7 +44,6 @@ import { PageNotFoundComponent } from '@shared/error-pages/page-not-found/page-n
     AppEffectsModule,
     HttpClientModule,
     MatIconModule,
-    MatToolbarModule,
     FlexLayoutModule,
     MatButtonModule,
     MatDialogModule,

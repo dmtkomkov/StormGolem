@@ -1,26 +1,24 @@
-<mat-toolbar color="primary">
-  <div>
-    <a class="logo" mat-icon-button routerLink="/">
-      <mat-icon svgIcon="lightning"></mat-icon>
-      {{ title }}
-    </a>
-    <button mat-button routerLink="blog">Blog</button>
+<div class="toolbar">
+  <a class="logo" mat-icon-button routerLink="/">
+    <mat-icon svgIcon="lightning"></mat-icon>
+    {{ title }}
+  </a>
+  <button mat-button routerLink="blog">Blog</button>
 
-    <ng-container *ngIf="(user$ | async) as user; else login">
-      <a class="user" mat-icon-button>
-        <mat-icon svgIcon="user"></mat-icon>
-        {{ user.first_name }} {{ user.last_name }}
-      </a>
-      <button mat-button (click)="logout()">
-        Log Out
-      </button>
-    </ng-container>
-    <ng-template #login>
-      <button mat-button (click)="openLoginDialog()">
-        Log In
-      </button>
-    </ng-template>
-  </div>
-</mat-toolbar>
+  <ng-container *ngIf="(user$ | async) as user; else login">
+    <a class="user" mat-icon-button>
+      <mat-icon svgIcon="user"></mat-icon>
+      {{ user.first_name }} {{ user.last_name }}
+    </a>
+    <button mat-button (click)="logout()">
+      Log Out
+    </button>
+  </ng-container>
+  <ng-template #login>
+    <button mat-button (click)="openLoginDialog()">
+      Log In
+    </button>
+  </ng-template>
+</div>
 
 <router-outlet></router-outlet>

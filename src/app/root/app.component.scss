@@ -1,11 +1,15 @@
-.mat-toolbar {
+.toolbar {
+  box-sizing: border-box;
+  position: fixed;
   height: 48px;
   left: 0;
-  padding: 6px;
-  position: fixed;
+  right: 0;
   top: 0;
-  width: 100%;
+  padding: 8px;
   z-index: 2;
+  background: #88c0f3;
+  display: flex;
+  align-items: center;
 }
 
 a {
