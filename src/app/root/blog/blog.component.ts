@@ -9,7 +9,7 @@ import { LoadBlogPosts, ResetBlog } from "@store/actions";
 import { IAppState, blogPostsSlice, authSlice } from "@store/states";
 
 import { Observable, Subscription } from 'rxjs';
-import { handleAuthStatus, waitNewAuthStatus } from "@shared/helpers/auth.helper";
+import { handleAuthStatus, waitNewAuthStatus } from "@shared/helpers/auth.helpers";
 
 @Component({
   selector: 'sg-blog',
