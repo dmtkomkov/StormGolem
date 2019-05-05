@@ -25,6 +25,7 @@ import { PostComponent } from '@root/blog/post/post.component';
 import { PostFormComponent } from '@root/blog/post/post-form/post-form.component';
 import { LoginDialogComponent } from '@shared/dialogs/login-dialog/login-dialog.component';
 import { PageNotFoundComponent } from '@shared/error-pages/page-not-found/page-not-found.component';
+import { IconComponent } from "@shared/icon/icon.component";
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { PageNotFoundComponent } from '@shared/error-pages/page-not-found/page-n
     PageNotFoundComponent,
     PostComponent,
     PostFormComponent,
+    IconComponent,
   ],
   imports: [
     BrowserModule,
