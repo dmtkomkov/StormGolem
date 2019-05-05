@@ -5,8 +5,10 @@ html {
 
 body {
   height: calc(100% - 48px);
-  margin: 0;
-  overflow: scroll;
+  margin-top: 48px;
+  margin-left: 0;
+  margin-right: 0;
+  overflow: auto;
   -webkit-overflow-scrolling: touch;
-  padding-top: 48px;
+  padding-top: 0;
 }
