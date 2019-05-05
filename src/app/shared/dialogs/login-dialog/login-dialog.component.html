@@ -6,12 +6,8 @@
     <input formControlName="password" matInput>
   </mat-form-field>
   <div fxFlexAlign="center">
-    <button mat-raised-button color="warn" (click)="close()">
-      CANCEL
-    </button>
-    <button mat-raised-button color="primary" (click)="submit()" [disabled]="loginForm.invalid">
-      OK
-    </button>
+    <sg-button (click)="close()">CANCEL</sg-button>
+    <sg-button (click)="submit()">OK</sg-button>
   </div>
   <div fxFlex *ngIf="loginErrMsg">
     {{ loginErrMsg }}
