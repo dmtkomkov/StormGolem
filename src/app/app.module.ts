@@ -5,10 +5,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from '@shared/services';
 import { ModalModule } from "@modal/modal.module";
 
-import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -45,10 +43,8 @@ import { IconComponent } from "@shared/icon/icon.component";
     AppStoreModule,
     AppEffectsModule,
     HttpClientModule,
-    MatIconModule,
     FlexLayoutModule,
     MatButtonModule,
-    MatDialogModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,

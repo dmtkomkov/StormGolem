@@ -13,9 +13,9 @@
       <mat-card-title class="single no-avatar">
         Add new post
       </mat-card-title>
-      <mat-icon class="toggle-button expand-button" svgIcon="lightning"
+      <div class="toggle-button expand-button"
         (click)="select()">
-      </mat-icon>
+      </div>
     </mat-card-header>
   </mat-card>
 </ng-template>
@@ -29,9 +29,9 @@
       <mat-card-subtitle>
         {{ blogPost.created | date }}
       </mat-card-subtitle>
-      <mat-icon class="toggle-button expand-button" svgIcon="lightning"
+      <div class="toggle-button expand-button"
         (click)="select()">
-      </mat-icon>
+      </div>
     </mat-card-header>
     <mat-card-content>
       {{ blogPost.body }}
@@ -46,9 +46,9 @@
       <mat-card-title class="no-avatar">
         {{ blogPost.id === 0 ? 'Add new post' : 'Update post' }}
       </mat-card-title>
-      <mat-icon class="toggle-button collapse-button" svgIcon="lightning"
+      <div class="toggle-button collapse-button"
         (click)=unselect()>
-      </mat-icon>
+      </div>
     </mat-card-header>
     <sg-post-form [id]="blogPost.id" [title]="blogPost.title"
       [body]=blogPost.body>

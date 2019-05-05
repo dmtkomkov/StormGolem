@@ -1,6 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { MatIconRegistry } from '@angular/material';
 
 import { LoginDialogComponent } from '@shared/dialogs/login-dialog/login-dialog.component';
 
@@ -27,8 +25,6 @@ export class AppComponent implements OnInit, OnDestroy {
   private statusSubscription: Subscription;
 
   constructor(
-    private iconRegistry: MatIconRegistry,
-    private sanitizer: DomSanitizer,
     private dialog: ModalService,
     private store: Store<IAppState>,
   ) {
@@ -36,11 +32,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    for (let icon of ['lightning', 'user']) {
-      const safeResourceUrl: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`assets/${icon}.svg`);
-      this.iconRegistry.addSvgIcon(icon, safeResourceUrl);
-    }
-
     this.user$ = this.store.select(userSlice).pipe(
       map((userState: IUserState) => userState.user),
     );
