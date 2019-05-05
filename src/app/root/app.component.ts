@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { MatIconRegistry, MatDialog } from '@angular/material';
+import { MatIconRegistry } from '@angular/material';
 
 import { LoginDialogComponent } from '@shared/dialogs/login-dialog/login-dialog.component';
 
@@ -13,7 +13,8 @@ import { LogOut } from "@store/actions";
 
 import { Observable, Subscription } from "rxjs";
 import { map } from "rxjs/operators";
-import { handleAuthStatus, waitNewAuthStatus } from "@shared/helpers/auth.helper";
+import { handleAuthStatus, waitNewAuthStatus } from "@shared/helpers/auth.helpers";
+import { ModalService } from "@modal/modal.service";
 
 @Component({
   selector: 'sg-root',
@@ -28,7 +29,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
-    private dialog: MatDialog,
+    private dialog: ModalService,
     private store: Store<IAppState>,
   ) {
     this.title = 'Storm Golem';

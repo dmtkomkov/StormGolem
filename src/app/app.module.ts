@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from '@shared/services';
+import { ModalModule } from "@modal/modal.module";
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -52,6 +53,7 @@ import { PageNotFoundComponent } from '@shared/error-pages/page-not-found/page-n
     ReactiveFormsModule,
     MatInputModule,
     MatCardModule,
+    ModalModule,
   ],
   providers: [
     {

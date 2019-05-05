@@ -10,7 +10,8 @@
       "@interfaces": ["app/interfaces"],
       "@root/*": ["app/root/*"],
       "@shared/*": ["app/shared/*"],
-      "@store/*": ["app/store/*"]
+      "@store/*": ["app/store/*"],
+      "@modal/*": ["app/modal/*"]
     }
   }
 }

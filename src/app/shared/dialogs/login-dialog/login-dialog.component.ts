@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Store } from "@ngrx/store";
@@ -7,7 +6,8 @@ import { LogIn } from "@store/actions";
 import { IAppState, authSlice } from "@store/states";
 
 import { Subscription } from "rxjs";
-import { handleAuthStatus, waitNewAuthStatus } from "@shared/helpers/auth.helper";
+import { handleAuthStatus, waitNewAuthStatus } from "@shared/helpers/auth.helpers";
+import { ModalRef } from "@modal/modal-ref";
 
 @Component({
   selector: 'sg-login-dialog',
@@ -20,7 +20,7 @@ export class LoginDialogComponent implements OnInit, OnDestroy {
   private statusSubscription: Subscription;
 
   constructor(
-    private dialogRef: MatDialogRef<LoginDialogComponent>,
+    private dialogRef: ModalRef,
     private fb: FormBuilder,
     private store: Store<IAppState>,
   ) {
