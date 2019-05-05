@@ -5,7 +5,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from '@shared/services';
 import { ModalModule } from "@modal/modal.module";
 
-import { FlexLayoutModule } from "@angular/flex-layout";
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 
@@ -42,7 +41,6 @@ import { ButtonComponent } from "@shared/button/button.component";
     AppStoreModule,
     AppEffectsModule,
     HttpClientModule,
-    FlexLayoutModule,
     ReactiveFormsModule,
     MatCardModule,
     ModalModule,

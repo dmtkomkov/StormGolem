@@ -1,7 +1,6 @@
-<div fxLayout="column" fxLayoutGap="10px" *ngIf="blogPageContent$ | async as blogPageContent">
+<ng-container *ngIf="blogPageContent$ | async as blogPageContent">
   <sg-post class="sg-post"
-           fxFlexAlign="center"
            *ngFor="let blogPost of blogPageContent; trackBy: trackByPostId"
            [blogPost]="blogPost">
   </sg-post>
-</div>
+</ng-container>
