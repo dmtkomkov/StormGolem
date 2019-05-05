@@ -1,14 +1,11 @@
-@import '../../../../../node_modules/@angular/material/theming';
-@import '../../../../../src/theme';
-
 .toggle-button {
   cursor: pointer;
   max-height: 24px;
   min-height: 24px;
   max-width: 24px;
   min-width: 24px;
-  border: 2px solid mat-color($app-primary, A400);
-  background-color: mat-color($app-warn, lighter);
+  border: 2px solid red;
+  background-color: blue;
 }
 
 .expand-button {

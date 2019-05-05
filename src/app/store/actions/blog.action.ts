@@ -1,4 +1,4 @@
-import { Action } from "@ngrx/store/src/models";
+import { Action } from "@ngrx/store";
 import { IBlogPost } from "@interfaces";
 
 export enum EBlogAction {

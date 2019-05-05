@@ -1,4 +1,4 @@
-import { Action } from "@ngrx/store/src/models";
+import { Action } from "@ngrx/store";
 import { ILoginUser, IToken } from "@interfaces";
 
 export enum EAuthAction {
