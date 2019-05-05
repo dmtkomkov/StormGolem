@@ -1,25 +1,13 @@
 @import '../../../../../node_modules/@angular/material/theming';
 @import '../../../../../src/theme';
 
-.mat-card {
-  background-color: mat-color($app-primary, lighter);
-  color: mat-contrast($app-primary, lighter);
-}
-
-.mat-card-avatar {
-  background-color: mat-color($app-primary, A400);
-}
-
 .toggle-button {
-  margin-left: auto;
-  margin-right: 0;
   cursor: pointer;
   max-height: 24px;
   min-height: 24px;
   max-width: 24px;
   min-width: 24px;
   border: 2px solid mat-color($app-primary, A400);
-
   background-color: mat-color($app-warn, lighter);
 }
 
@@ -29,14 +17,4 @@
 
 .collapse-button {
   border-radius: 0 10px;
-}
-
-.mat-card-title {
-  &.single {
-    margin-bottom: 0; // No content beneath the title
-  }
-  &.no-avatar {
-    margin-left: -16px; // Align to the right mat-card-header-text
-    color: mat-color($app-primary, darker);
-  }
 }

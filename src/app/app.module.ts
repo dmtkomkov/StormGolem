@@ -2,11 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 import { InterceptorService } from '@shared/services';
 import { ModalModule } from "@modal/modal.module";
-
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
 
 import { AppRouterModule } from './app-router.module';
 import { AppStoreModule } from "./app-store.module";
@@ -42,7 +40,6 @@ import { ButtonComponent } from "@shared/button/button.component";
     AppEffectsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MatCardModule,
     ModalModule,
   ],
   providers: [
