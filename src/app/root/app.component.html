@@ -1,23 +1,15 @@
 <div class="toolbar">
   <sg-icon icon="lightning"></sg-icon>
-  <a class="logo" mat-icon-button routerLink="/">
-    {{ title }}
-  </a>
-  <button mat-button routerLink="blog">Blog</button>
+  <sg-button routerLink="/">{{ title }}</sg-button>
+  <sg-button routerLink="blog">Blog</sg-button>
 
   <ng-container *ngIf="(user$ | async) as user; else login">
     <sg-icon icon="user"></sg-icon>
-    <a class="user" mat-icon-button>
-      {{ user.first_name }} {{ user.last_name }}
-    </a>
-    <button mat-button (click)="logout()">
-      Log Out
-    </button>
+    <div>{{ user.first_name }} {{ user.last_name }}</div>
+    <sg-button (click)="logout()">Log Out</sg-button>
   </ng-container>
   <ng-template #login>
-    <button mat-button (click)="openLoginDialog()">
-      Log In
-    </button>
+    <sg-button (click)="openLoginDialog()">Log In</sg-button>
   </ng-template>
 </div>
 

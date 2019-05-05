@@ -6,7 +6,6 @@ import { InterceptorService } from '@shared/services';
 import { ModalModule } from "@modal/modal.module";
 
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -24,6 +23,7 @@ import { PostFormComponent } from '@root/blog/post/post-form/post-form.component
 import { LoginDialogComponent } from '@shared/dialogs/login-dialog/login-dialog.component';
 import { PageNotFoundComponent } from '@shared/error-pages/page-not-found/page-not-found.component';
 import { IconComponent } from "@shared/icon/icon.component";
+import { ButtonComponent } from "@shared/button/button.component";
 
 @NgModule({
   declarations: [
@@ -35,6 +35,7 @@ import { IconComponent } from "@shared/icon/icon.component";
     PostComponent,
     PostFormComponent,
     IconComponent,
+    ButtonComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +45,6 @@ import { IconComponent } from "@shared/icon/icon.component";
     AppEffectsModule,
     HttpClientModule,
     FlexLayoutModule,
-    MatButtonModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,

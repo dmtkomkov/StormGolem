@@ -16,29 +16,21 @@
 
   <!-- Buttons -->
   <div fxFlexAlign="end">
-    <button
+    <sg-button
       *ngIf="id === 0"
-      mat-raised-button
-      color="primary"
-      (click)="create()"
-      [disabled]="blogPostForm.invalid">
+      (click)="create()">
       Save
-    </button>
-    <button
+    </sg-button>
+    <sg-button
       *ngIf="id !== 0"
-      mat-raised-button
-      color="warn"
       (click)="delete()">
       Delete
-    </button>
-    <button
+    </sg-button>
+    <sg-button
       *ngIf="id !== 0"
-      mat-raised-button
-      color="primary"
-      (click)="update()"
-      [disabled]="blogPostForm.invalid">
+      (click)="update()">
       Save
-    </button>
+    </sg-button>
   </div>
 
 </form>
