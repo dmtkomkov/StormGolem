@@ -1,7 +1,8 @@
-.sg-button {
+:host {
   border: 1px solid #000000;
   border-radius: 2px;
   padding: 2px;
   margin: 2px;
   cursor: pointer;
+  outline: none;
 }
