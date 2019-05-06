@@ -19,7 +19,7 @@
             "assets": [
               "src/assets"
             ],
-            "styles": ["src/styles.scss"],
+            "styles": ["src/styles/main.scss"],
             "scripts": []
           },
           "configurations": {
@@ -67,10 +67,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [],
-            "styles": [
-              "src/styles.scss",
-              "src/theme.scss"
-            ],
+            "styles": ["src/styles/main.scss"],
             "assets": [
               "src/assets",
               "src/favicon.ico"
