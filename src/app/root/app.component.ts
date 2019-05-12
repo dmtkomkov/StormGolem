@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { LoginDialogComponent } from '@shared/dialogs/login-dialog/login-dialog.component';
 
-import { IUser } from '@interfaces';
+import { EAnimation, IUser } from '@interfaces';
 
 import { Store } from "@ngrx/store";
 import { IAppState, authSlice, IUserState, userSlice } from "@store/states";
@@ -51,7 +51,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   openLoginDialog() {
-    this.dialog.open(LoginDialogComponent);
+    this.dialog.open(LoginDialogComponent, EAnimation.FOCUS);
   }
 
   logout() {

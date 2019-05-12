@@ -1,13 +1,23 @@
-import { Component, Type, ComponentFactoryResolver, ViewChild, OnDestroy, ComponentRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  Type,
+  ComponentFactoryResolver,
+  ViewChild,
+  OnDestroy,
+  ComponentRef,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Input
+} from '@angular/core';
 import { ModalDirective } from './modal.directive';
 import { ModalRef } from './modal-ref';
 import {
   trigger,
-  state,
   style,
   animate,
   transition,
 } from '@angular/animations';
+import { EAnimation } from "@interfaces";
 
 @Component({
   selector: 'app-modal',
@@ -15,16 +25,30 @@ import {
   styleUrls: ['./modal.component.css'],
   animations :[
     trigger('shift', [
-      state('void', style({
-        transform: 'translateX(100%)',
-        opacity: 0,
-      })),
-      transition(':enter', animate(300)),
+      transition(
+        `void => ${EAnimation.FLY}`,
+        [
+          style({
+            transform: 'translateX(100%)',
+          }),
+          animate("300ms ease-out"),
+        ]
+      ),
+      transition(
+        `void => ${EAnimation.FOCUS}`,
+        [
+          style({
+            opacity: 0,
+          }),
+          animate("300ms ease-out"),
+        ]
+      ),
     ]),
   ],
 })
 export class ModalComponent implements AfterViewInit, OnDestroy {
   @ViewChild(ModalDirective) insertionPoint: ModalDirective;
+  @Input() animation: EAnimation;
   componentRef: ComponentRef<any>;
   childComponentType: Type<any>;
 

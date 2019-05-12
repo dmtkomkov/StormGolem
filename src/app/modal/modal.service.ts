@@ -4,6 +4,7 @@ import { ModalComponent } from './modal.component';
 import { ModalInjector } from './modal-injector';
 import { ModalConfig } from './modal-config';
 import { ModalRef } from './modal-ref';
+import { EAnimation } from "@interfaces";
 
 @Injectable({
   providedIn: ModalModule
@@ -18,11 +19,12 @@ export class ModalService {
     private injector: Injector,
   ) {}
 
-  public open(componentType: Type<any>, config?: ModalConfig) {
+  public open(componentType: Type<any>, animation: EAnimation = null, config?: ModalConfig) {
     if (this.modalRef) return this.modalRef; // Allows only one modal at a time
 
     this.modalRef = this.appendModalComponentToBody(config || {});
     this.modalComponentRef.instance.childComponentType = componentType;
+    this.modalComponentRef.instance.animation = animation;
 
     return this.modalRef;
   }

@@ -1,3 +1,8 @@
+export enum EAnimation {
+  FLY = 'fly',
+  FOCUS = 'focus',
+}
+
 interface Page<T> {
   results: T[];
   page_size: number;
