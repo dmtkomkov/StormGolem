@@ -58,4 +58,6 @@ export class AppComponent implements OnInit, OnDestroy {
     localStorage.setItem('token', null);
     this.store.dispatch(new LogOut());
   }
+
+  showMenu() { }
 }
