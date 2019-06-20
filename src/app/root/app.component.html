@@ -1,7 +1,6 @@
 <div class="toolbar">
   <sg-icon icon="lightning"></sg-icon>
-  <sg-button routerLink="/">{{ title }}</sg-button>
-  <sg-button routerLink="blog">Blog</sg-button>
+  {{ title }}
 
   <ng-container *ngIf="(user$ | async) as user; else login">
     <sg-icon icon="user"></sg-icon>
