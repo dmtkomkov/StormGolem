@@ -13,6 +13,7 @@ import { Observable, Subscription } from "rxjs";
 import { map } from "rxjs/operators";
 import { handleAuthStatus, waitNewAuthStatus } from "@shared/helpers/auth.helpers";
 import { ModalService } from "@modal/modal.service";
+import { MainMenuComponent } from "@shared/dialogs/main-menu/main-menu.component";
 
 @Component({
   selector: 'sg-root',
@@ -59,5 +60,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.store.dispatch(new LogOut());
   }
 
-  showMenu() { }
+  showMenu() {
+    this.dialog.open(MainMenuComponent, { animation: EAnimation.FLY });
+  }
 }

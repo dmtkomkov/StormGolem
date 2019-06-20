@@ -19,6 +19,7 @@ import { LoginDialogComponent } from '@shared/dialogs/login-dialog/login-dialog.
 import { PageNotFoundComponent } from '@shared/error-pages/page-not-found/page-not-found.component';
 import { IconComponent } from "@shared/icon/icon.component";
 import { ButtonComponent } from "@shared/button/button.component";
+import { MainMenuComponent } from '@shared/dialogs/main-menu/main-menu.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ButtonComponent } from "@shared/button/button.component";
     PostFormComponent,
     IconComponent,
     ButtonComponent,
+    MainMenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +53,7 @@ import { ButtonComponent } from "@shared/button/button.component";
   ],
   entryComponents: [
     LoginDialogComponent,
+    MainMenuComponent,
   ],
   bootstrap: [ AppComponent ]
 })
