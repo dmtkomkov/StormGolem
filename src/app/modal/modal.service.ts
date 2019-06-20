@@ -1,14 +1,22 @@
-import { Injectable, ComponentFactoryResolver, ApplicationRef, Injector, Type, EmbeddedViewRef, ComponentRef } from '@angular/core';
+import { Injectable, ComponentFactoryResolver, ApplicationRef, Injector, Type, EmbeddedViewRef, ComponentRef,  InjectionToken, InjectFlags } from '@angular/core';
 import { ModalModule } from './modal.module';
 import { ModalComponent } from './modal.component';
-import { ModalInjector } from './modal-injector';
-import { ModalConfig } from './modal-config';
 import { ModalRef } from './modal-ref';
-import { EAnimation } from "@interfaces";
+import { ModalConfig } from "@modal/modal-config";
 
-@Injectable({
-  providedIn: ModalModule
-})
+class ModalInjector implements Injector {
+  // Custom injector that takes injection from additional map
+  constructor(private _parentInjector: Injector, private _additionalTokens: WeakMap<any, any>) {}
+
+  get<T>(token: Type<T> | InjectionToken<T>, notFoundValue?: T, flags?: InjectFlags): T;
+  get(token: any, notFoundValue?: any);
+  get(token: any, notFoundValue?: any, flags?: any) {
+    const value = this._additionalTokens.get(token); // Try to find injections in custom map from params
+    return value ? value : this._parentInjector.get<any>(token, notFoundValue);
+  }
+}
+
+@Injectable({ providedIn: ModalModule })
 export class ModalService {
   modalComponentRef: ComponentRef<ModalComponent>;
   modalRef: ModalRef = null;
@@ -19,21 +27,21 @@ export class ModalService {
     private injector: Injector,
   ) {}
 
-  public open(componentType: Type<any>, animation: EAnimation = null, config?: ModalConfig) {
+  public open(componentType: Type<any>, config: ModalConfig = new ModalConfig()) {
     if (this.modalRef) return this.modalRef; // Allows only one modal at a time
 
-    this.modalRef = this.appendModalComponentToBody(config || {});
+    this.modalRef = this.appendModalComponentToBody(config);
     this.modalComponentRef.instance.childComponentType = componentType;
-    this.modalComponentRef.instance.animation = animation;
 
     return this.modalRef;
   }
 
   private appendModalComponentToBody(config: ModalConfig) {
+    this.modalRef = new ModalRef();
+
+    // Inject modal config and reference
     const map = new WeakMap();
     map.set(ModalConfig, config);
-
-    this.modalRef = new ModalRef();
     map.set(ModalRef, this.modalRef);
 
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ModalComponent);

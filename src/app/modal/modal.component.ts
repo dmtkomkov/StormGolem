@@ -7,17 +7,12 @@ import {
   ComponentRef,
   AfterViewInit,
   ChangeDetectorRef,
-  Input
 } from '@angular/core';
 import { ModalDirective } from './modal.directive';
 import { ModalRef } from './modal-ref';
-import {
-  trigger,
-  style,
-  animate,
-  transition,
-} from '@angular/animations';
+import { trigger, style, animate, transition, } from '@angular/animations';
 import { EAnimation } from "@interfaces";
+import { ModalConfig } from "@modal/modal-config";
 
 @Component({
   selector: 'app-modal',
@@ -28,18 +23,14 @@ import { EAnimation } from "@interfaces";
       transition(
         `void => ${EAnimation.FLY}`,
         [
-          style({
-            transform: 'translateX(100%)',
-          }),
+          style({ transform: 'translateX(100%)' }),
           animate("300ms ease-out"),
         ]
       ),
       transition(
         `void => ${EAnimation.FOCUS}`,
         [
-          style({
-            opacity: 0,
-          }),
+          style({ opacity: 0 }),
           animate("300ms ease-out"),
         ]
       ),
@@ -48,14 +39,14 @@ import { EAnimation } from "@interfaces";
 })
 export class ModalComponent implements AfterViewInit, OnDestroy {
   @ViewChild(ModalDirective) insertionPoint: ModalDirective;
-  @Input() animation: EAnimation;
   componentRef: ComponentRef<any>;
   childComponentType: Type<any>;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
     private cd: ChangeDetectorRef,
-    private modalRef: ModalRef
+    private modalRef: ModalRef,
+    private modalConfig: ModalConfig,
   ) {}
 
   ngAfterViewInit() {

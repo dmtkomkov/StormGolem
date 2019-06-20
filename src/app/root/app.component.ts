@@ -51,7 +51,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   openLoginDialog() {
-    this.dialog.open(LoginDialogComponent, EAnimation.FOCUS);
+    this.dialog.open(LoginDialogComponent, { animation: EAnimation.FOCUS });
   }
 
   logout() {
