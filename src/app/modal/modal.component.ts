@@ -1,12 +1,6 @@
 import {
-  Component,
-  Type,
-  ComponentFactoryResolver,
-  ViewChild,
-  OnDestroy,
-  ComponentRef,
-  AfterViewInit,
-  ChangeDetectorRef,
+  Component, Type, ComponentFactoryResolver, ViewChild, OnDestroy, ComponentRef,
+  AfterViewInit, ChangeDetectorRef, ViewContainerRef,
 } from '@angular/core';
 import { ModalDirective } from './modal.directive';
 import { ModalRef } from './modal-ref';
@@ -66,8 +60,8 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
   loadChildComponent(componentType: Type<any>) {
     let componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentType);
 
-    let viewContainerRef = this.insertionPoint.viewContainerRef;
-    viewContainerRef.clear();
+    let viewContainerRef: ViewContainerRef = this.insertionPoint.viewContainerRef;
+    viewContainerRef.clear(); // Destroys all views in this container.
 
     this.componentRef = viewContainerRef.createComponent(componentFactory);
   }
