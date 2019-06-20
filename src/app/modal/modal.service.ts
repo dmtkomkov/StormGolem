@@ -65,6 +65,7 @@ export class ModalService {
   private removeModalComponentFromBody() {
     this.appRef.detachView(this.modalComponentRef.hostView);
     this.modalComponentRef.destroy();
+    this.modalRef.afterClosed.complete();
     this.modalRef = null;
   }
 }
