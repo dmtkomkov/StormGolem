@@ -11,7 +11,7 @@ import { ModalConfig } from "@modal/modal-config";
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.css'],
+  styleUrls: ['./modal.component.scss'],
   animations :[
     trigger('shift', [
       transition(
