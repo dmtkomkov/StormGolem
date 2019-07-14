@@ -60,6 +60,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   showMenu() {
-    this.dialog.open(MainMenuComponent, { animation: EAnimation.FLY, type: EModalType.RIGHT_MENU });
+    this.dialog.open(MainMenuComponent, { animation: EAnimation.FLY, type: EModalType.LEFT_MENU });
   }
 }

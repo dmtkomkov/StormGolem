@@ -6,6 +6,9 @@
     "start": "ng serve --liveReload=false",
     "build": "ng build --prod"
   },
+  "stylelint": {
+    "extends": "stylelint-config-standard"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "7.0.1",
@@ -33,6 +36,8 @@
     "@angular/cli": "7.0.3",
     "@angular/compiler-cli": "7.2.14",
     "@angular/language-service": "7.0.1",
+    "stylelint": "^10.1.0",
+    "stylelint-config-standard": "^18.3.0",
     "typescript": "3.1.3"
   }
 }

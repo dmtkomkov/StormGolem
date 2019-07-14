@@ -9,7 +9,22 @@
   top: 0;
   padding: 8px;
   z-index: 2;
-  background: $overcast;
+  background-color: $overcast;
   display: flex;
   align-items: center;
+
+  .logo {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .separator {
+    flex: 1 1 0;
+  }
+
+  .login {
+    display: flex;
+    align-items: center;
+  }
 }

@@ -19,6 +19,6 @@ export class MainMenuComponent implements OnInit {
 
   navigate(url: string) {
     this.dialogRef.close();
-    this.router.navigate([url]).catch(error => console.log(error));
+    this.router.navigate([url]).catch(console.log);
   }
 }

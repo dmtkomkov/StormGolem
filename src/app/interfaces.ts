@@ -4,7 +4,7 @@ export enum EAnimation {
 }
 
 export enum EModalType {
-  RIGHT_MENU = 'RightMenu',
+  LEFT_MENU = 'RightMenu',
   DIALOG = 'Dialog',
 }
 

@@ -24,7 +24,7 @@ import { ModalConfig } from "@modal/modal-config";
       transition(
         `void => ${EAnimation.FLY}`,
         [
-          style({ transform: 'translateX(100%)' }),
+          style({ transform: 'translateX(-100%)' }),
           animate("300ms ease-out"),
         ]
       ),
@@ -51,8 +51,8 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
     private config: ModalConfig,
   ) {
     switch(config.type) {
-      case EModalType.RIGHT_MENU: {
-        this.configClass = 'right-menu';
+      case EModalType.LEFT_MENU: {
+        this.configClass = 'left-menu';
         break;
       }
       case EModalType.DIALOG: {

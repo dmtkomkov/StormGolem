@@ -1,17 +1,19 @@
 <div class="toolbar">
-  <sg-icon icon="lightning"></sg-icon>
-  {{ title }}
-
-  <ng-container *ngIf="(user$ | async) as user; else login">
-    <sg-icon icon="user"></sg-icon>
-    <div>{{ user.first_name }} {{ user.last_name }}</div>
-    <sg-button (click)="logout()">Log Out</sg-button>
-  </ng-container>
-  <ng-template #login>
-    <sg-button (click)="openLoginDialog()">Log In</sg-button>
-  </ng-template>
-
-  <sg-button (click)="showMenu()">Menu</sg-button>
+  <div class="logo" (click)="showMenu()">
+    <sg-icon icon="lightning"></sg-icon>
+    {{ title }}
+  </div>
+  <div class="separator"></div>
+  <div class="login">
+    <ng-container *ngIf="(user$ | async) as user; else login">
+      <sg-icon icon="user"></sg-icon>
+      <div>{{ user.first_name }} {{ user.last_name }}</div>
+      <sg-button (click)="logout()">Log Out</sg-button>
+    </ng-container>
+    <ng-template #login>
+      <sg-button (click)="openLoginDialog()">Log In</sg-button>
+    </ng-template>
+  </div>
 </div>
 
 <router-outlet></router-outlet>
