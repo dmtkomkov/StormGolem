@@ -28,7 +28,6 @@
     "core-js": "2.5.7",
     "jwt-decode": "2.2.0",
     "rxjs": "6.3.3",
-    "tslint": "5.11.0",
     "zone.js": "0.8.26"
   },
   "devDependencies": {
@@ -36,8 +35,9 @@
     "@angular/cli": "7.0.3",
     "@angular/compiler-cli": "7.2.14",
     "@angular/language-service": "7.0.1",
-    "stylelint": "^10.1.0",
-    "stylelint-config-standard": "^18.3.0",
+    "stylelint": "10.1.0",
+    "stylelint-config-standard": "18.3.0",
+    "tslint": "5.11.0",
     "typescript": "3.1.3"
   }
 }
