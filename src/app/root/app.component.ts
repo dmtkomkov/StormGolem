@@ -1,13 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { LoginDialogComponent } from '@shared/dialogs/login-dialog/login-dialog.component';
 
-import { EAnimation, IUser } from '@interfaces';
+import { EAnimation, EModalType, IUser } from '@interfaces';
 
 import { Store } from "@ngrx/store";
-import { IAppState, authSlice, IUserState, userSlice } from "@store/states";
-import { LoadUser, ResetUser } from "@store/actions";
-import { LogOut } from "@store/actions";
+import { authSlice, IAppState, IUserState, userSlice } from "@store/states";
+import { LoadUser, LogOut, ResetUser } from "@store/actions";
 
 import { Observable, Subscription } from "rxjs";
 import { map } from "rxjs/operators";
@@ -52,7 +51,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   openLoginDialog() {
-    this.dialog.open(LoginDialogComponent, { animation: EAnimation.FOCUS });
+    this.dialog.open(LoginDialogComponent, { animation: EAnimation.FOCUS, type: EModalType.DIALOG });
   }
 
   logout() {
@@ -61,6 +60,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   showMenu() {
-    this.dialog.open(MainMenuComponent, { animation: EAnimation.FLY });
+    this.dialog.open(MainMenuComponent, { animation: EAnimation.FLY, type: EModalType.RIGHT_MENU });
   }
 }

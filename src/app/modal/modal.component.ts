@@ -1,11 +1,18 @@
 import {
-  Component, Type, ComponentFactoryResolver, ViewChild, OnDestroy, ComponentRef,
-  AfterViewInit, ChangeDetectorRef, ViewContainerRef,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ComponentFactoryResolver,
+  ComponentRef,
+  OnDestroy,
+  Type,
+  ViewChild,
+  ViewContainerRef,
 } from '@angular/core';
 import { ModalDirective } from './modal.directive';
 import { ModalRef } from './modal-ref';
-import { trigger, style, animate, transition, } from '@angular/animations';
-import { EAnimation } from "@interfaces";
+import { animate, style, transition, trigger, } from '@angular/animations';
+import { EAnimation, EModalType } from "@interfaces";
 import { ModalConfig } from "@modal/modal-config";
 
 @Component({
@@ -35,13 +42,25 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
   @ViewChild(ModalDirective) insertionPoint: ModalDirective;
   componentRef: ComponentRef<any>;
   childComponentType: Type<any>;
+  configClass: string;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
     private cd: ChangeDetectorRef,
-    private modalRef: ModalRef,
-    private modalConfig: ModalConfig,
-  ) {}
+    private ref: ModalRef,
+    private config: ModalConfig,
+  ) {
+    switch(config.type) {
+      case EModalType.RIGHT_MENU: {
+        this.configClass = 'right-menu';
+        break;
+      }
+      case EModalType.DIALOG: {
+        this.configClass = 'dialog';
+        break;
+      }
+    }
+  }
 
   ngAfterViewInit() {
     this.loadChildComponent(this.childComponentType);
@@ -49,7 +68,7 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
   }
 
   onOverlayClicked(evt: MouseEvent) {
-    this.modalRef.close();
+    this.ref.close();
     evt.stopPropagation();
   }
 
