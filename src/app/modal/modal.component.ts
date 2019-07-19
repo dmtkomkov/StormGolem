@@ -90,4 +90,9 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
       this.componentRef.destroy();
     }
   }
+
+  onClickedOutside(evt: Event) {
+    this.ref.close();
+    evt.stopPropagation();
+  }
 }
