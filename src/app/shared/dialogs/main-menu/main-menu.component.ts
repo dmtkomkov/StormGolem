@@ -5,7 +5,7 @@ import { ModalRef } from "@modal/modal-ref";
 @Component({
   selector: 'sg-main-menu',
   templateUrl: 'main-menu.component.html',
-  styles: []
+  styleUrls: [ 'main-menu.component.scss' ],
 })
 export class MainMenuComponent implements OnInit {
 

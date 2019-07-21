@@ -1,0 +1,12 @@
+@import "colors";
+
+.menu-item {
+  cursor: pointer;
+  text-align: center;
+  padding: 4px;
+  font-size: 18px;
+
+  &:hover {
+    background: $lavender;
+  }
+}

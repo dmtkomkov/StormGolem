@@ -12,7 +12,7 @@ import { ModalRef } from "@modal/modal-ref";
 @Component({
   selector: 'sg-login-dialog',
   templateUrl: 'login-dialog.component.html',
-  styles: [ ],
+  styleUrls: [ 'login-dialog.component.scss' ],
 })
 export class LoginDialogComponent implements OnInit, OnDestroy {
   public loginForm: FormGroup;
