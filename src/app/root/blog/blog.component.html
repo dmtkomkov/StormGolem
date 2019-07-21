@@ -1,6 +1,6 @@
-<ng-container *ngIf="blogPageContent$ | async as blogPageContent">
+<div class="blog" *ngIf="blogPageContent$ | async as blogPageContent">
   <sg-post class="sg-post"
-           *ngFor="let blogPost of blogPageContent; trackBy: trackByPostId"
-           [blogPost]="blogPost">
+     *ngFor="let blogPost of blogPageContent; trackBy: trackByPostId"
+     [blogPost]="blogPost">
   </sg-post>
-</ng-container>
+</div>
