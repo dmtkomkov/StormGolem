@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { InterceptorService } from '@shared/services';
+import { InterceptorService } from '@services';
 import { ModalModule } from "@modal/modal.module";
 
 import { AppRouterModule } from './app-router.module';

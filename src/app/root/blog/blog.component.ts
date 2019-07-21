@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 
-import { BlogService } from '@shared/services';
+import { BlogService } from '@services';
 
 import {IBlogPost} from '@interfaces';
 

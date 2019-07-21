@@ -17,7 +17,7 @@ import {
   DeleteBlogPostSuccess,
   DeleteBlogPostError,
 } from "@store/actions";
-import { BlogService } from "@shared/services";
+import { BlogService } from "@services";
 import { IBlogPage, IBlogPost } from "@interfaces";
 import { selectBlogPost } from "@shared/helpers";
 

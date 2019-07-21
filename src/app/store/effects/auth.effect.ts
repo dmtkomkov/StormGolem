@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { AuthService } from "@shared/services";
+import { AuthService } from "@services";
 import {
   EAuthAction, AuthAction,
   LogIn, LogInError, LogInSuccess,

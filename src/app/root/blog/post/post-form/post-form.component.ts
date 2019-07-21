@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { BlogService } from '@shared/services';
+import { BlogService } from '@services';
 
 import { Store } from "@ngrx/store";
 import { CreateBlogPost, DeleteBlogPost, UpdateBlogPost } from "@store/actions";

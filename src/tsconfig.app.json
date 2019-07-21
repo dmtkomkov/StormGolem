@@ -11,7 +11,8 @@
       "@root/*": ["app/root/*"],
       "@shared/*": ["app/shared/*"],
       "@store/*": ["app/store/*"],
-      "@modal/*": ["app/modal/*"]
+      "@modal/*": ["app/modal/*"],
+      "@services": ["app/services"]
     }
   }
 }
