@@ -9,21 +9,58 @@
 
   <!-- Clickable panel for creating new post -->
   <ng-template #newBlogPost>
-    {{ 'Add new post' }}
-    <div class="toggle-button expand-button" (click)="select()"></div>
+    <div class="sg-card">
+      <div class="sg-card-header">
+        <div class="sg-card-icon">&#9730;</div>
+        <div class="sg-card-title">
+          <div class="main-title">{{ 'Add new post' }}</div>
+          <div class="sub-title">{{ 'Press + to add ne post' }}</div>
+        </div>
+        <div class="separator"></div>
+        <div class="sg-card-panel">
+          <div class="toggle-button" (click)="select()">&#9776;</div>
+        </div>
+      </div>
+      <div class="sg-card-body"></div>
+    </div>
   </ng-template>
 
   <!-- Existed post -->
   <ng-template #exitedBlogPost>
-    {{ blogPost.title }} {{ blogPost.created | date }}
-    <div class="toggle-button expand-button" (click)="select()"></div>
-    {{ blogPost.body }}
+    <div class="sg-card">
+      <div class="sg-card-header">
+        <div class="sg-card-icon">&#9730;</div>
+        <div class="sg-card-title">
+          <div class="main-title">{{ blogPost.title }}</div>
+          <div class="sub-title">Created: {{ blogPost.created | date }}</div>
+        </div>
+        <div class="separator"></div>
+        <div class="sg-card-panel">
+          <div class="toggle-button" (click)="select()">&#9776;</div>
+        </div>
+      </div>
+      <div class="sg-card-body">{{ blogPost.body }}</div>
+    </div>
   </ng-template>
 
   <!-- Post form -->
   <ng-template #blogPostFormTemplate>
-    {{ blogPost.id === 0 ? 'Add new post' : 'Update post' }}
-    <div class="toggle-button collapse-button" (click)=unselect()></div>
-    <sg-post-form [id]="blogPost.id" [title]="blogPost.title" [body]=blogPost.body></sg-post-form>
+
+    <div class="sg-card">
+      <div class="sg-card-header">
+        <div class="sg-card-icon">&#9730;</div>
+        <div class="sg-card-title">
+          <div class="main-title">{{ blogPost.id === 0 ? 'Add new post' : 'Update post' }}</div>
+          <div class="sub-title">{{ 'Post form' }}</div>
+        </div>
+        <div class="separator"></div>
+        <div class="sg-card-panel">
+          <div class="toggle-button" (click)="unselect()">&#9932;</div>
+        </div>
+      </div>
+      <div class="sg-card-body">
+        <sg-post-form [id]="blogPost.id" [title]="blogPost.title" [body]=blogPost.body></sg-post-form>
+      </div>
+    </div>
   </ng-template>
 </div>
