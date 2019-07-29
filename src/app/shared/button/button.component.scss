@@ -2,7 +2,12 @@
   border: 1px solid #000;
   border-radius: 2px;
   padding: 2px;
-  margin: 2px;
   cursor: pointer;
   outline: none;
+  height: 20px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }

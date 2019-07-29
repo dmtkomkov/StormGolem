@@ -2,11 +2,13 @@
 
   <!-- Fields -->
   <input formControlName="title" autocomplete="off" spellcheck="false">
-  <textarea formControlName="body" autocomplete="off" spellcheck="false"></textarea>
+  <textarea rows="5" formControlName="body" autocomplete="off" spellcheck="false"></textarea>
 
   <!-- Buttons -->
-  <sg-button *ngIf="id === 0" (click)="create()">Save</sg-button>
-  <sg-button *ngIf="id !== 0" (click)="delete()">Delete</sg-button>
-  <sg-button *ngIf="id !== 0" (click)="update()">Save</sg-button>
+  <div class="panel">
+    <sg-button *ngIf="id === 0" (click)="create()">Save</sg-button>
+    <sg-button *ngIf="id !== 0" (click)="delete()">Delete</sg-button>
+    <sg-button *ngIf="id !== 0" (click)="update()">Save</sg-button>
+  </div>
 
 </form>

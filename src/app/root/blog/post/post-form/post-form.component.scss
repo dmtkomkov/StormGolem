@@ -1,0 +1,36 @@
+@import 'colors';
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input, textarea {
+  outline: none;
+  padding: 5px;
+  color: $text-dark;
+  min-height: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  margin-bottom: 5px;
+  border: none;
+  background-color: $text-light;
+}
+
+input {
+  font-weight: bold;
+}
+
+textarea {
+  resize: vertical;
+  overflow: auto;
+}
+
+.panel {
+  display: flex;
+  justify-content: flex-end;
+}
+
+sg-button:not(:first-child) {
+  margin-left: 5px;
+}

@@ -10,7 +10,7 @@ import { IAppState } from "@store/states";
 @Component({
   selector: 'sg-post-form',
   templateUrl: 'post-form.component.html',
-  styles: []
+  styleUrls: ['post-form.component.scss'],
 })
 export class PostFormComponent implements OnInit {
   @Input() id: number;
