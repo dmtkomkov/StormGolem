@@ -1,14 +1,15 @@
 <form [formGroup]="blogPostForm" novalidate>
 
   <!-- Fields -->
-  <input formControlName="title" autocomplete="off" spellcheck="false">
-  <textarea rows="5" formControlName="body" autocomplete="off" spellcheck="false"></textarea>
+  <input autocomplete="off" formControlName="title" spellcheck="false"  >
+  <textarea autocomplete="off" formControlName="body" rows="5" spellcheck="false"></textarea>
 
   <!-- Buttons -->
   <div class="panel">
-    <sg-button *ngIf="id === 0" (click)="create()">Save</sg-button>
-    <sg-button *ngIf="id !== 0" (click)="delete()">Delete</sg-button>
-    <sg-button *ngIf="id !== 0" (click)="update()">Save</sg-button>
+    <sg-button class="btn-error" *ngIf="id !== 0" (click)="delete()">Delete</sg-button>
+    <div class="separator"></div>
+    <sg-button class="btn-ok" *ngIf="id !== 0" (click)="update()">Update</sg-button>
+    <sg-button class="btn-ok" *ngIf="id === 0" (click)="create()">Save</sg-button>
   </div>
 
 </form>
