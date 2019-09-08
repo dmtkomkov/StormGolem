@@ -43,6 +43,7 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
   componentRef: ComponentRef<any>;
   childComponentType: Type<any>;
   configClass: string;
+  configAnimation: EAnimation;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -60,6 +61,7 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
         break;
       }
     }
+    this.configAnimation = config.animation;
   }
 
   ngAfterViewInit() {

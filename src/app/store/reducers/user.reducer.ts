@@ -1,7 +1,7 @@
 import { EUserAction, UserAction } from "@store/actions";
 import { initialUserState, IUserState } from "@store/states";
 
-export const userReducer = (state: IUserState = initialUserState, action: UserAction): IUserState => {
+export function userReducer(state: IUserState = initialUserState, action: UserAction): IUserState {
   switch (action.type) {
 
     case EUserAction.LoadUser: return {...state, loading: true};

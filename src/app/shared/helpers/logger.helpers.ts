@@ -1,4 +1,4 @@
-export const ngrxLogger = (reducer) => {
+export function ngrxLogger(reducer) {
   return (currentState, action) => {
     const nextState = reducer(currentState, action);
     console.groupCollapsed(action.type);
@@ -8,4 +8,4 @@ export const ngrxLogger = (reducer) => {
     console.groupEnd();
     return nextState;
   }
-};
+}

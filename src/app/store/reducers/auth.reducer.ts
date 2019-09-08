@@ -1,7 +1,7 @@
 import { EAuthAction, AuthAction } from "@store/actions";
 import { EAuthStatus, initialAuthState, IAuthState } from "@store/states";
 
-export const authReducer = (state: IAuthState = initialAuthState, action: AuthAction): IAuthState => {
+export function authReducer(state: IAuthState = initialAuthState, action: AuthAction): IAuthState {
   switch (action.type) {
 
     case EAuthAction.LogIn: return {authStatus: EAuthStatus.Authorization};

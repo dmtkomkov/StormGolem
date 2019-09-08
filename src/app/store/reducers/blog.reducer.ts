@@ -2,7 +2,7 @@ import { BlogAction, EBlogAction } from "@store/actions";
 import { IBlogState, initialBlogState } from "@store/states";
 import { selectBlogPost } from "@shared/helpers";
 
-export const blogReducer = (state: IBlogState = initialBlogState, action: BlogAction): IBlogState => {
+export function blogReducer(state: IBlogState = initialBlogState, action: BlogAction): IBlogState {
   switch (action.type) {
 
     case EBlogAction.LoadBlogPosts: return {...state, loading: true};
