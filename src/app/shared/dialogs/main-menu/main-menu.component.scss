@@ -1,13 +1,27 @@
 @import "colors";
 
-.menu-item {
-  cursor: pointer;
-  text-align: center;
+.menu {
   padding: 4px;
-  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-item {
+  display: flex;
+  cursor: pointer;
+  padding: 4px;
+
+  .menu-icon {
+    text-indent: 45px;
+    font-size: 14px;
+  }
+
+  .menu-text {
+    text-indent: 5px;
+    font-size: 20px;
+  }
 
   &:hover {
-    background: $icon-background;
-    color: $modal;
+    font-weight: bold;
   }
 }
