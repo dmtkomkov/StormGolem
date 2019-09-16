@@ -59,4 +59,10 @@ export class LoginDialogComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.statusSubscription.unsubscribe();
   }
+
+  onKeydown(event) {
+    if (event.key === "Enter") {
+      this.submit();
+    }
+  }
 }

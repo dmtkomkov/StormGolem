@@ -1,11 +1,11 @@
-<div class="dialog-body">
+<div class="dialog-body" (keydown)="onKeydown($event)">
   <form [formGroup]="loginForm">
-    <input formControlName="username" spellcheck="false" title="">
+    <input formControlName="username" spellcheck="false" title="" autofocus>
     <input formControlName="password" spellcheck="false" type="password" title="">
   </form>
   <!-- Buttons -->
   <div class="panel">
-    <sg-button class="btn-error" (click)="close()">CANCEL</sg-button>
+    <sg-button class="btn-error" (click)="close()" >CANCEL</sg-button>
     <div class="separator"></div>
     <sg-button class="btn-ok" (click)="submit()">OK</sg-button>
   </div>
