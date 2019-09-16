@@ -1,0 +1,31 @@
+@import 'colors';
+
+.dialog-body {
+  padding: 15px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.panel {
+  display: flex;
+  margin-top: 10px;
+}
+
+.btn-ok {
+  background-color: $ok;
+}
+
+.btn-error {
+  background-color: $error;
+}
+
+.error-message {
+  color: $text-dark;
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 10px;
+  text-align: center;
+}

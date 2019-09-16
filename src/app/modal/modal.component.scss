@@ -4,6 +4,7 @@
   position: fixed;
   display: flex;
   justify-content: center;
+  align-items: center;
   top: 48px;
   left: 0;
   bottom: 0;
@@ -26,6 +27,6 @@
 
   &.dialog {
     width: 400px;
-    height: 200px;
+    min-height: 150px;
   }
 }
