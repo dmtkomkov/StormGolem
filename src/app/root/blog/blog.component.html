@@ -1,6 +1,8 @@
-<div class="blog" *ngIf="blogPageContent$ | async as blogPageContent">
-  <sg-post class="sg-post"
-     *ngFor="let blogPost of blogPageContent; trackBy: trackByPostId"
-     [blogPost]="blogPost">
-  </sg-post>
+<div class="blog-container">
+  <div class="blog" *ngIf="blogPageContent$ | async as blogPageContent">
+    <sg-post class="sg-post"
+       *ngFor="let blogPost of blogPageContent; trackBy: trackByPostId"
+       [blogPost]="blogPost">
+    </sg-post>
+  </div>
 </div>

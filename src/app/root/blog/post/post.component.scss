@@ -49,9 +49,9 @@
   }
 
   .sg-card-body {
+    white-space: pre-wrap;
     min-height: 40px;
     padding: 15px;
-    border: 2px solid $border;
-    border-top: none;
+    background: white;
   }
 }
