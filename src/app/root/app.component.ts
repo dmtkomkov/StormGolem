@@ -10,7 +10,7 @@ import { LoadUser, LogOut, ResetUser } from "@store/actions";
 
 import { Observable, Subscription } from "rxjs";
 import { map } from "rxjs/operators";
-import { handleAuthStatus, waitNewAuthStatus } from "@shared/helpers/auth.helpers";
+import { handleAuthStatus, getAuthStatus } from "@shared/helpers/auth.helpers";
 import { ModalService } from "@modal/modal.service";
 import { MainMenuComponent } from "@shared/dialogs/main-menu/main-menu.component";
 
@@ -37,7 +37,7 @@ export class AppComponent implements OnInit, OnDestroy {
     );
 
     this.statusSubscription = this.store.select(authSlice).pipe(
-      waitNewAuthStatus(),
+      getAuthStatus(),
       handleAuthStatus(
         () => this.store.dispatch(new LoadUser()),
         () => this.store.dispatch(new ResetUser()),
