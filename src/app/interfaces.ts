@@ -29,10 +29,6 @@ export interface ILoginUser {
   password: string;
 }
 
-export interface IPage {
-  limit: number;
-}
-
 export interface IToken {
   token: string;
 }

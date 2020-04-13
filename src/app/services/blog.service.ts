@@ -6,16 +6,28 @@ import { Observable } from 'rxjs';
 
 import { IBlogPost, IBlogPage } from '@interfaces';
 
+export const PAGE_SIZE = 5;
+
 @Injectable({providedIn: 'root'})
 export class BlogService {
   private baseUrl: string = 'blog';
+  private pageSize: number;
+  private pageNumber: number;
 
   constructor(
     private http: HttpClient,
-  ) { }
+  ) {
+    this.pageSize = PAGE_SIZE;
+    this.pageNumber = 1;
+  }
 
-  getBlogPage(limit: number): Observable<IBlogPage> {
-    let params = new HttpParams().set('limit', limit.toString());
+  getBlogPage(reload: boolean): Observable<IBlogPage> {
+    let params: HttpParams;
+    if (reload) {
+      params = new HttpParams().set('limit', (this.pageSize * this.pageNumber).toString()).set('page', '1');
+    } else {
+      params = new HttpParams().set('limit', this.pageSize.toString()).set('page', this.pageNumber.toString());
+    }
     return this.http.get<IBlogPage>(this.baseUrl, { params });
   }
 
@@ -31,5 +43,13 @@ export class BlogService {
   deleteBlogPost(blogPostId: number): Observable<{}> {
     const url = Location.joinWithSlash(this.baseUrl, blogPostId.toString());
     return this.http.delete<{}>(url);
+  }
+
+  nextPage() {
+    this.pageNumber += 1;
+  }
+
+  resetPage() {
+    this.pageNumber = 1;
   }
 }

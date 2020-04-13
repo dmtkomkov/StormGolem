@@ -6,7 +6,10 @@ export function blogReducer(state: IBlogState = initialBlogState, action: BlogAc
   switch (action.type) {
 
     case EBlogAction.LoadBlogPosts: return {...state, loading: true};
-    case EBlogAction.LoadBlogPostsSuccess: return {blogPosts: action.payload, loading: false};
+    case EBlogAction.LoadBlogPostsSuccess: return {
+      blogPosts: state.blogPosts && !action.reload ? state.blogPosts.concat(action.payload.slice(1)) : action.payload,
+      loading: false
+    };
     case EBlogAction.LoadBlogPostsError: return initialBlogState;
 
     case EBlogAction.CreateBlogPost: return {...state, loading: true};
@@ -26,4 +29,5 @@ export function blogReducer(state: IBlogState = initialBlogState, action: BlogAc
 
     default: return state;
   }
-};
+}
+

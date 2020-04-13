@@ -1,5 +1,5 @@
 import { Action } from "@ngrx/store";
-import { IBlogPost, IPage } from "@interfaces";
+import { IBlogPost } from "@interfaces";
 
 export enum EBlogAction {
   LoadBlogPosts = '[Blog] Load Blog Posts',
@@ -24,12 +24,12 @@ export enum EBlogAction {
 
 export class LoadBlogPosts implements Action {
   public readonly type = EBlogAction.LoadBlogPosts;
-  constructor(public payload: IPage) {}
+  constructor(public reload: boolean = true) { }
 }
 
 export class LoadBlogPostsSuccess implements Action {
   public readonly type = EBlogAction.LoadBlogPostsSuccess;
-  constructor(public payload: IBlogPost[]) { }
+  constructor(public payload: IBlogPost[], public reload: boolean) { }
 }
 
 export class LoadBlogPostsError implements Action {

@@ -35,11 +35,11 @@ export class BlogEffect {
 
   @Effect() loadBlogPosts$ = this.actions$.pipe(
     ofType<BlogAction>(EBlogAction.LoadBlogPosts),
-    concatMap((action: LoadBlogPosts) => this.blogService.getBlogPage(action.payload.limit)
+    concatMap((action: LoadBlogPosts) => this.blogService.getBlogPage(action.reload)
       .pipe(
         map((blogPage: IBlogPage) => blogPage.results),
         map((blogPosts: IBlogPost[]) => [EMPTY_BLOG_POST].concat(selectBlogPost(blogPosts, NaN))),
-        map((blogPosts: IBlogPost[]) => new LoadBlogPostsSuccess(blogPosts)),
+        map((blogPosts: IBlogPost[]) => new LoadBlogPostsSuccess(blogPosts, action.reload)),
         catchError(() => of(new LoadBlogPostsError())),
       )
     ),
@@ -81,6 +81,9 @@ export class BlogEffect {
       EBlogAction.UpdateBlogPostSuccess,
       EBlogAction.DeleteBlogPostSuccess,
     ),
-    map(() => new LoadBlogPosts({ limit: 1 })),
+    map(() => {
+      console.log('reload');
+      return new LoadBlogPosts();
+    }),
   );
 }
