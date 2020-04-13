@@ -1,7 +1,7 @@
 import { EAuthAction, AuthAction } from "@store/actions";
-import { EAuthStatus, initialAuthState, IAuthState } from "@store/states";
+import { EAuthStatus, IAuthState } from "@store/states";
 
-export function authReducer(state: IAuthState = initialAuthState, action: AuthAction): IAuthState {
+export function authReducer(state: IAuthState = null, action: AuthAction): IAuthState {
   switch (action.type) {
 
     case EAuthAction.LogIn: return {authStatus: EAuthStatus.Authorization};
@@ -14,9 +14,11 @@ export function authReducer(state: IAuthState = initialAuthState, action: AuthAc
     }
 
     case EAuthAction.RefreshToken:
-    case EAuthAction.RefreshTokenSuccess:
+    case EAuthAction.RefreshTokenSuccess: {
+      return {authStatus: EAuthStatus.LoggedIn};
+    }
     default: {
       return state;
     }
   }
-};
+}

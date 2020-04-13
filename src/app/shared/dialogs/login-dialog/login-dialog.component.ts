@@ -6,7 +6,7 @@ import { LogIn } from "@store/actions";
 import { IAppState, authSlice } from "@store/states";
 
 import { Subscription } from "rxjs";
-import { handleAuthStatus, waitNewAuthStatus } from "@shared/helpers/auth.helpers";
+import { handleAuthStatus, getAuthStatus } from "@shared/helpers/auth.helpers";
 import { ModalRef } from "@modal/modal-ref";
 
 @Component({
@@ -29,7 +29,7 @@ export class LoginDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.statusSubscription = this.store.select(authSlice).pipe(
-      waitNewAuthStatus(),
+      getAuthStatus(),
       handleAuthStatus(
         () => {
           this.loginErrMsg = null;
