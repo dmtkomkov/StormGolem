@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Location } from '@angular/common';
 
 import { Observable } from 'rxjs';
@@ -14,9 +14,9 @@ export class BlogService {
     private http: HttpClient,
   ) { }
 
-  getBlogPage(): Observable<IBlogPage> {
-    // FIXME: add page number as a param
-    return this.http.get<IBlogPage>(this.baseUrl);
+  getBlogPage(activePage: number = 13): Observable<IBlogPage> {
+    let params = new HttpParams().set('page', activePage.toString());
+    return this.http.get<IBlogPage>(this.baseUrl, { params });
   }
 
   createBlogPost(blogPost: IBlogPost): Observable<IBlogPost> {

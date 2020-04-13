@@ -29,6 +29,10 @@ export interface ILoginUser {
   password: string;
 }
 
+export interface IPage {
+  activePage: number;
+}
+
 export interface IToken {
   token: string;
 }
