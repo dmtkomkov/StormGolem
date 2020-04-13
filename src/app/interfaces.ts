@@ -30,7 +30,7 @@ export interface ILoginUser {
 }
 
 export interface IPage {
-  activePage: number;
+  limit: number;
 }
 
 export interface IToken {

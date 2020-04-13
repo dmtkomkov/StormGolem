@@ -14,8 +14,8 @@ export class BlogService {
     private http: HttpClient,
   ) { }
 
-  getBlogPage(activePage: number): Observable<IBlogPage> {
-    let params = new HttpParams().set('page', activePage.toString());
+  getBlogPage(limit: number): Observable<IBlogPage> {
+    let params = new HttpParams().set('limit', limit.toString());
     return this.http.get<IBlogPage>(this.baseUrl, { params });
   }
 

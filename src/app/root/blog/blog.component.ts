@@ -19,7 +19,7 @@ import { handleAuthStatus, getAuthStatus } from "@shared/helpers/auth.helpers";
 export class BlogComponent implements OnInit, OnDestroy {
   public blogPageContent$: Observable<IBlogPost[]>;
   private statusSubscription: Subscription;
-  activePage: number = 1;
+  limit: number;
 
   constructor(
     private blogService: BlogService,
@@ -27,21 +27,21 @@ export class BlogComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.limit = 5;
     this.blogPageContent$ = this.store.select(blogPostsSlice);
     this.statusSubscription = this.store.select(authSlice).pipe(
       getAuthStatus(),
       handleAuthStatus(
-        () => this.store.dispatch(new LoadBlogPosts({ activePage: 1 })),
+        () => this.store.dispatch(new LoadBlogPosts({ limit: this.limit })),
         () => this.store.dispatch(new ResetBlog()),
       )
     ).subscribe();
-    this.store.dispatch(new LoadBlogPosts({ activePage: this.activePage }));
+    this.store.dispatch(new LoadBlogPosts({ limit: this.limit }));
   }
 
   ngOnDestroy() {
     this.store.dispatch(new ResetBlog());
     this.statusSubscription.unsubscribe();
-
   }
 
   trackByPostId(index: number, blogPost: IBlogPost): number {

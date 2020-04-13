@@ -35,7 +35,7 @@ export class BlogEffect {
 
   @Effect() loadBlogPosts$ = this.actions$.pipe(
     ofType<BlogAction>(EBlogAction.LoadBlogPosts),
-    concatMap((action: LoadBlogPosts) => this.blogService.getBlogPage(action.payload.activePage)
+    concatMap((action: LoadBlogPosts) => this.blogService.getBlogPage(action.payload.limit)
       .pipe(
         map((blogPage: IBlogPage) => blogPage.results),
         map((blogPosts: IBlogPost[]) => [EMPTY_BLOG_POST].concat(selectBlogPost(blogPosts, NaN))),
@@ -81,6 +81,6 @@ export class BlogEffect {
       EBlogAction.UpdateBlogPostSuccess,
       EBlogAction.DeleteBlogPostSuccess,
     ),
-    map(() => new LoadBlogPosts({ activePage: 1 })),
+    map(() => new LoadBlogPosts({ limit: 1 })),
   );
 }
