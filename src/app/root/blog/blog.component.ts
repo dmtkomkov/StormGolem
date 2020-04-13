@@ -19,7 +19,7 @@ import { handleAuthStatus, getAuthStatus } from "@shared/helpers/auth.helpers";
 export class BlogComponent implements OnInit, OnDestroy {
   public blogPageContent$: Observable<IBlogPost[]>;
   private statusSubscription: Subscription;
-  activePage: 1;
+  activePage: number = 1;
 
   constructor(
     private blogService: BlogService,
@@ -35,7 +35,7 @@ export class BlogComponent implements OnInit, OnDestroy {
         () => this.store.dispatch(new ResetBlog()),
       )
     ).subscribe();
-    this.store.dispatch(new LoadBlogPosts({ activePage: this.activePage}));
+    this.store.dispatch(new LoadBlogPosts({ activePage: this.activePage }));
   }
 
   ngOnDestroy() {
