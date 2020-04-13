@@ -2,7 +2,12 @@
 
 form {
   display: flex;
-  flex-direction: column
+  flex-direction: column;
+
+  input {
+    font-size: 18px;
+    font-weight: 500;
+  }
 }
 
 .panel {

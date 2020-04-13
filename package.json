@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "start": "ng serve --liveReload=false",
+    "start": "ng serve",
     "build": "ng build --prod"
   },
   "stylelint": {

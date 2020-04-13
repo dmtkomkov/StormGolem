@@ -13,21 +13,26 @@
 .sg-card {
   display: flex;
   flex-direction: column;
-  box-shadow: 5px 5px 3px $shadow;
   margin-bottom: 20px;
+  border: 2px solid $border-default;
+  border-radius: 5px;
+
+  &.new {
+    border: 2px solid $border-new;
+    background-color: $background-new;
+    cursor: pointer;
+  }
 
   .sg-card-header {
-    // background-color: $header;
-    background-image: linear-gradient(to right, $header, $border, $header);
-    height: 40px;
+    padding: 5px;
+    height: 50px;
     display: flex;
     align-items: center;
 
     .sg-card-icon {
       height: 40px;
       width: 40px;
-      // background-color: $icon-background;
-      background-image: radial-gradient($header, $icon-background);
+      // border-right: 1px solid $border-default;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -41,7 +46,7 @@
 
       .main-title {
         font-size: 18px;
-        font-weight: bold;
+        font-weight: 500;
       }
 
       .sub-title {
@@ -52,9 +57,23 @@
 
   .sg-card-body {
     white-space: pre-wrap;
-    min-height: 40px;
-    padding: 25px;
+    padding: 10px 20px;
     line-height: 1.5;
     background: white;
   }
+}
+
+.icon-divider {
+  width: 0;
+  margin-right: 10px;
+  margin-left: 5px;
+  height: 40px;
+  border-right: 1px solid #ccc;
+}
+
+.body-divider {
+  align-self: center;
+  height: 0;
+  width: 580px;
+  border-top: 1px solid $border-default;
 }
