@@ -1,4 +1,9 @@
-<div class="blog-container">
+<div class="blog-container"
+     infiniteScroll
+     [scrollWindow]="false"
+     [infiniteScrollDistance]="1"
+     [infiniteScrollThrottle]="300"
+     (scrolled)="loadNextPage()">
   <div class="blog" *ngIf="blogPageContent$ | async as blogPageContent">
     <sg-post class="sg-post"
        *ngFor="let blogPost of blogPageContent; trackBy: trackByPostId"

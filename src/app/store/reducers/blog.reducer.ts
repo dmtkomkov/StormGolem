@@ -1,15 +1,27 @@
 import { BlogAction, EBlogAction } from "@store/actions";
 import { IBlogState, initialBlogState } from "@store/states";
 import { selectBlogPost } from "@shared/helpers";
+import { IBlogPost } from "@interfaces";
+
+const EMPTY_BLOG_POST: IBlogPost = { id: 0, title: '', body: '', selected: false };
 
 export function blogReducer(state: IBlogState = initialBlogState, action: BlogAction): IBlogState {
   switch (action.type) {
 
     case EBlogAction.LoadBlogPosts: return {...state, loading: true};
-    case EBlogAction.LoadBlogPostsSuccess: return {
-      blogPosts: state.blogPosts && !action.reload ? state.blogPosts.concat(action.payload.slice(1)) : action.payload,
-      loading: false
-    };
+    case EBlogAction.LoadBlogPostsSuccess: {
+      let blogPosts: IBlogPost[];
+      if (!action.reload && state.blogPosts) {
+        blogPosts = state.blogPosts.concat(action.payload);
+      } else {
+        blogPosts = action.payload;
+      }
+      return {
+        ...state,
+        blogPosts: [EMPTY_BLOG_POST].concat(selectBlogPost(blogPosts, NaN)),
+        loading: false,
+      };
+    }
     case EBlogAction.LoadBlogPostsError: return initialBlogState;
 
     case EBlogAction.CreateBlogPost: return {...state, loading: true};

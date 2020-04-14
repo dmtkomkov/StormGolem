@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 
 import { IBlogPost, IBlogPage } from '@interfaces';
 
-export const PAGE_SIZE = 5;
+export const PAGE_SIZE = 10;
 
 @Injectable({providedIn: 'root'})
 export class BlogService {

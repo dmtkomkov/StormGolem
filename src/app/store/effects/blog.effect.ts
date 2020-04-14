@@ -19,12 +19,9 @@ import {
 } from "@store/actions";
 import { BlogService } from "@services";
 import { IBlogPage, IBlogPost } from "@interfaces";
-import { selectBlogPost } from "@shared/helpers";
 
 import { of } from "rxjs";
 import { catchError, concatMap, map } from 'rxjs/operators';
-
-const EMPTY_BLOG_POST: IBlogPost = { id: 0, title: '', body: '', selected: false };
 
 @Injectable()
 export class BlogEffect {
@@ -38,7 +35,6 @@ export class BlogEffect {
     concatMap((action: LoadBlogPosts) => this.blogService.getBlogPage(action.reload)
       .pipe(
         map((blogPage: IBlogPage) => blogPage.results),
-        map((blogPosts: IBlogPost[]) => [EMPTY_BLOG_POST].concat(selectBlogPost(blogPosts, NaN))),
         map((blogPosts: IBlogPost[]) => new LoadBlogPostsSuccess(blogPosts, action.reload)),
         catchError(() => of(new LoadBlogPostsError())),
       )

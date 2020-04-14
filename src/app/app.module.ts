@@ -20,6 +20,7 @@ import { PageNotFoundComponent } from '@shared/error-pages/page-not-found/page-n
 import { IconComponent } from "@shared/icon/icon.component";
 import { ButtonComponent } from "@shared/button/button.component";
 import { MainMenuComponent } from '@shared/dialogs/main-menu/main-menu.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { MainMenuComponent } from '@shared/dialogs/main-menu/main-menu.component
     HttpClientModule,
     ReactiveFormsModule,
     ModalModule,
+    InfiniteScrollModule,
   ],
   providers: [
     {

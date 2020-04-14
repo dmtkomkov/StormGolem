@@ -1,7 +1,9 @@
+.blog-container {
+  height: calc(100vh - 48px);
+  overflow: auto;
+}
+
 .blog {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
   width: 600px;
   margin: auto;
   padding: 20px;
