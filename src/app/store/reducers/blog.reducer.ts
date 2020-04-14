@@ -14,15 +14,15 @@ export function blogReducer(state: IBlogState = initialBlogState, action: BlogAc
       if (!action.reload && state.blogPosts) {
         blogPosts = state.blogPosts.concat(action.payload);
       } else {
-        blogPosts = action.payload;
+        blogPosts = [EMPTY_BLOG_POST].concat(action.payload);
       }
       return {
         ...state,
-        blogPosts: [EMPTY_BLOG_POST].concat(selectBlogPost(blogPosts, NaN)),
+        blogPosts: selectBlogPost(blogPosts, NaN),
         loading: false,
       };
     }
-    case EBlogAction.LoadBlogPostsError: return initialBlogState;
+    case EBlogAction.LoadBlogPostsError: return {...state, loading: false};
 
     case EBlogAction.CreateBlogPost: return {...state, loading: true};
     case EBlogAction.CreateBlogPostSuccess: return {...state, loading: true};
