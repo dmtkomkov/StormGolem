@@ -6,7 +6,7 @@
   <div class="separator"></div>
   <div class="login">
     <ng-container *ngIf="(user$ | async) as user; else login">
-      <sg-icon icon="login-user"></sg-icon>
+      <sg-icon icon="user"></sg-icon>
       <div>{{ user.first_name }} {{ user.last_name }}</div>
       <sg-button (click)="logout()">Log Out</sg-button>
     </ng-container>
