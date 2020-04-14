@@ -21,6 +21,9 @@ import { IconComponent } from "@shared/icon/icon.component";
 import { ButtonComponent } from "@shared/button/button.component";
 import { MainMenuComponent } from '@shared/dialogs/main-menu/main-menu.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { CloseIconComponent } from "./components/icons/close-icon/close-icon.component";
+import { AddIconComponent } from "./components/icons/add-icon/add-icon.component";
+import { EditIconComponent } from "./components/icons/edit-icon/edit-icon.component";
 
 @NgModule({
   declarations: [
@@ -34,6 +37,9 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     IconComponent,
     ButtonComponent,
     MainMenuComponent,
+    CloseIconComponent,
+    AddIconComponent,
+    EditIconComponent,
   ],
   imports: [
     BrowserModule,

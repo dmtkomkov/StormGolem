@@ -1,0 +1,8 @@
+@import 'colors';
+
+circle,
+line {
+  stroke: $warning;
+  stroke-width: 2;
+  fill: none;
+}
