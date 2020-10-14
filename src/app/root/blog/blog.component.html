@@ -2,7 +2,7 @@
      infiniteScroll
      [scrollWindow]="false"
      [infiniteScrollDistance]="1"
-     [infiniteScrollThrottle]="300"
+     [infiniteScrollThrottle]="600"
      (scrolled)="loadNextPage()">
   <div class="blog" *ngIf="blogPageContent$ | async as blogPageContent">
     <sg-post class="sg-post"

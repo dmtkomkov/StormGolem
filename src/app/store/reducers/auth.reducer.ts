@@ -6,14 +6,8 @@ export function authReducer(state: IAuthState = null, action: AuthAction): IAuth
 
     case EAuthAction.LogIn: return {authStatus: EAuthStatus.Authorization};
     case EAuthAction.LogInSuccess: return {authStatus: EAuthStatus.LoggedIn};
-
-    case EAuthAction.LogOut:
-    case EAuthAction.LogInError: {
-      return {authStatus: EAuthStatus.LoggedOut};
-    }
-
-    default: {
-      return state;
-    }
+    case EAuthAction.LogOut: return {authStatus: EAuthStatus.LoggedOut};
+    case EAuthAction.LogInError: return {authStatus: EAuthStatus.LoggedInError};
+    default: return state;
   }
 }

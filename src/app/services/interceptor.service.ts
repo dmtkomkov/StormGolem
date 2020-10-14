@@ -1,14 +1,27 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {
+  HttpInterceptor,
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpHeaders,
+  HttpErrorResponse
+} from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 import { environment } from '@environments';
+import { catchError } from "rxjs/operators";
+import { LogOut } from "@store/actions";
+import { Store } from "@ngrx/store";
+import { IAppState } from "@store/states";
 
 @Injectable({providedIn: 'root'})
 export class InterceptorService implements HttpInterceptor {
   readonly baseUrl = environment.backend;
   readonly apiUrl = environment.backend + environment.api;
 
-  constructor() { }
+  constructor(
+    private store: Store<IAppState>,
+  ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Add auth header and set new url
@@ -20,7 +33,14 @@ export class InterceptorService implements HttpInterceptor {
       url: this.getModifiedUrl(request.url),
     });
 
-    return next.handle(modifiedRequest);
+    return next.handle(modifiedRequest).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          this.store.dispatch(new LogOut());
+        }
+        return throwError(error);
+      }),
+    );
   }
 
   private getModifiedUrl(url: string): string {

@@ -36,9 +36,11 @@ export class LoginDialogComponent implements OnInit, OnDestroy {
           this.close();
         },
         () => {
+        },
+        () => {
           this.loginErrMsg = `Login failed`;
           setTimeout(() => this.loginErrMsg = null, 2000);
-        },
+        }
       )
     ).subscribe();
 

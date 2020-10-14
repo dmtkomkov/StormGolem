@@ -40,7 +40,10 @@ export class AppComponent implements OnInit, OnDestroy {
       getAuthStatus(),
       handleAuthStatus(
         () => this.store.dispatch(new LoadUser()),
-        () => this.store.dispatch(new ResetUser()),
+        () => {
+          this.store.dispatch(new ResetUser());
+          this.openLoginDialog();
+        },
       )
     ).subscribe();
     this.store.dispatch(new LoadUser());
