@@ -5,7 +5,6 @@ import { AuthService } from "@services";
 import {
   EAuthAction, AuthAction,
   LogIn, LogInError, LogInSuccess,
-  RefreshToken, RefreshTokenError, RefreshTokenSuccess,
 } from "@store/actions";
 import { IToken } from "@interfaces";
 
@@ -30,22 +29,6 @@ export class AuthEffect {
         catchError(() => {
           localStorage.setItem('token', null);
           return of(new LogInError());
-        }),
-      )
-    ),
-  );
-
-  @Effect() refreshUser$ = this.actions$.pipe(
-    ofType<AuthAction>(EAuthAction.RefreshToken),
-    concatMap((action: RefreshToken) => this.authService.refresh(action.payload)
-      .pipe(
-        map((new_token: IToken) => {
-          localStorage.setItem('token', new_token.token);
-          return new RefreshTokenSuccess();
-        }),
-        catchError(() => {
-          localStorage.setItem('token', null);
-          return of(new RefreshTokenError());
         }),
       )
     ),

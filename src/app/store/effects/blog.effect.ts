@@ -78,7 +78,6 @@ export class BlogEffect {
       EBlogAction.DeleteBlogPostSuccess,
     ),
     map(() => {
-      console.log('reload');
       return new LoadBlogPosts();
     }),
   );

@@ -8,15 +8,10 @@ export function authReducer(state: IAuthState = null, action: AuthAction): IAuth
     case EAuthAction.LogInSuccess: return {authStatus: EAuthStatus.LoggedIn};
 
     case EAuthAction.LogOut:
-    case EAuthAction.LogInError:
-    case EAuthAction.RefreshTokenError: {
+    case EAuthAction.LogInError: {
       return {authStatus: EAuthStatus.LoggedOut};
     }
 
-    case EAuthAction.RefreshToken:
-    case EAuthAction.RefreshTokenSuccess: {
-      return {authStatus: EAuthStatus.LoggedIn};
-    }
     default: {
       return state;
     }

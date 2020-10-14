@@ -15,9 +15,4 @@ export class AuthService {
   auth(loginUser: ILoginUser): Observable<IToken> {
     return this.http.post<IToken>('auth', loginUser);
   }
-
-  // Refresh token
-  refresh(old_token: IToken): Observable<IToken> {
-    return this.http.post<IToken>('refresh', old_token);
-  }
 }

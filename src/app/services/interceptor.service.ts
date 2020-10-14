@@ -1,24 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders } from '@angular/common/http';
-
-import { ITokenData } from '@interfaces';
 import { Observable } from 'rxjs';
 import { environment } from '@environments';
-
-import { Store } from "@ngrx/store";
-import { RefreshToken } from "@store/actions";
-import { IAppState } from "@store/states";
-
-import * as decode from "jwt-decode";
 
 @Injectable({providedIn: 'root'})
 export class InterceptorService implements HttpInterceptor {
   readonly baseUrl = environment.backend;
   readonly apiUrl = environment.backend + environment.api;
 
-  constructor(
-    private store: Store<IAppState>,
-  ) { }
+  constructor() { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Add auth header and set new url
@@ -30,21 +20,12 @@ export class InterceptorService implements HttpInterceptor {
       url: this.getModifiedUrl(request.url),
     });
 
-    // Check and refresh token if needed
-    if (token && request.url !== 'auth' && request.url !== 'refresh' && !request.url.startsWith('assets')) {
-      const current = Math.round(+new Date()/1000);
-      const tokenData: ITokenData = decode(token);
-      if (tokenData.exp - current < 600) {
-        this.store.dispatch(new RefreshToken({token: token}));
-      }
-    }
-
     return next.handle(modifiedRequest);
   }
 
   private getModifiedUrl(url: string): string {
     if (url.startsWith('assets')) return url; // Do not modify assets url
-    else if (url === 'auth' || url === 'refresh') return this.baseUrl + url; // Use base url for auth
+    else if (url === 'auth') return this.baseUrl + url; // Use base url for auth
     else return this.apiUrl + url; // Use api url for all other requests
   }
 }
