@@ -23,11 +23,11 @@ export class AuthEffect {
     concatMap((action: LogIn) => this.authService.auth(action.payload)
       .pipe(
         map((token: IToken) => {
-          localStorage.setItem('token', token.token);
+          sessionStorage.setItem('token', token.token);
           return new LogInSuccess();
         }),
         catchError(() => {
-          localStorage.setItem('token', null);
+          sessionStorage.setItem('token', null);
           return of(new LogInError());
         }),
       )

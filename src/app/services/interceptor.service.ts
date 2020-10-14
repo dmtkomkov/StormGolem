@@ -25,7 +25,7 @@ export class InterceptorService implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Add auth header and set new url
-    const token: string = localStorage.getItem('token');
+    const token: string = sessionStorage.getItem('token');
     const modifiedRequest = request.clone({
       headers: token?
         new HttpHeaders({ Authorization: `JWT ${token}`}):
