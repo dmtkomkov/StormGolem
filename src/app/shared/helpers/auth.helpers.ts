@@ -1,9 +1,8 @@
 import { pipe } from "rxjs";
-import { filter, map, tap } from "rxjs/operators";
+import { map, tap } from "rxjs/operators";
 import { EAuthStatus, IAuthState } from "@store/states";
 
 export const getAuthStatus = () => pipe(
-  filter((authState: IAuthState) => authState !== null),
   map((authState: IAuthState) => authState.authStatus),
 );
 

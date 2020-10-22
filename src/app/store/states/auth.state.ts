@@ -11,4 +11,8 @@ export interface IAuthState {
   authStatus: EAuthStatus;
 }
 
+export const initialAuthState: IAuthState = {
+  authStatus: EAuthStatus.LoggedIn
+}
+
 export const authSlice = createFeatureSelector<IAuthState>('auth');

@@ -46,7 +46,6 @@ export class AppComponent implements OnInit, OnDestroy {
         },
       )
     ).subscribe();
-    this.store.dispatch(new LoadUser());
   }
 
   ngOnDestroy() {

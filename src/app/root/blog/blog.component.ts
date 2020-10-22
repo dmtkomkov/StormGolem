@@ -34,7 +34,6 @@ export class BlogComponent implements OnInit, OnDestroy {
         () => this.store.dispatch(new ResetBlog()),
       )
     ).subscribe();
-    this.store.dispatch(new LoadBlogPosts());
   }
 
   ngOnDestroy() {
