@@ -6,10 +6,10 @@ import {IBlogPost} from '@interfaces';
 
 import { Store } from '@ngrx/store';
 import { LoadBlogPosts, ResetBlog } from "@store/actions";
-import { IAppState, blogPostsSlice, authSlice } from "@store/states";
+import { IAppState, blogPostsSlice, authSlice, IAuthState, EAuthStatus } from "@store/states";
 
 import { Observable, Subscription } from 'rxjs';
-import { handleAuthStatus, getAuthStatus } from "@shared/helpers/auth.helpers";
+import { tap } from "rxjs/operators";
 
 @Component({
   selector: 'sg-blog',
@@ -19,6 +19,7 @@ import { handleAuthStatus, getAuthStatus } from "@shared/helpers/auth.helpers";
 export class BlogComponent implements OnInit, OnDestroy {
   public blogPageContent$: Observable<IBlogPost[]>;
   private statusSubscription: Subscription;
+  private pageLoaded = false;
 
   constructor(
     private blogService: BlogService,
@@ -26,14 +27,23 @@ export class BlogComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.blogPageContent$ = this.store.select(blogPostsSlice);
-    this.statusSubscription = this.store.select(authSlice).pipe(
-      getAuthStatus(),
-      handleAuthStatus(
-        () => this.store.dispatch(new LoadBlogPosts()),
-        () => this.store.dispatch(new ResetBlog()),
-      )
-    ).subscribe();
+    this.blogPageContent$ = this.store.select(blogPostsSlice).pipe(
+      tap((blogPosts: IBlogPost[]) => {
+        if (blogPosts !== null && this.pageLoaded === false) {
+          this.pageLoaded = true;
+        }
+      })
+    );
+
+    // Load blog at first place
+    this.store.dispatch(new LoadBlogPosts());
+
+    // Load blog on login
+    this.statusSubscription = this.store.select(authSlice).subscribe((authState: IAuthState) => {
+      if (authState.authStatus === EAuthStatus.LoggedIn && this.pageLoaded === false) {
+        this.store.dispatch(new LoadBlogPosts());
+      }
+    });
   }
 
   ngOnDestroy() {
