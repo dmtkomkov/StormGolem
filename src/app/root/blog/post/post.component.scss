@@ -1,5 +1,9 @@
 @import "colors";
 
+.blog-post {
+  padding-bottom: 20px;
+}
+
 .toggle-button {
   cursor: pointer;
   display: flex;
@@ -11,7 +15,7 @@
 .sg-card {
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  // margin-bottom: 20px;
   border: 2px solid $border-default;
   border-radius: 5px;
 
