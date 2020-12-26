@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Location } from '@angular/common';
 
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 import { IBlogPost, IBlogPage } from '@interfaces';
 
@@ -13,12 +13,21 @@ export class BlogService {
   private baseUrl: string = 'blog';
   private pageSize: number;
   private pageNumber: number;
+  private blogActions$ = new Subject<any>();
 
   constructor(
     private http: HttpClient,
   ) {
     this.pageSize = PAGE_SIZE;
     this.pageNumber = 1;
+  }
+
+  getBlogActions() {
+    return this.blogActions$;
+  }
+
+  sendBlogAction(blogAction, payload) {
+    this.blogActions$.next({action: blogAction, payload: payload});
   }
 
   getBlogPage(reload: boolean): Observable<IBlogPage> {

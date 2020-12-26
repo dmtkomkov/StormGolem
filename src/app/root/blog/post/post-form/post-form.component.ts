@@ -3,10 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { BlogService } from '@services';
 
-import { Store } from "@ngrx/store";
-import { CreateBlogPost, DeleteBlogPost, UpdateBlogPost } from "@store/actions";
-import { IAppState } from "@store/states";
-
 @Component({
   selector: 'sg-post-form',
   templateUrl: 'post-form.component.html',
@@ -21,7 +17,6 @@ export class PostFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private blogService: BlogService,
-    private store: Store<IAppState>,
   ) { }
 
   ngOnInit() {
@@ -32,14 +27,14 @@ export class PostFormComponent implements OnInit {
   }
 
   create() {
-    this.store.dispatch(new CreateBlogPost(this.blogPostForm.value));
+    this.blogService.sendBlogAction('create', this.blogPostForm.value);
   }
 
   update() {
-    this.store.dispatch(new UpdateBlogPost({id: this.id, ...this.blogPostForm.value}));
+    this.blogService.sendBlogAction('update', {id: this.id, ...this.blogPostForm.value});
   }
 
   delete() {
-    this.store.dispatch(new DeleteBlogPost(this.id));
+    this.blogService.sendBlogAction('delete', this.id);
   }
 }
