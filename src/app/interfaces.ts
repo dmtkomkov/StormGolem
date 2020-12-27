@@ -44,10 +44,7 @@ export interface IBlogPost {
 
 export type IBlogPage = Page<IBlogPost>;
 
-export interface ITokenData {
-  username: string;
-  user_id: number;
-  email: string;
-  orig_iat: number;
-  exp: number;
+export interface IBlogPostAction {
+  name: string;
+  payload: IBlogPost;
 }

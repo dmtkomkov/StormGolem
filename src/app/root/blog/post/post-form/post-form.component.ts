@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { BlogService } from '@services';
+import { IBlogPost } from "@interfaces";
 
 @Component({
   selector: 'sg-post-form',
@@ -27,14 +28,18 @@ export class PostFormComponent implements OnInit {
   }
 
   create() {
-    this.blogService.sendBlogAction('create', this.blogPostForm.value);
+    this.blogService.sendBlogAction('create', this.blogPost);
   }
 
   update() {
-    this.blogService.sendBlogAction('update', {id: this.id, ...this.blogPostForm.value});
+    this.blogService.sendBlogAction('update', this.blogPost);
   }
 
   delete() {
-    this.blogService.sendBlogAction('delete', this.id);
+    this.blogService.sendBlogAction('delete', this.blogPost);
+  }
+
+  private get blogPost(): IBlogPost {
+    return { id: this.id, ...this.blogPostForm.value }
   }
 }

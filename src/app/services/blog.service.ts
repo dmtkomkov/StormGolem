@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 
 import { Observable, Subject } from 'rxjs';
 
-import { IBlogPost, IBlogPage } from '@interfaces';
+import { IBlogPost, IBlogPage, IBlogPostAction } from '@interfaces';
 
 export const PAGE_SIZE = 10;
 
@@ -12,7 +12,7 @@ export const PAGE_SIZE = 10;
 export class BlogService {
   private baseUrl: string = 'blog';
   private pageSize: number;
-  private blogActions$ = new Subject<any>();
+  private blogActions$ = new Subject<IBlogPostAction>();
 
   constructor(
     private http: HttpClient,
@@ -20,12 +20,12 @@ export class BlogService {
     this.pageSize = PAGE_SIZE;
   }
 
-  getBlogActions() {
+  getBlogActions(): Observable<IBlogPostAction> {
     return this.blogActions$;
   }
 
-  sendBlogAction(blogAction, payload) {
-    this.blogActions$.next({action: blogAction, payload: payload});
+  sendBlogAction(name: string, payload: IBlogPost) {
+    this.blogActions$.next({name, payload});
   }
 
   getBlogPage(pageNumber: number): Observable<IBlogPage> {
@@ -49,8 +49,8 @@ export class BlogService {
     return this.http.put<IBlogPost>(url, blogPost);
   }
 
-  deleteBlogPost(blogPostId: number): Observable<{}> {
-    const url = Location.joinWithSlash(this.baseUrl, blogPostId.toString());
+  deleteBlogPost(blogPost: IBlogPost): Observable<{}> {
+    const url = Location.joinWithSlash(this.baseUrl, blogPost.id.toString());
     return this.http.delete<{}>(url);
   }
 }

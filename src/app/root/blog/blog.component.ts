@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { BlogService } from '@services';
 
@@ -7,7 +7,7 @@ import { IBlogPage, IBlogPost } from '@interfaces';
 import { Store } from '@ngrx/store';
 import { IAppState, authSlice, IAuthState, EAuthStatus } from "@store/states";
 
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 const EMPTY_BLOG_POST: IBlogPost = { id: 0, title: '', body: '' };
 
@@ -37,10 +37,17 @@ export class BlogComponent implements OnInit, OnDestroy {
     this.loadBlogPosts();
 
     // Subscribe blog actions
+    this.handleBlogOnActions();
+
+    // Load blog on login
+    this.handleBlogOnLogin();
+  }
+
+  private handleBlogOnActions() {
     this.actionSubscription = this.blogService.getBlogActions().subscribe(
       (action) => {
-        let serviceAction = null;
-        switch(action.action) {
+        let serviceAction: Observable<IBlogPost|{}>;
+        switch(action.name) {
           case 'create': {
             serviceAction = this.blogService.createBlogPost(action.payload);
             break;
@@ -61,8 +68,9 @@ export class BlogComponent implements OnInit, OnDestroy {
         )
       },
     )
+  }
 
-    // Load blog on login
+  private handleBlogOnLogin() {
     this.statusSubscription = this.store.select(authSlice).subscribe((authState: IAuthState) => {
       if (authState.authStatus === EAuthStatus.LoggedIn && this.pageLoaded === false) {
         this.loadBlogPosts();
@@ -70,7 +78,7 @@ export class BlogComponent implements OnInit, OnDestroy {
     });
   }
 
-  loadBlogPosts(resetSelected: boolean = false) {
+  private loadBlogPosts(resetSelected: boolean = false) {
     this.blogService.getBlogPages(this.pageNumber).subscribe(
       (blogPage: IBlogPage) => {
         this.blogPosts = [EMPTY_BLOG_POST].concat(blogPage.results);
@@ -81,17 +89,12 @@ export class BlogComponent implements OnInit, OnDestroy {
     )
   }
 
-  addBlogPosts() {
+  private addBlogPosts() {
     this.blogService.getBlogPage(this.pageNumber).subscribe(
       (blogPage: IBlogPage) => {
         this.blogPosts = this.blogPosts.concat(blogPage.results);
       }
     )
-  }
-
-  ngOnDestroy() {
-    this.statusSubscription.unsubscribe();
-    this.actionSubscription.unsubscribe();
   }
 
   trackByPostId(index: number, blogPost: IBlogPost): number {
@@ -105,5 +108,10 @@ export class BlogComponent implements OnInit, OnDestroy {
 
   togglePost(id: number) {
     this.selectedPostId = id;
+  }
+
+  ngOnDestroy() {
+    this.statusSubscription.unsubscribe();
+    this.actionSubscription.unsubscribe();
   }
 }
