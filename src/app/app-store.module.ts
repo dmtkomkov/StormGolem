@@ -1,10 +1,9 @@
 import { NgModule } from "@angular/core";
 import { StoreModule } from "@ngrx/store";
 import { ngrxLogger } from "@shared/helpers";
-import { authReducer, blogReducer, userReducer } from "@store/reducers";
+import { authReducer, userReducer } from "@store/reducers";
 
 const appStore = {
-  blog: blogReducer,
   auth: authReducer,
   user: userReducer,
 };

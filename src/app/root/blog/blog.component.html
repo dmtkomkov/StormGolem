@@ -4,9 +4,9 @@
      [infiniteScrollDistance]="1"
      [infiniteScrollThrottle]="600"
      (scrolled)="loadNextPage()">
-  <div class="blog" *ngIf="blogPageContent$ | async as blogPageContent">
+  <div class="blog">
     <sg-post class="sg-post"
-       *ngFor="let blogPost of blogPageContent; trackBy: trackByPostId"
+       *ngFor="let blogPost of blogPosts; trackBy: trackByPostId"
        [blogPost]="blogPost"
        [selected]="selectedPostId === blogPost.id"
        (selectPost)="togglePost($event)">
