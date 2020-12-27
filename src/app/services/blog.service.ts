@@ -12,14 +12,12 @@ export const PAGE_SIZE = 10;
 export class BlogService {
   private baseUrl: string = 'blog';
   private pageSize: number;
-  private pageNumber: number;
   private blogActions$ = new Subject<any>();
 
   constructor(
     private http: HttpClient,
   ) {
     this.pageSize = PAGE_SIZE;
-    this.pageNumber = 1;
   }
 
   getBlogActions() {
@@ -30,13 +28,15 @@ export class BlogService {
     this.blogActions$.next({action: blogAction, payload: payload});
   }
 
-  getBlogPage(reload: boolean): Observable<IBlogPage> {
+  getBlogPage(pageNumber: number): Observable<IBlogPage> {
     let params: HttpParams;
-    if (reload) {
-      params = new HttpParams().set('limit', (this.pageSize * this.pageNumber).toString()).set('page', '1');
-    } else {
-      params = new HttpParams().set('limit', this.pageSize.toString()).set('page', this.pageNumber.toString());
-    }
+    params = new HttpParams().set('limit', this.pageSize.toString()).set('page', pageNumber.toString());
+    return this.http.get<IBlogPage>(this.baseUrl, { params });
+  }
+
+  getBlogPages(pageNumber: number): Observable<IBlogPage> {
+    let params: HttpParams;
+    params = new HttpParams().set('limit', (this.pageSize * pageNumber).toString());
     return this.http.get<IBlogPage>(this.baseUrl, { params });
   }
 
@@ -52,13 +52,5 @@ export class BlogService {
   deleteBlogPost(blogPostId: number): Observable<{}> {
     const url = Location.joinWithSlash(this.baseUrl, blogPostId.toString());
     return this.http.delete<{}>(url);
-  }
-
-  nextPage() {
-    this.pageNumber += 1;
-  }
-
-  resetPage() {
-    this.pageNumber = 1;
   }
 }

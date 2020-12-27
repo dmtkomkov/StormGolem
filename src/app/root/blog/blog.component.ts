@@ -20,6 +20,7 @@ export class BlogComponent implements OnInit, OnDestroy {
   private statusSubscription: Subscription;
   private actionSubscription: Subscription;
   private pageLoaded = false;
+  private pageNumber: number;
   selectedPostId: number;
   blogPosts: IBlogPost[]
 
@@ -27,6 +28,7 @@ export class BlogComponent implements OnInit, OnDestroy {
     private blogService: BlogService,
     private store: Store<IAppState>,
   ) {
+    this.pageNumber = 1;
     this.blogPosts = [];
   }
 
@@ -54,8 +56,7 @@ export class BlogComponent implements OnInit, OnDestroy {
         }
         serviceAction.subscribe(
           () => {
-            this.loadBlogPosts();
-            this.selectedPostId = NaN;
+            this.loadBlogPosts(true);
           },
         )
       },
@@ -69,20 +70,26 @@ export class BlogComponent implements OnInit, OnDestroy {
     });
   }
 
-  loadBlogPosts(reload: boolean = true) {
-    this.blogService.getBlogPage(reload).subscribe(
+  loadBlogPosts(resetSelected: boolean = false) {
+    this.blogService.getBlogPages(this.pageNumber).subscribe(
       (blogPage: IBlogPage) => {
-        if (!reload && this.blogPosts) {
-          this.blogPosts = this.blogPosts.concat(blogPage.results);
-        } else {
-          this.blogPosts = [EMPTY_BLOG_POST].concat(blogPage.results);
+        this.blogPosts = [EMPTY_BLOG_POST].concat(blogPage.results);
+        if (resetSelected) {
+          this.selectedPostId = NaN;
         }
       }
     )
   }
 
+  addBlogPosts() {
+    this.blogService.getBlogPage(this.pageNumber).subscribe(
+      (blogPage: IBlogPage) => {
+        this.blogPosts = this.blogPosts.concat(blogPage.results);
+      }
+    )
+  }
+
   ngOnDestroy() {
-    this.blogService.resetPage();
     this.statusSubscription.unsubscribe();
     this.actionSubscription.unsubscribe();
   }
@@ -92,8 +99,8 @@ export class BlogComponent implements OnInit, OnDestroy {
   }
 
   loadNextPage() {
-    this.blogService.nextPage();
-    this.loadBlogPosts(false);
+    this.pageNumber += 1;
+    this.addBlogPosts();
   }
 
   togglePost(id: number) {
