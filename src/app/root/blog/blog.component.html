@@ -7,7 +7,9 @@
   <div class="blog" *ngIf="blogPageContent$ | async as blogPageContent">
     <sg-post class="sg-post"
        *ngFor="let blogPost of blogPageContent; trackBy: trackByPostId"
-       [blogPost]="blogPost">
+       [blogPost]="blogPost"
+       [selected]="selectedPostId === blogPost.id"
+       (selectPost)="togglePost($event)">
     </sg-post>
   </div>
 </div>

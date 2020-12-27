@@ -21,6 +21,7 @@ export class BlogComponent implements OnInit, OnDestroy {
   private statusSubscription: Subscription;
   private actionSubscription: Subscription;
   private pageLoaded = false;
+  selectedPostId: number;
 
   constructor(
     private blogService: BlogService,
@@ -58,7 +59,10 @@ export class BlogComponent implements OnInit, OnDestroy {
           }
         }
         serviceAction.subscribe(
-          () => this.store.dispatch(new LoadBlogPosts()),
+          () => {
+            this.store.dispatch(new LoadBlogPosts());
+            this.selectedPostId = NaN;
+          },
         )
       },
     )
@@ -68,6 +72,7 @@ export class BlogComponent implements OnInit, OnDestroy {
     this.statusSubscription = this.store.select(authSlice).subscribe((authState: IAuthState) => {
       if (authState.authStatus === EAuthStatus.LoggedIn && this.pageLoaded === false) {
         this.store.dispatch(new LoadBlogPosts());
+        this.selectedPostId = NaN;
       }
     });
   }
@@ -86,5 +91,9 @@ export class BlogComponent implements OnInit, OnDestroy {
   loadNextPage() {
     this.blogService.nextPage();
     this.store.dispatch(new LoadBlogPosts(false));
+  }
+
+  togglePost(id: number) {
+    this.selectedPostId = id;
   }
 }
