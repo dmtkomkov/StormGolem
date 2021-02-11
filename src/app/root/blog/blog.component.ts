@@ -19,7 +19,6 @@ const EMPTY_BLOG_POST: IBlogPost = { id: 0, title: '', body: '' };
 export class BlogComponent implements OnInit, OnDestroy {
   private statusSubscription: Subscription;
   private actionSubscription: Subscription;
-  private pageLoaded = false;
   private pageNumber: number;
   selectedPostId: number;
   blogPosts: IBlogPost[]
@@ -72,7 +71,7 @@ export class BlogComponent implements OnInit, OnDestroy {
 
   private handleBlogOnLogin() {
     this.statusSubscription = this.store.select(authSlice).subscribe((authState: IAuthState) => {
-      if (authState.authStatus === EAuthStatus.LoggedIn && this.pageLoaded === false) {
+      if (authState.authStatus === EAuthStatus.LoggedIn) {
         this.loadBlogPosts();
       }
     });
