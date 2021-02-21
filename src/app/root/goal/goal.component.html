@@ -1,0 +1,11 @@
+<div class="goal-container">
+<!--     infiniteScroll-->
+<!--     [scrollWindow]="false"-->
+<!--     [infiniteScrollDistance]="1"-->
+<!--     [infiniteScrollThrottle]="600"-->
+<!--     (scrolled)="loadNextPage()"-->
+  <div class="goal">
+    <div class="sg-post" *ngFor="let workLog of workLogs">{{ workLog }}
+    </div>
+  </div>
+</div>

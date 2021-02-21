@@ -24,7 +24,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CloseIconComponent } from "./components/icons/close-icon/close-icon.component";
 import { AddIconComponent } from "./components/icons/add-icon/add-icon.component";
 import { EditIconComponent } from "./components/icons/edit-icon/edit-icon.component";
-import { WorkLogComponent } from "@root/work-log/work-log.component";
+import { GoalComponent } from "@root/goal/goal.component";
 
 @NgModule({
   declarations: [
@@ -41,7 +41,7 @@ import { WorkLogComponent } from "@root/work-log/work-log.component";
     CloseIconComponent,
     AddIconComponent,
     EditIconComponent,
-    WorkLogComponent,
+    GoalComponent,
   ],
   imports: [
     BrowserModule,

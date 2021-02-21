@@ -4,12 +4,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from "@root/home/home.component";
 import { BlogComponent } from "@root/blog/blog.component";
 import { PageNotFoundComponent } from "@shared/error-pages/page-not-found/page-not-found.component";
-import { WorkLogComponent } from "@root/work-log/work-log.component";
+import { GoalComponent } from "@root/goal/goal.component";
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'blog', component: BlogComponent },
-  { path: 'worklog', component: WorkLogComponent },
+  { path: 'worklog', component: GoalComponent },
   { path: '**', component: PageNotFoundComponent },
 ];
 
