@@ -5,7 +5,14 @@
 <!--     [infiniteScrollThrottle]="600"-->
 <!--     (scrolled)="loadNextPage()"-->
   <div class="goal">
-    <div class="sg-post" *ngFor="let workLog of workLogs">{{ workLog }}
+    <form [formGroup]="workLogForm" novalidate>
+      <input autocomplete="off" formControlName="log" spellcheck="false" autofocus title="">
+      <div class="panel">
+        <sg-button class="btn-ok" (click)="create()">Save</sg-button>
+      </div>
+    </form>
+    <div class="sg-post" *ngFor="let workLog of workLogs">
+      {{ workLog.log }}
     </div>
   </div>
 </div>

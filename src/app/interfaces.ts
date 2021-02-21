@@ -8,7 +8,7 @@ export enum EModalType {
   DIALOG = 'Dialog',
 }
 
-interface Page<T> {
+export interface Page<T> {
   results: T[];
   page_size: number;
   count: number;
