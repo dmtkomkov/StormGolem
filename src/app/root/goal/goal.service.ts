@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { IGoalPage, IWorkLog } from "@root/goal/goal.interfaces";
 
 // TODO: move to const file
-export const PAGE_SIZE = 10;
+export const PAGE_SIZE = 20;
 
 @Injectable({providedIn: 'root'})
 export class GoalService {
