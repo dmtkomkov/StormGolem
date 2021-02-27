@@ -25,6 +25,7 @@ import { CloseIconComponent } from "./components/icons/close-icon/close-icon.com
 import { AddIconComponent } from "./components/icons/add-icon/add-icon.component";
 import { EditIconComponent } from "./components/icons/edit-icon/edit-icon.component";
 import { GoalComponent } from "@root/goal/goal.component";
+import { GoalTableComponent } from "@root/goal/goal-table/goal-table.component";
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { GoalComponent } from "@root/goal/goal.component";
     AddIconComponent,
     EditIconComponent,
     GoalComponent,
+    GoalTableComponent,
   ],
   imports: [
     BrowserModule,

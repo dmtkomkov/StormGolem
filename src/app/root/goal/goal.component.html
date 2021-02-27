@@ -11,8 +11,6 @@
         <sg-button class="btn-ok" (click)="create()">Save</sg-button>
       </div>
     </form>
-    <div class="sg-post" *ngFor="let workLog of workLogs">
-      {{ workLog.log }} - {{ workLog.date }}
-    </div>
+    <sg-goal-table *ngIf="workLogs" [workLogs]="workLogs"></sg-goal-table>
   </div>
 </div>

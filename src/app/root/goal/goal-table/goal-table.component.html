@@ -1,0 +1,6 @@
+<div *ngFor="let date of sortedDates">
+  {{ date }}
+  <div *ngFor="let dateLog of goalTable[date]">
+    -->{{ dateLog.log }}
+  </div>
+</div>
