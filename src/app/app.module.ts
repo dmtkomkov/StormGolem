@@ -26,6 +26,7 @@ import { AddIconComponent } from "./components/icons/add-icon/add-icon.component
 import { EditIconComponent } from "./components/icons/edit-icon/edit-icon.component";
 import { GoalComponent } from "@root/goal/goal.component";
 import { GoalTableComponent } from "@root/goal/goal-table/goal-table.component";
+import { GoalRowComponent } from "@root/goal/goal-row/goal-row.component";
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { GoalTableComponent } from "@root/goal/goal-table/goal-table.component";
     EditIconComponent,
     GoalComponent,
     GoalTableComponent,
+    GoalRowComponent,
   ],
   imports: [
     BrowserModule,

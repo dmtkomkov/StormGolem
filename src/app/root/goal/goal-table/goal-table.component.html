@@ -1,6 +1,10 @@
-<div *ngFor="let date of sortedDates">
-  {{ date }}
-  <div *ngFor="let dateLog of goalTable[date]">
-    -->{{ dateLog.log }}
+<ng-container *ngFor="let date of sortedDates">
+  <div class="date-card">
+    <div class="date-header">
+      {{ date }}
+    </div>
+    <div *ngFor="let dateLog of goalTable[date]">
+      <sg-goal-row [dateLog]="dateLog"></sg-goal-row>
+    </div>
   </div>
-</div>
+</ng-container>

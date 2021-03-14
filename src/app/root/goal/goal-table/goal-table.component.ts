@@ -18,7 +18,6 @@ export class GoalTableComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.buildGoalTable();
-    console.log(this.sortedDates);
   }
 
   private buildGoalTable() {

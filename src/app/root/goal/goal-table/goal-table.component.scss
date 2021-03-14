@@ -1,0 +1,13 @@
+@import "colors";
+
+.date-card {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.date-header {
+  padding: 5px 10px;
+  font-size: 16px; // TODO: move to const
+  border-bottom: 2px solid $border-default;
+  font-weight: bold;
+}
