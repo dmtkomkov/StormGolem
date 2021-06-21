@@ -8,7 +8,8 @@ export interface IWorkLog {
 
 export interface IDateLog {
   log: string;
-  labels?: string[]
+  labels?: string[];
+  duration?: number;
 }
 
 export interface IGoalTable {
