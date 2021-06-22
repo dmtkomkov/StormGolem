@@ -1,8 +1,32 @@
 @import 'colors';
 
+.worklog-form {
+  border: 2px solid $border-default;
+  border-radius: 5px;
+  padding: 10px;
+}
+
 form {
   display: flex;
   flex-direction: column;
+
+  .input-separator {
+    width: 10px;
+  }
+
+  .inputs {
+    display: flex;
+
+    .input.hours,
+    .input.minutes {
+      flex: 0 0 50px;
+      min-height: 20px;
+    }
+
+    .input.log {
+      flex: 1;
+    }
+  }
 
   input {
     font-size: 14px;

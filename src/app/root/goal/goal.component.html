@@ -5,12 +5,30 @@
 <!--     [infiniteScrollThrottle]="600"-->
 <!--     (scrolled)="loadNextPage()"-->
   <div class="goal">
-    <form [formGroup]="workLogForm" novalidate>
-      <input autocomplete="off" formControlName="log" spellcheck="false" autofocus title="">
-      <div class="panel">
-        <sg-button class="btn-ok" (click)="create()">Save</sg-button>
-      </div>
-    </form>
+    <div class="worklog-form">
+      <form [formGroup]="workLogForm" novalidate>
+        <div class="inputs">
+          <select autocomplete="off" formControlName="hours" class="input hours">
+            <option [ngValue]="0">0h</option>
+            <option [ngValue]="1">1h</option>
+            <option [ngValue]="2">2h</option>
+            <option [ngValue]="3">3h</option>
+          </select>
+          <div class="input-separator"></div>
+          <select autocomplete="off" formControlName="minutes" class="input minutes">
+            <option [ngValue]="0">0m</option>
+            <option [ngValue]="15">15m</option>
+            <option [ngValue]="30">30m</option>
+            <option [ngValue]="45">45m</option>
+          </select>
+          <div class="input-separator"></div>
+          <input autocomplete="off" formControlName="log" spellcheck="false" maxlength="65" class="input log">
+        </div>
+        <div class="panel">
+          <sg-button class="btn-ok" (click)="create()">Save</sg-button>
+        </div>
+      </form>
+    </div>
     <sg-goal-table *ngIf="workLogs" [workLogs]="workLogs"></sg-goal-table>
   </div>
 </div>

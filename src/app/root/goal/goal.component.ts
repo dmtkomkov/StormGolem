@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import { GoalService } from "@root/goal/goal.service";
 import { IGoalPage, IWorkLog } from "@root/goal/goal.interfaces";
 
@@ -19,15 +19,22 @@ export class GoalComponent implements OnInit {
 
   ngOnInit() {
     this.workLogForm = this.formBuilder.group({
-      log: [ '', Validators.required ],
+      hours: 0,
+      minutes: 30,
+      log: '',
     });
 
     this.loadWorkLogs();
   }
 
   create() {
-    this.goalService.createWorkLog(this.workLogForm.value).subscribe(
-      () => this.loadWorkLogs(),
+    const formData = this.workLogForm.value;
+    const workLogData: IWorkLog = {log: formData.log, duration: formData.hours * 60 + formData.minutes}
+    this.goalService.createWorkLog(workLogData).subscribe(
+      () => {
+        this.loadWorkLogs();
+        this.workLogForm.reset({ hours: 0, minutes: 30 });
+      },
     );
   }
 
