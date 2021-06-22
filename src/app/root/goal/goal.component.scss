@@ -16,19 +16,10 @@ form {
 
   .inputs {
     display: flex;
-
-    .input.hours,
-    .input.minutes {
-      flex: 0 0 50px;
-      min-height: 20px;
-    }
-
-    .input.log {
-      flex: 1;
-    }
   }
 
-  input {
+  input,
+  select {
     font-size: 14px;
     font-weight: 500;
     padding-bottom: 5px;

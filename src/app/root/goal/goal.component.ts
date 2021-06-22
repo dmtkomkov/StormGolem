@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { GoalService } from "@root/goal/goal.service";
 import { IGoalPage, IWorkLog } from "@root/goal/goal.interfaces";
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'sg-work-log',
@@ -22,6 +23,7 @@ export class GoalComponent implements OnInit {
       hours: 0,
       minutes: 30,
       log: '',
+      date: formatDate(new Date(), 'yyyy-MM-dd', 'en'),
     });
 
     this.loadWorkLogs();
@@ -29,11 +31,11 @@ export class GoalComponent implements OnInit {
 
   create() {
     const formData = this.workLogForm.value;
-    const workLogData: IWorkLog = {log: formData.log, duration: formData.hours * 60 + formData.minutes}
+    const workLogData: IWorkLog = {log: formData.log, duration: formData.hours * 60 + formData.minutes, date: formData.date}
     this.goalService.createWorkLog(workLogData).subscribe(
       () => {
         this.loadWorkLogs();
-        this.workLogForm.reset({ hours: 0, minutes: 30 });
+        this.workLogForm.reset({ hours: 0, minutes: 30, date: formatDate(new Date(), 'yyyy-MM-dd', 'en') });
       },
     );
   }
