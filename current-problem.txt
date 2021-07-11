@@ -1,1 +1,2 @@
-Create menu as a dialog from pointer coordinate with animation from pointer.
+1. Create menu as a dialog from pointer coordinate with animation from pointer.
+2. Update goal and labels design
