@@ -1,11 +1,7 @@
 export enum EAnimation {
   FLY = 'Fly',
   FOCUS = 'Focus',
-}
-
-export enum EModalType {
-  LEFT_MENU = 'RightMenu',
-  DIALOG = 'Dialog',
+  SLIDE = 'Slide'
 }
 
 export interface Page<T> {

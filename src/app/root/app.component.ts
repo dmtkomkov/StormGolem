@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { LoginDialogComponent } from '@shared/dialogs/login-dialog/login-dialog.component';
 
-import { EAnimation, EModalType, IUser } from '@interfaces';
+import { EAnimation, IUser } from '@interfaces';
 
 import { Store } from "@ngrx/store";
 import { authSlice, IAppState, IUserState, userSlice } from "@store/states";
@@ -53,7 +53,12 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   openLoginDialog() {
-    this.dialog.open(LoginDialogComponent, { animation: EAnimation.FOCUS, type: EModalType.DIALOG });
+    this.dialog.open(LoginDialogComponent, {
+      animation: EAnimation.FOCUS,
+      overlay: true,
+      width: 400,
+      height: 150
+    });
   }
 
   logout() {
@@ -62,6 +67,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   showMenu() {
-    this.dialog.open(MainMenuComponent, { animation: EAnimation.FLY, type: EModalType.LEFT_MENU });
+    this.dialog.open(MainMenuComponent, {
+      animation: EAnimation.FLY,
+      width: 200,
+    });
   }
 }

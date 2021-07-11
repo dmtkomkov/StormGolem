@@ -12,7 +12,7 @@ import {
 import { ModalDirective } from './modal.directive';
 import { ModalRef } from './modal-ref';
 import { animate, style, transition, trigger, } from '@angular/animations';
-import { EAnimation, EModalType } from "@interfaces";
+import { EAnimation } from "@interfaces";
 import { ModalConfig } from "@modal/modal-config";
 
 @Component({
@@ -35,6 +35,13 @@ import { ModalConfig } from "@modal/modal-config";
           animate("300ms ease-out"),
         ]
       ),
+      transition(
+        `void => ${EAnimation.SLIDE}`,
+        [
+          style({ transform: 'translateY(-50%) scaleY(0)' }),
+          animate("300ms ease-out"),
+        ]
+      ),
     ]),
   ],
 })
@@ -42,7 +49,8 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
   @ViewChild(ModalDirective) insertionPoint: ModalDirective;
   componentRef: ComponentRef<any>;
   childComponentType: Type<any>;
-  configClass: string;
+  overlayStyle: any;
+  modalStyle: any;
   configAnimation: EAnimation;
 
   constructor(
@@ -51,15 +59,32 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
     private ref: ModalRef,
     private config: ModalConfig,
   ) {
-    switch(config.type) {
-      case EModalType.LEFT_MENU: {
-        this.configClass = 'left-menu';
-        break;
+    if (!config.overlay) {
+      this.overlayStyle = {}
+      if (this.config.x) {
+        this.overlayStyle['left.px'] = this.config.x.toString();
+      } else {
+        this.overlayStyle['left.px'] = '0'
       }
-      case EModalType.DIALOG: {
-        this.configClass = 'dialog';
-        break;
+      if (this.config.width) {
+        this.overlayStyle['width.px'] = this.config.width.toString();
+      } else {
+        this.overlayStyle['right.px'] = '0'
       }
+      if (this.config.y) {
+        this.overlayStyle['top.px'] = this.config.y.toString()
+      } else {
+        this.overlayStyle['top.px'] = '48'
+      }
+      if (this.config.height) {
+        this.overlayStyle['height.px'] = this.config.height.toString()
+      } else {
+        this.overlayStyle['bottom.px'] = '0'
+      }
+      this.modalStyle = {'width': '100%', 'height': '100%'}
+    } else {
+      this.overlayStyle = {'left.px': '0', 'right.px': '0', 'top.px': '48', 'bottom.px': '0'}
+      this.modalStyle = {'width.px': this.config.width.toString(), 'min-height.px': this.config.height.toString()}
     }
     this.configAnimation = config.animation;
   }

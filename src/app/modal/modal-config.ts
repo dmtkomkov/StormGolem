@@ -1,6 +1,10 @@
-import { EAnimation, EModalType } from "@interfaces";
+import { EAnimation } from "@interfaces";
 
 export class ModalConfig {
   animation: EAnimation = null;
-  type: EModalType = null;
+  overlay?: boolean;
+  x?: number;
+  y?: number;
+  width?: number;
+  height?: number;
 }

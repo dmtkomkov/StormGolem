@@ -1,5 +1,6 @@
-<div [@shift]="configAnimation" class="overlay {{ configClass }}" (click)="onOverlayClicked($event)">
-  <div class="modal  {{ configClass }} " (click)="onModalClicked($event)" (clickOutside)="onClickedOutside($event)" [delayClickOutsideInit]="true">
+<div [@shift]="configAnimation" class="overlay" (click)="onOverlayClicked($event)" [ngStyle]="overlayStyle">
+  <div class="modal" (click)="onModalClicked($event)" (clickOutside)="onClickedOutside($event)"
+       [delayClickOutsideInit]="true" [ngStyle]="modalStyle">
     <ng-template appInsertion></ng-template>
   </div>
 </div>
