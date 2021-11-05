@@ -13,11 +13,11 @@ import {ControlValueAccessor,  NG_VALUE_ACCESSOR} from "@angular/forms";
 })
 export class TagInputComponent implements ControlValueAccessor {
   public innerValue: string[] = [];
-  onChange = (_value) => {}
+  onChange = (_value: string[]) => {}
   onTouched = () => {}
 
-  writeValue(value): void {
-    if (value === null || value === '' || value === undefined) {
+  writeValue(value: string[]): void {
+    if (value === null || value === undefined) {
       this.innerValue = [];
     } else {
       this.innerValue = this.innerValue.concat(value);
@@ -32,16 +32,16 @@ export class TagInputComponent implements ControlValueAccessor {
     this.onTouched = fn;
   };
 
-  onKeyUp(e) {
-    if (e.code === 'Space') {
-      this.writeValue([e.target.value]);
+  onKeyUp(event) {
+    if (event.code === 'Space') {
+      this.writeValue([event.target.value]);
       this.onChange(this.innerValue);
     }
   }
 
-  onKeyPress(e) {
-    if (e.code === 'Space') {
-      e.preventDefault();
+  onKeyPress(event) {
+    if (event.code === 'Space') {
+      event.preventDefault();
     }
   }
 
