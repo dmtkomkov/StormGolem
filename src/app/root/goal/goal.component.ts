@@ -24,6 +24,7 @@ export class GoalComponent implements OnInit {
       minutes: 30,
       log: '',
       date: formatDate(new Date(), 'yyyy-MM-dd', 'en'),
+      custom: null,
     });
 
     this.loadWorkLogs();
@@ -35,7 +36,12 @@ export class GoalComponent implements OnInit {
     this.goalService.createWorkLog(workLogData).subscribe(
       () => {
         this.loadWorkLogs();
-        this.workLogForm.reset({ hours: 0, minutes: 30, date: formatDate(new Date(), 'yyyy-MM-dd', 'en') });
+        this.workLogForm.reset({
+          hours: 0,
+          minutes: 30,
+          date: formatDate(new Date(), 'yyyy-MM-dd', 'en'),
+          custom: null,
+        });
       },
     );
   }
@@ -43,7 +49,7 @@ export class GoalComponent implements OnInit {
   loadWorkLogs() {
     this.goalService.getBlogPage(1).subscribe(
       (goalPage: IGoalPage) => {
-        this.workLogs = goalPage.results
+        this.workLogs = goalPage.results;
       }
     )
   }

@@ -27,6 +27,7 @@ import { EditIconComponent } from "./components/icons/edit-icon/edit-icon.compon
 import { GoalComponent } from "@root/goal/goal.component";
 import { GoalTableComponent } from "@root/goal/goal-table/goal-table.component";
 import { GoalRowComponent } from "@root/goal/goal-row/goal-row.component";
+import { TagInputComponent } from "@shared/tag-input/tag-input.component";
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { GoalRowComponent } from "@root/goal/goal-row/goal-row.component";
     GoalComponent,
     GoalTableComponent,
     GoalRowComponent,
+    TagInputComponent,
   ],
   imports: [
     BrowserModule,

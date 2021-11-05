@@ -1,0 +1,31 @@
+@import "colors";
+
+input {
+  line-height: 1.5;
+  outline: none;
+  padding: 0;
+  color: $text-dark;
+  border: none;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  margin: 0;
+}
+
+.div-input {
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+
+.labels {
+  display: flex;
+  flex-direction: row;
+}
+
+.label {
+  font-size: 10px;
+  margin-right: 5px;
+  padding: 2px 5px;
+  //background-color: #d2acac;
+  border-radius: 5px;
+  border: 1px solid #8c5252;
+}
