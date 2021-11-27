@@ -29,7 +29,7 @@ import { GoalTableComponent } from "@root/goal/goal-table/goal-table.component";
 import { GoalRowComponent } from "@root/goal/goal-row/goal-row.component";
 import { TagInputComponent } from "@shared/tag-input/tag-input.component";
 import { OverlayModule } from '@angular/cdk/overlay';
-import { TestOverlayComponent } from './test-overlay/test-overlay.component';
+import { TestOverlayComponent } from '@shared/test-overlay/test-overlay.component';
 
 @NgModule({
   declarations: [

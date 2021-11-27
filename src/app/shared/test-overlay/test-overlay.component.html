@@ -1,0 +1,5 @@
+<div class="menu-container" [@slideContent]="animationState">
+  <div class="option" *ngFor="let label of labels" (click)="selectOption(label)">
+    {{ label }}
+  </div>
+</div>

@@ -1,5 +1,8 @@
-import {Component, forwardRef} from '@angular/core';
+import { Component, ElementRef, forwardRef, ViewChild } from '@angular/core';
 import {ControlValueAccessor,  NG_VALUE_ACCESSOR} from "@angular/forms";
+import { ConnectedPosition, Overlay } from '@angular/cdk/overlay';
+import { ComponentPortal } from '@angular/cdk/portal';
+import { TestOverlayComponent } from '../test-overlay/test-overlay.component';
 
 @Component({
   selector: 'sg-tag-input',
@@ -12,9 +15,14 @@ import {ControlValueAccessor,  NG_VALUE_ACCESSOR} from "@angular/forms";
   styleUrls: ['./tag-input.component.scss']
 })
 export class TagInputComponent implements ControlValueAccessor {
+  @ViewChild('testbutton', {read: ElementRef}) private testButton: ElementRef;
   public innerValue: string[] = [];
   onChange = (_value: string[]) => {}
   onTouched = () => {}
+
+  constructor(
+      private overlay: Overlay
+  ) { }
 
   writeValue(value: string[]): void {
     if (value === null || value === undefined) {
@@ -45,4 +53,20 @@ export class TagInputComponent implements ControlValueAccessor {
     }
   }
 
+  openOverlay() {
+    const overlayRef = this.overlay.create({
+      positionStrategy: this.overlay.position().flexibleConnectedTo(this.testButton).withPositions([{
+        originX: 'start',
+        originY: 'bottom',
+        overlayX: 'start',
+        overlayY: 'top'
+      } as ConnectedPosition]).withPush(false)
+    });
+    const x = new ComponentPortal(TestOverlayComponent);
+    overlayRef.attach(x);
+    overlayRef.outsidePointerEvents().subscribe(() => {
+      overlayRef.detach();
+      overlayRef.dispose();
+    });
+  }
 }

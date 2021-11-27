@@ -1,0 +1,18 @@
+@import "colors";
+
+div.menu-container {
+  background: #FFF;
+  border-radius: 3px;
+  border: 1px solid $border-default;
+  width: 100px;
+
+  .option {
+    padding: 5px;
+    border-bottom: 1px solid $border-default;
+    cursor: pointer;
+
+    &:hover {
+      background: $background-default;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 <div class="div-input">
   <div class="labels">
     <div class="label" *ngFor="let v of innerValue">{{ v }}</div>
-    <input (blur)="onTouched()" (keyup)="onKeyUp($event)" (keypress)="onKeyPress($event)"/>
+    <input #testbutton (blur)="onTouched()" (keyup)="onKeyUp($event)" (keypress)="onKeyPress($event)" (click)="openOverlay()"/>
   </div>
 </div>
