@@ -28,6 +28,8 @@ import { GoalComponent } from "@root/goal/goal.component";
 import { GoalTableComponent } from "@root/goal/goal-table/goal-table.component";
 import { GoalRowComponent } from "@root/goal/goal-row/goal-row.component";
 import { TagInputComponent } from "@shared/tag-input/tag-input.component";
+import { OverlayModule } from '@angular/cdk/overlay';
+import { TestOverlayComponent } from './test-overlay/test-overlay.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,7 @@ import { TagInputComponent } from "@shared/tag-input/tag-input.component";
     GoalTableComponent,
     GoalRowComponent,
     TagInputComponent,
+    TestOverlayComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +62,7 @@ import { TagInputComponent } from "@shared/tag-input/tag-input.component";
     ReactiveFormsModule,
     ModalModule,
     InfiniteScrollModule,
+    OverlayModule,
   ],
   providers: [
     {
