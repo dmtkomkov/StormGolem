@@ -1,5 +1,5 @@
-import { Injectable, Injector, ComponentRef } from '@angular/core';
-import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
+import { Injectable, Injector } from '@angular/core';
+import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { TestOverlayComponent } from '@shared/test-overlay/test-overlay.component';
 
@@ -7,16 +7,12 @@ import { FilePreviewOverlayRef } from './sg-overlay-ref';
 import { FILE_PREVIEW_DIALOG_DATA } from './sg-overlay-tokens';
 
 interface FilePreviewDialogConfig {
-    panelClass?: string;
     hasBackdrop?: boolean;
-    backdropClass?: string;
     options?: string[];
 }
 
 const DEFAULT_CONFIG: FilePreviewDialogConfig = {
     hasBackdrop: true,
-    backdropClass: 'dark-backdrop',
-    panelClass: 'tm-file-preview-dialog-panel',
     options: null
 }
 
@@ -37,7 +33,9 @@ export class FilePreviewOverlayService {
         // Instantiate remote control
         const dialogRef = new FilePreviewOverlayRef(overlayRef);
 
-        const overlayComponent = this.attachDialogContainer(overlayRef, dialogConfig, dialogRef);
+        const injector = this.createInjector(config, dialogRef);
+        const containerPortal = new ComponentPortal(TestOverlayComponent, null, injector);
+        overlayRef.attach(containerPortal);
 
         overlayRef.backdropClick().subscribe(_ => dialogRef.close());
 
@@ -47,15 +45,6 @@ export class FilePreviewOverlayService {
     private createOverlay(config: FilePreviewDialogConfig) {
         const overlayConfig = this.getOverlayConfig(config);
         return this.overlay.create(overlayConfig);
-    }
-
-    private attachDialogContainer(overlayRef: OverlayRef, config: FilePreviewDialogConfig, dialogRef: FilePreviewOverlayRef) {
-        const injector = this.createInjector(config, dialogRef);
-
-        const containerPortal = new ComponentPortal(TestOverlayComponent, null, injector);
-        const containerRef: ComponentRef<TestOverlayComponent> = overlayRef.attach(containerPortal);
-
-        return containerRef.instance;
     }
 
     private createInjector(config: FilePreviewDialogConfig, dialogRef: FilePreviewOverlayRef): Injector {
@@ -83,8 +72,6 @@ export class FilePreviewOverlayService {
 
         const overlayConfig = new OverlayConfig({
             hasBackdrop: config.hasBackdrop,
-            backdropClass: config.backdropClass,
-            panelClass: config.panelClass,
             scrollStrategy: this.overlay.scrollStrategies.block(),
             positionStrategy
         });
