@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { FilePreviewOverlayRef } from '../../modal2/sg-overlay-ref';
+import { FILE_PREVIEW_DIALOG_DATA } from '../../modal2/sg-overlay-tokens';
 
 const ANIMATION_TIMINGS = '200ms cubic-bezier(0.25, 0.8, 0.25, 1)';
 
@@ -23,17 +25,18 @@ const ANIMATION_TIMINGS = '200ms cubic-bezier(0.25, 0.8, 0.25, 1)';
 })
 export class TestOverlayComponent implements OnInit {
   animationState: 'void' | 'enter' | 'leave' = 'enter';
-  labels: string[] = ['home', 'work', 'hobby', 'health']
 
   constructor(
-
+      private dialogRef: FilePreviewOverlayRef,
+      @Inject(FILE_PREVIEW_DIALOG_DATA) public options: string[]
   ) { }
 
   ngOnInit(): void {
   }
 
-  selectOption(label: string) {
-    console.log(label);
+  selectOption(option: string) {
+    console.log(option);
+    this.dialogRef.close();
   }
 
 }

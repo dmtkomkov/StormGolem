@@ -1,8 +1,9 @@
 import { Component, ElementRef, forwardRef, ViewChild } from '@angular/core';
-import {ControlValueAccessor,  NG_VALUE_ACCESSOR} from "@angular/forms";
+import { ControlValueAccessor,  NG_VALUE_ACCESSOR } from "@angular/forms";
 import { ConnectedPosition, Overlay } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { TestOverlayComponent } from '../test-overlay/test-overlay.component';
+import { FilePreviewOverlayService } from '../../modal2/sg-overlay.service';
 
 @Component({
   selector: 'sg-tag-input',
@@ -21,7 +22,8 @@ export class TagInputComponent implements ControlValueAccessor {
   onTouched = () => {}
 
   constructor(
-      private overlay: Overlay
+      private overlay: Overlay,
+      private overlayService: FilePreviewOverlayService
   ) { }
 
   writeValue(value: string[]): void {
@@ -68,5 +70,9 @@ export class TagInputComponent implements ControlValueAccessor {
       overlayRef.detach();
       overlayRef.dispose();
     });
+  }
+
+  openOverlay2() {
+    let menu = this.overlayService.open({options: ['work1', 'work2', 'work3', 'work4']})
   }
 }
