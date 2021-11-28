@@ -4,6 +4,7 @@ import { ConnectedPosition, Overlay, OverlayConfig } from '@angular/cdk/overlay'
 import { ComponentPortal } from '@angular/cdk/portal';
 import { TestOverlayComponent } from '../test-overlay/test-overlay.component';
 import { OverlayService } from '../../modal2/sg-overlay.service';
+import { OverlayManagerRef } from '../../modal2/sg-overlay-manager-ref';
 
 @Component({
   selector: 'sg-tag-input',
@@ -88,6 +89,11 @@ export class TagInputComponent implements ControlValueAccessor {
       positionStrategy
     });
 
-    let menu = this.overlayService.open<TestOverlayComponent, string[]>(TestOverlayComponent, overlayConfig, ['213', '234', '234'])
+    let menu: OverlayManagerRef = this.overlayService.open<TestOverlayComponent, string[]>(TestOverlayComponent, overlayConfig, ['home', 'work', 'hobby', 'health'])
+    const sub = menu.afterClosed().subscribe(data => {
+      this.writeValue([data]);
+      this.onChange(this.innerValue);
+      sub.unsubscribe();
+    })
   }
 }

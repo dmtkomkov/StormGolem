@@ -27,7 +27,7 @@ export class TestOverlayComponent implements OnInit {
   animationState: 'void' | 'enter' | 'leave' = 'enter';
 
   constructor(
-      private dialogRef: OverlayManagerRef,
+      private overlayManagerRef: OverlayManagerRef,
       @Inject(SG_OVERLAY_DATA) public options: string[]
   ) { }
 
@@ -35,8 +35,6 @@ export class TestOverlayComponent implements OnInit {
   }
 
   selectOption(option: string) {
-    console.log(option);
-    this.dialogRef.close();
+    this.overlayManagerRef.close(option);
   }
-
 }

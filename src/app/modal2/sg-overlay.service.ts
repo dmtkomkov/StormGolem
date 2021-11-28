@@ -3,7 +3,7 @@ import { ComponentType, Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/
 import { ComponentPortal } from '@angular/cdk/portal';
 import { OverlayManagerRef } from './sg-overlay-manager-ref';
 
-export const SG_OVERLAY_DATA = new InjectionToken<string[]>('FILE_PREVIEW_DIALOG_DATA');
+export const SG_OVERLAY_DATA = new InjectionToken<string[]>('SG_OVERLAY_DATA');
 
 @Injectable()
 export class OverlayService {

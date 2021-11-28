@@ -1,21 +1,32 @@
 import { OverlayRef } from '@angular/cdk/overlay';
 import { Component } from '@angular/core';
+import { Subject } from 'rxjs';
 
 export class OverlayManagerRef {
     // Instance of Component Portal
-    private componentInstance: Component = null;
-
-    setComponentInstance(component: Component) {
-        this.componentInstance = component;
-    }
+    private _componentInstance: Component = null;
+    private _afterClosed: Subject<any> = new Subject<any>();
 
     constructor(
         private overlayRef: OverlayRef
     ) { }
 
-    close(): void {
-        console.log(this.componentInstance);
+    setComponentInstance(component: Component) {
+        this._componentInstance = component;
+    }
+
+    getComponentInstance() {
+        return this._componentInstance
+    }
+
+    close(data: any = null) {
         this.overlayRef.dispose();
-        this.componentInstance = null;
+        this._componentInstance = null;
+        this._afterClosed.next(data);
+        this._afterClosed.complete();
+    }
+
+    afterClosed() {
+        return this._afterClosed;
     }
 }
