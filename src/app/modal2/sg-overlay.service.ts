@@ -1,6 +1,6 @@
 import { Injectable, Injector, ComponentRef } from '@angular/core';
 import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
-import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
+import { ComponentPortal } from '@angular/cdk/portal';
 import { TestOverlayComponent } from '@shared/test-overlay/test-overlay.component';
 
 import { FilePreviewOverlayRef } from './sg-overlay-ref';
@@ -24,8 +24,8 @@ const DEFAULT_CONFIG: FilePreviewDialogConfig = {
 export class FilePreviewOverlayService {
 
     constructor(
-        private injector: Injector,
-        private overlay: Overlay) { }
+        private overlay: Overlay
+    ) { }
 
     open(config: FilePreviewDialogConfig = {}) {
         // Override default configuration
@@ -58,13 +58,21 @@ export class FilePreviewOverlayService {
         return containerRef.instance;
     }
 
-    private createInjector(config: FilePreviewDialogConfig, dialogRef: FilePreviewOverlayRef): PortalInjector {
-        const injectionTokens = new WeakMap();
+    private createInjector(config: FilePreviewDialogConfig, dialogRef: FilePreviewOverlayRef): Injector {
+        const injector: Injector = Injector.create({
+            providers: [
+                {
+                    provide: FilePreviewOverlayRef,
+                    useValue: dialogRef
+                },
+                {
+                    provide: FILE_PREVIEW_DIALOG_DATA,
+                    useValue: config.options
+                },
+            ]
+        });
 
-        injectionTokens.set(FilePreviewOverlayRef, dialogRef);
-        injectionTokens.set(FILE_PREVIEW_DIALOG_DATA, config.options);
-
-        return new PortalInjector(this.injector, injectionTokens);
+        return injector;
     }
 
     private getOverlayConfig(config: FilePreviewDialogConfig): OverlayConfig {
