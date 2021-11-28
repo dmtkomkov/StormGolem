@@ -30,7 +30,7 @@ import { GoalRowComponent } from "@root/goal/goal-row/goal-row.component";
 import { TagInputComponent } from "@shared/tag-input/tag-input.component";
 import { OverlayModule } from '@angular/cdk/overlay';
 import { TestOverlayComponent } from '@shared/test-overlay/test-overlay.component';
-import { FilePreviewOverlayService } from './modal2/sg-overlay.service';
+import { OverlayService } from './modal2/sg-overlay.service';
 
 @NgModule({
   declarations: [
@@ -71,7 +71,7 @@ import { FilePreviewOverlayService } from './modal2/sg-overlay.service';
       useClass: InterceptorService,
       multi: true,
     },
-    FilePreviewOverlayService,
+    OverlayService,
   ],
   entryComponents: [
     LoginDialogComponent,

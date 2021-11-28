@@ -1,81 +1,35 @@
-import { Injectable, Injector } from '@angular/core';
-import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
+import { ComponentRef, Injectable, InjectionToken, Injector } from '@angular/core';
+import { ComponentType, Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { TestOverlayComponent } from '@shared/test-overlay/test-overlay.component';
+import { OverlayManagerRef } from './sg-overlay-manager-ref';
 
-import { FilePreviewOverlayRef } from './sg-overlay-ref';
-import { FILE_PREVIEW_DIALOG_DATA } from './sg-overlay-tokens';
-
-interface FilePreviewDialogConfig {
-    hasBackdrop?: boolean;
-    options?: string[];
-}
-
-const DEFAULT_CONFIG: FilePreviewDialogConfig = {
-    hasBackdrop: true,
-    options: null
-}
+export const SG_OVERLAY_DATA = new InjectionToken<string[]>('FILE_PREVIEW_DIALOG_DATA');
 
 @Injectable()
-export class FilePreviewOverlayService {
+export class OverlayService {
 
     constructor(
         private overlay: Overlay
     ) { }
 
-    open(config: FilePreviewDialogConfig = {}) {
-        // Override default configuration
-        const dialogConfig = { ...DEFAULT_CONFIG, ...config };
+    open<C, D>(componentType: ComponentType<C>, overlayConfig: OverlayConfig, data: D): OverlayManagerRef {
+        const overlayRef: OverlayRef = this.overlay.create(overlayConfig)
+        const overlayManagerRef: OverlayManagerRef = new OverlayManagerRef(overlayRef);
 
-        // Returns an OverlayRef which is a PortalHost
-        const overlayRef = this.createOverlay(dialogConfig);
-
-        // Instantiate remote control
-        const dialogRef = new FilePreviewOverlayRef(overlayRef);
-
-        const injector = this.createInjector(config, dialogRef);
-        const containerPortal = new ComponentPortal(TestOverlayComponent, null, injector);
-        overlayRef.attach(containerPortal);
-
-        overlayRef.backdropClick().subscribe(_ => dialogRef.close());
-
-        return dialogRef;
-    }
-
-    private createOverlay(config: FilePreviewDialogConfig) {
-        const overlayConfig = this.getOverlayConfig(config);
-        return this.overlay.create(overlayConfig);
-    }
-
-    private createInjector(config: FilePreviewDialogConfig, dialogRef: FilePreviewOverlayRef): Injector {
+        // Add injections overlayManagerRef and data into Portal component
         const injector: Injector = Injector.create({
             providers: [
-                {
-                    provide: FilePreviewOverlayRef,
-                    useValue: dialogRef
-                },
-                {
-                    provide: FILE_PREVIEW_DIALOG_DATA,
-                    useValue: config.options
-                },
+                { provide: OverlayManagerRef, useValue: overlayManagerRef },
+                { provide: SG_OVERLAY_DATA, useValue: data },
             ]
         });
+        const containerPortal = new ComponentPortal(componentType, null, injector);
+        const overlayComponentRef: ComponentRef<C> = overlayRef.attach(containerPortal);
+        overlayManagerRef.setComponentInstance(overlayComponentRef.instance);
 
-        return injector;
-    }
+        overlayRef.backdropClick().subscribe(_ => overlayManagerRef.close());
+        overlayRef.outsidePointerEvents().subscribe(_ => overlayManagerRef.close());
 
-    private getOverlayConfig(config: FilePreviewDialogConfig): OverlayConfig {
-        const positionStrategy = this.overlay.position()
-            .global()
-            .centerHorizontally()
-            .centerVertically();
-
-        const overlayConfig = new OverlayConfig({
-            hasBackdrop: config.hasBackdrop,
-            scrollStrategy: this.overlay.scrollStrategies.block(),
-            positionStrategy
-        });
-
-        return overlayConfig;
+        return overlayManagerRef;
     }
 }
