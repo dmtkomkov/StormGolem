@@ -21,7 +21,9 @@ export class OverlayManager {
     close(data: any = null) {
         this.overlayRef.dispose();
         this._componentInstance = null;
-        this._afterClosed.next(data);
+        if (data !== null) {
+            this._afterClosed.next(data);
+        }
         this._afterClosed.complete();
     }
 
