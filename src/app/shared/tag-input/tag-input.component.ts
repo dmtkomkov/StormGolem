@@ -1,7 +1,7 @@
 import { Component, ElementRef, forwardRef, ViewChild } from '@angular/core';
 import { ControlValueAccessor,  NG_VALUE_ACCESSOR } from "@angular/forms";
 import { ConnectedPosition, Overlay, OverlayConfig } from '@angular/cdk/overlay';
-import { TestOverlayComponent } from '../test-overlay/test-overlay.component';
+import { DropList } from '../test-overlay/drop-list.component';
 import { OverlayService } from '../../modal2/sg-overlay.service';
 import { OverlayManager } from '../../modal2/sg-overlay-manager-ref';
 
@@ -43,19 +43,6 @@ export class TagInputComponent implements ControlValueAccessor {
     this.onTouched = fn;
   };
 
-  onKeyUp(event) {
-    if (event.code === 'Space') {
-      this.writeValue([event.target.value]);
-      this.onChange(this.innerValue);
-    }
-  }
-
-  onKeyPress(event) {
-    if (event.code === 'Space') {
-      event.preventDefault();
-    }
-  }
-
   openDropList() {
     const positionStrategy = this.overlay.position()
         .flexibleConnectedTo(this.testButton)
@@ -72,7 +59,7 @@ export class TagInputComponent implements ControlValueAccessor {
       positionStrategy
     });
 
-    this.dropList = this.overlayService.open<TestOverlayComponent, string[]>(TestOverlayComponent, overlayConfig, ['home', 'work', 'hobby', 'health'])
+    this.dropList = this.overlayService.open<DropList, string[]>(DropList, overlayConfig, ['home', 'work', 'hobby', 'health'])
     this.dropList.afterClosed().subscribe(data => {
       this.writeValue([data]);
       this.onChange(this.innerValue);

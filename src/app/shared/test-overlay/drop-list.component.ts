@@ -7,8 +7,8 @@ const ANIMATION_TIMINGS = '200ms cubic-bezier(0.25, 0.8, 0.25, 1)';
 
 @Component({
   selector: 'sg-test-overlay',
-  templateUrl: './test-overlay.component.html',
-  styleUrls: ['./test-overlay.component.scss'],
+  templateUrl: './drop-list.component.html',
+  styleUrls: ['./drop-list.component.scss'],
   animations: [
     trigger('fade', [
       state('fadeOut', style({ opacity: 0 })),
@@ -23,7 +23,7 @@ const ANIMATION_TIMINGS = '200ms cubic-bezier(0.25, 0.8, 0.25, 1)';
     ])
   ]
 })
-export class TestOverlayComponent implements OnInit {
+export class DropList implements OnInit {
   animationState: 'void' | 'enter' | 'leave' = 'enter';
 
   constructor(
