@@ -7,9 +7,8 @@
   </div>
   <div class="log-container">
     <div class="log">{{ dateLog.log }}</div>
-    <div class="labels">
-      <div class="label">label1</div>
-      <div class="label">label2</div>
+    <div class="labels" *ngIf="dateLog.labels">
+      <div *ngFor="let label of dateLog.labels" class="label">{{ label }}</div>
     </div>
   </div>
   <div class="separator"></div>

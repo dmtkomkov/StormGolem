@@ -16,7 +16,7 @@ import { OverlayManager } from '../../modal2/sg-overlay-manager-ref';
   styleUrls: ['./tag-input.component.scss']
 })
 export class TagInputComponent implements ControlValueAccessor {
-  @ViewChild('testbutton', {read: ElementRef}) private testButton: ElementRef;
+  @ViewChild('dropListTarget', {read: ElementRef}) private testButton: ElementRef;
   public innerValue: string[] = [];
   dropList: OverlayManager;
   onChange = (_value: string[]) => {}
