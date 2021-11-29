@@ -1,10 +1,9 @@
 import { Component, ElementRef, forwardRef, ViewChild } from '@angular/core';
 import { ControlValueAccessor,  NG_VALUE_ACCESSOR } from "@angular/forms";
 import { ConnectedPosition, Overlay, OverlayConfig } from '@angular/cdk/overlay';
-import { ComponentPortal } from '@angular/cdk/portal';
 import { TestOverlayComponent } from '../test-overlay/test-overlay.component';
 import { OverlayService } from '../../modal2/sg-overlay.service';
-import { OverlayManagerRef } from '../../modal2/sg-overlay-manager-ref';
+import { OverlayManager } from '../../modal2/sg-overlay-manager-ref';
 
 @Component({
   selector: 'sg-tag-input',
@@ -19,6 +18,7 @@ import { OverlayManagerRef } from '../../modal2/sg-overlay-manager-ref';
 export class TagInputComponent implements ControlValueAccessor {
   @ViewChild('testbutton', {read: ElementRef}) private testButton: ElementRef;
   public innerValue: string[] = [];
+  dropList: OverlayManager;
   onChange = (_value: string[]) => {}
   onTouched = () => {}
 
@@ -56,24 +56,7 @@ export class TagInputComponent implements ControlValueAccessor {
     }
   }
 
-  openOverlay() {
-    const overlayRef = this.overlay.create({
-      positionStrategy: this.overlay.position().flexibleConnectedTo(this.testButton).withPositions([{
-        originX: 'start',
-        originY: 'bottom',
-        overlayX: 'start',
-        overlayY: 'top'
-      } as ConnectedPosition]).withPush(false)
-    });
-    const x = new ComponentPortal(TestOverlayComponent);
-    overlayRef.attach(x);
-    overlayRef.outsidePointerEvents().subscribe(() => {
-      overlayRef.detach();
-      overlayRef.dispose();
-    });
-  }
-
-  openOverlay2() {
+  openDropList() {
     const positionStrategy = this.overlay.position()
         .flexibleConnectedTo(this.testButton)
         .withPositions([{
@@ -89,11 +72,10 @@ export class TagInputComponent implements ControlValueAccessor {
       positionStrategy
     });
 
-    let menu: OverlayManagerRef = this.overlayService.open<TestOverlayComponent, string[]>(TestOverlayComponent, overlayConfig, ['home', 'work', 'hobby', 'health'])
-    const sub = menu.afterClosed().subscribe(data => {
+    this.dropList = this.overlayService.open<TestOverlayComponent, string[]>(TestOverlayComponent, overlayConfig, ['home', 'work', 'hobby', 'health'])
+    this.dropList.afterClosed().subscribe(data => {
       this.writeValue([data]);
       this.onChange(this.innerValue);
-      sub.unsubscribe();
     })
   }
 }

@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { OverlayManagerRef } from '../../modal2/sg-overlay-manager-ref';
+import { OverlayManager } from '../../modal2/sg-overlay-manager-ref';
 import { SG_OVERLAY_DATA } from '../../modal2/sg-overlay.service';
 
 const ANIMATION_TIMINGS = '200ms cubic-bezier(0.25, 0.8, 0.25, 1)';
@@ -27,7 +27,7 @@ export class TestOverlayComponent implements OnInit {
   animationState: 'void' | 'enter' | 'leave' = 'enter';
 
   constructor(
-      private overlayManagerRef: OverlayManagerRef,
+      private overlayManager: OverlayManager,
       @Inject(SG_OVERLAY_DATA) public options: string[]
   ) { }
 
@@ -35,6 +35,6 @@ export class TestOverlayComponent implements OnInit {
   }
 
   selectOption(option: string) {
-    this.overlayManagerRef.close(option);
+    this.overlayManager.close(option);
   }
 }
