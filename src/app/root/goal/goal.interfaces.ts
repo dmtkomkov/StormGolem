@@ -7,6 +7,16 @@ export interface IWorkLog {
   duration?: number;
 }
 
+export interface ILabel {
+  name: string;
+  group: string;
+}
+
+export interface ILabelGroup {
+  name: string;
+  color: string;
+}
+
 export interface IDateLog {
   log: string;
   labels?: string[];

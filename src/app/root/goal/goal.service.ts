@@ -20,18 +20,14 @@ export class GoalService {
     this.pageSize = PAGE_SIZE;
   }
 
-  // getBlogActions(): Observable<IBlogPostAction> {
-  //   return this.blogActions$;
-  // }
-  //
-  // sendBlogAction(name: string, payload: IBlogPost) {
-  //   this.blogActions$.next({name, payload});
-  // }
-
-  getBlogPage(pageNumber: number): Observable<IGoalPage> {
+  getGoalPage(pageNumber: number): Observable<IGoalPage> {
     let params: HttpParams;
     params = new HttpParams().set('limit', this.pageSize.toString()).set('page', pageNumber.toString());
     return this.http.get<IGoalPage>(this.baseUrl, { params });
+  }
+
+  getLabelTable(): Observable<any> {
+    return this.http.get<any>('label');
   }
 
   // getBlogPages(pageNumber: number): Observable<IBlogPage> {

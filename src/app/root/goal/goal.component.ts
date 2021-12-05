@@ -30,6 +30,7 @@ export class GoalComponent implements OnInit {
     });
 
     this.loadWorkLogs();
+    this.goalService.getLabelTable().subscribe(data => console.log(data));
   }
 
   create() {
@@ -55,7 +56,7 @@ export class GoalComponent implements OnInit {
   }
 
   loadWorkLogs() {
-    this.goalService.getBlogPage(1).subscribe(
+    this.goalService.getGoalPage(1).subscribe(
         (goalPage: IGoalPage) => {
           this.workLogs = goalPage.results;
         }
