@@ -1,6 +1,6 @@
 <div class="div-input">
   <div class="labels">
     <div class="label" *ngFor="let v of innerValue">{{ v }}</div>
-    <input #dropListTarget (blur)="onTouched()" (click)="openDropList()"/>
+    <input #inputEl (blur)="onTouched()" (click)="openLabelList()"/>
   </div>
 </div>

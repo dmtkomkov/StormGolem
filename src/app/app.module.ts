@@ -29,7 +29,7 @@ import { GoalTableComponent } from "@root/goal/goal-table/goal-table.component";
 import { GoalRowComponent } from "@root/goal/goal-row/goal-row.component";
 import { TagInputComponent } from "@shared/tag-input/tag-input.component";
 import { OverlayModule } from '@angular/cdk/overlay';
-import { DropList } from '@shared/test-overlay/drop-list.component';
+import { DropList } from '@shared/drop-list/drop-list.component';
 import { OverlayService } from './modal2/sg-overlay.service';
 
 @NgModule({

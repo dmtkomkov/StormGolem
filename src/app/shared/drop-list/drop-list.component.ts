@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { OverlayManager } from '../../modal2/sg-overlay-manager-ref';
+import { OverlayManager } from '../../modal2/sg-overlay-manager';
 import { SG_OVERLAY_DATA } from '../../modal2/sg-overlay.service';
 
 const ANIMATION_TIMINGS = '200ms cubic-bezier(0.25, 0.8, 0.25, 1)';

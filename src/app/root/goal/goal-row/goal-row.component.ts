@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { IDateLog } from "@root/goal/goal.interfaces";
-import { MainMenuComponent } from "@shared/dialogs/main-menu/main-menu.component";
-import { EAnimation } from "@interfaces";
-import { ModalService } from "@modal/modal.service";
+import { DropList } from "@shared/drop-list/drop-list.component";
+import { OverlayService } from "../../../modal2/sg-overlay.service";
+import { OverlayManager } from "../../../modal2/sg-overlay-manager";
+import { ConnectedPosition, Overlay, OverlayConfig } from "@angular/cdk/overlay";
 
 @Component({
   selector: 'sg-goal-row',
@@ -10,25 +11,39 @@ import { ModalService } from "@modal/modal.service";
   styleUrls: ['goal-row.component.scss']
 })
 export class GoalRowComponent implements OnInit {
+  @ViewChild('menuButton', { read: ElementRef }) private menuButton: ElementRef;
   @Input() dateLog: IDateLog;
+  menu: OverlayManager;
 
   constructor(
-    private dialog: ModalService,
+    private overlayService: OverlayService,
+    private overlay: Overlay,
   ) { }
 
   ngOnInit() {
 
   }
 
-  showMenu(e) {
-    const width: number = 200;
-    this.dialog.open(MainMenuComponent, {
-      animation: EAnimation.SLIDE,
-      x: e.clientX - width,
-      y: e.clientY,
-      width: width,
-      height: 100
+  showMenu() {
+    const positionStrategy = this.overlay.position()
+      .flexibleConnectedTo(this.menuButton)
+      .withPositions([{
+        originX: 'start',
+        originY: 'bottom',
+        overlayX: 'start',
+        overlayY: 'top'
+      } as ConnectedPosition])
+    // .withPush(false)
+
+    const overlayConfig = new OverlayConfig({
+      hasBackdrop: false,
+      positionStrategy
     });
+
+    this.menu = this.overlayService.open<DropList, string[]>(DropList, overlayConfig, ['edit', 'delete'])
+    this.menu.afterClosed().subscribe(data => {
+      console.log(data);
+    })
   }
 
 }

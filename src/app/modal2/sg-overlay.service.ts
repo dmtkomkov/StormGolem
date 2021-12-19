@@ -1,7 +1,7 @@
 import { ComponentRef, Injectable, InjectionToken, Injector } from '@angular/core';
 import { ComponentType, Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { OverlayManager } from './sg-overlay-manager-ref';
+import { OverlayManager } from './sg-overlay-manager';
 
 export const SG_OVERLAY_DATA = new InjectionToken<any>('SG_OVERLAY_DATA');
 

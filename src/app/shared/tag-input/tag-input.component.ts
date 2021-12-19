@@ -1,9 +1,9 @@
 import { Component, ElementRef, forwardRef, ViewChild } from '@angular/core';
 import { ControlValueAccessor,  NG_VALUE_ACCESSOR } from "@angular/forms";
 import { ConnectedPosition, Overlay, OverlayConfig } from '@angular/cdk/overlay';
-import { DropList } from '../test-overlay/drop-list.component';
+import { DropList } from '../drop-list/drop-list.component';
 import { OverlayService } from '../../modal2/sg-overlay.service';
-import { OverlayManager } from '../../modal2/sg-overlay-manager-ref';
+import { OverlayManager } from '../../modal2/sg-overlay-manager';
 
 @Component({
   selector: 'sg-tag-input',
@@ -16,9 +16,9 @@ import { OverlayManager } from '../../modal2/sg-overlay-manager-ref';
   styleUrls: ['./tag-input.component.scss']
 })
 export class TagInputComponent implements ControlValueAccessor {
-  @ViewChild('dropListTarget', {read: ElementRef}) private testButton: ElementRef;
+  @ViewChild('inputEl', { read: ElementRef }) private inputEl: ElementRef;
   public innerValue: string[] = [];
-  dropList: OverlayManager;
+  labelList: OverlayManager;
   onChange = (_value: string[]) => {}
   onTouched = () => {}
 
@@ -43,24 +43,24 @@ export class TagInputComponent implements ControlValueAccessor {
     this.onTouched = fn;
   };
 
-  openDropList() {
+  openLabelList() {
     const positionStrategy = this.overlay.position()
-        .flexibleConnectedTo(this.testButton)
+        .flexibleConnectedTo(this.inputEl)
         .withPositions([{
           originX: 'start',
           originY: 'bottom',
           overlayX: 'start',
           overlayY: 'top'
         } as ConnectedPosition])
-        .withPush(false)
+        // .withPush(false)
 
     const overlayConfig = new OverlayConfig({
       hasBackdrop: false,
       positionStrategy
     });
 
-    this.dropList = this.overlayService.open<DropList, string[]>(DropList, overlayConfig, ['home', 'work', 'hobby', 'health'])
-    this.dropList.afterClosed().subscribe(data => {
+    this.labelList = this.overlayService.open<DropList, string[]>(DropList, overlayConfig, ['home', 'work', 'hobby', 'health'])
+    this.labelList.afterClosed().subscribe(data => {
       this.writeValue([data]);
       this.onChange(this.innerValue);
     })
