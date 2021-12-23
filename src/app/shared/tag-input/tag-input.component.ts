@@ -31,7 +31,7 @@ export class TagInputComponent implements ControlValueAccessor {
     if (value === null || value === undefined) {
       this.innerValue = [];
     } else {
-      this.innerValue = this.innerValue.concat(value);
+      this.innerValue = value;
     }
   };
 
@@ -60,7 +60,8 @@ export class TagInputComponent implements ControlValueAccessor {
 
     this.labelList = this.overlayService.open<DropList, string[]>(DropList, overlayConfig, ['home', 'work', 'hobby', 'health'])
     this.labelList.afterClosed().subscribe(data => {
-      this.writeValue([data]);
+      const newValue = this.innerValue.concat(data)
+      this.writeValue(newValue);
       this.onChange(this.innerValue);
     })
   }
