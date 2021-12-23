@@ -1,6 +1,7 @@
 import { Page } from "@interfaces";
 
 export interface IWorkLog {
+  id?: number
   log: string;
   date?: string;
   labels?: string[],

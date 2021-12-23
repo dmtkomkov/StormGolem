@@ -15,13 +15,13 @@ export class GoalComponent implements OnInit, OnDestroy {
   workLogs: IWorkLog[];
   workLogForm: FormGroup;
   updateFormSub: Subscription;
-  editMode: boolean;
+  workLogId: number;
 
   constructor(
       private formBuilder: FormBuilder,
       private goalService: GoalService
   ) {
-    this.editMode = true;
+    this.workLogId = NaN;
   }
 
   ngOnInit() {
@@ -48,6 +48,7 @@ export class GoalComponent implements OnInit, OnDestroy {
         labels: workLog.labels,
       })
       console.log(workLog);
+      this.workLogId = workLog.id
     })
   }
 
