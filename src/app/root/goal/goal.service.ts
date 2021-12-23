@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 import { IGoalPage, IWorkLog } from "@root/goal/goal.interfaces";
 
@@ -12,12 +12,21 @@ export const PAGE_SIZE = 20;
 export class GoalService {
   private baseUrl: string = 'goal';
   private pageSize: number;
+  private workLogUpdateData$ = new Subject<IWorkLog>();
   // private blogActions$ = new Subject<IBlogPostAction>();
 
   constructor(
     private http: HttpClient,
   ) {
     this.pageSize = PAGE_SIZE;
+  }
+
+  sendUpdateData(workLog: IWorkLog) {
+    this.workLogUpdateData$.next(workLog);
+  }
+
+  getUpdateData(): Observable<IWorkLog> {
+    return this.workLogUpdateData$
   }
 
   getGoalPage(pageNumber: number): Observable<IGoalPage> {

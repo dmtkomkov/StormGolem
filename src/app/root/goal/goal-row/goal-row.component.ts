@@ -4,6 +4,7 @@ import { DropList } from "@shared/drop-list/drop-list.component";
 import { OverlayService } from "../../../modal2/sg-overlay.service";
 import { OverlayManager } from "../../../modal2/sg-overlay-manager";
 import { ConnectedPosition, Overlay, OverlayConfig } from "@angular/cdk/overlay";
+import { GoalService } from "@root/goal/goal.service";
 
 @Component({
   selector: 'sg-goal-row',
@@ -13,11 +14,13 @@ import { ConnectedPosition, Overlay, OverlayConfig } from "@angular/cdk/overlay"
 export class GoalRowComponent implements OnInit {
   @ViewChild('menuButton', { read: ElementRef }) private menuButton: ElementRef;
   @Input() dateLog: IDateLog;
+  @Input() date: string;
   menu: OverlayManager;
 
   constructor(
     private overlayService: OverlayService,
     private overlay: Overlay,
+    private goalService: GoalService,
   ) { }
 
   ngOnInit() {
@@ -41,8 +44,10 @@ export class GoalRowComponent implements OnInit {
     });
 
     this.menu = this.overlayService.open<DropList, string[]>(DropList, overlayConfig, ['edit', 'delete'])
-    this.menu.afterClosed().subscribe(data => {
-      console.log(data);
+    this.menu.afterClosed().subscribe((action: string) => {
+      if (action === 'edit') {
+        this.goalService.sendUpdateData({ ...this.dateLog, date: this.date });
+      }
     })
   }
 

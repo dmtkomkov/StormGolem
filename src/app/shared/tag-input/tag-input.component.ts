@@ -52,7 +52,6 @@ export class TagInputComponent implements ControlValueAccessor {
           overlayX: 'start',
           overlayY: 'top'
         } as ConnectedPosition])
-        // .withPush(false)
 
     const overlayConfig = new OverlayConfig({
       hasBackdrop: false,

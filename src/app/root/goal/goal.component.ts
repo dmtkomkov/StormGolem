@@ -1,23 +1,27 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { GoalService } from "@root/goal/goal.service";
 import { IGoalPage, IWorkLog } from "@root/goal/goal.interfaces";
 import { formatDate } from '@angular/common';
+import { Subscription } from "rxjs";
 
 @Component({
   selector: 'sg-work-log',
   templateUrl: 'goal.component.html',
   styleUrls: ['goal.component.scss']
 })
-export class GoalComponent implements OnInit {
+export class GoalComponent implements OnInit, OnDestroy {
   @ViewChild('testbutton', {read: ElementRef}) private testButton: ElementRef;
   workLogs: IWorkLog[];
   workLogForm: FormGroup;
+  updateFormSub: Subscription;
+  editMode: boolean;
 
   constructor(
       private formBuilder: FormBuilder,
       private goalService: GoalService
   ) {
+    this.editMode = true;
   }
 
   ngOnInit() {
@@ -31,6 +35,24 @@ export class GoalComponent implements OnInit {
 
     this.loadWorkLogs();
     this.goalService.getLabelTable().subscribe(data => console.log(data));
+
+    this.updateFormSub = this.goalService.getUpdateData().subscribe((workLog) => {
+      const minutes = workLog.duration % 60;
+      const hours = (workLog.duration - minutes) / 60;
+      console.log(hours, minutes);
+      this.workLogForm.setValue({
+        hours: hours,
+        minutes: minutes,
+        log: workLog.log,
+        date: workLog.date,
+        labels: workLog.labels,
+      })
+      console.log(workLog);
+    })
+  }
+
+  ngOnDestroy() {
+    this.updateFormSub.unsubscribe();
   }
 
   create() {

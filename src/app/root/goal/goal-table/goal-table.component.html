@@ -4,7 +4,7 @@
       {{ date }}
     </div>
     <div *ngFor="let dateLog of goalTable[date]">
-      <sg-goal-row [dateLog]="dateLog"></sg-goal-row>
+      <sg-goal-row [dateLog]="dateLog" [date]="date"></sg-goal-row>
     </div>
   </div>
 </ng-container>
