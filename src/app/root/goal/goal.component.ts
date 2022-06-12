@@ -16,6 +16,7 @@ export class GoalComponent implements OnInit, OnDestroy {
   workLogForm: FormGroup;
   updateFormSub: Subscription;
   workLogId: number;
+  labelNames: string[] = ['home', 'work', 'health'];
 
   constructor(
       private formBuilder: FormBuilder,
@@ -30,16 +31,14 @@ export class GoalComponent implements OnInit, OnDestroy {
       minutes: 30,
       log: '',
       date: formatDate(new Date(), 'yyyy-MM-dd', 'en'),
-      labels: null,
+      labels: [],
     });
 
     this.loadWorkLogs();
-    this.goalService.getLabelTable().subscribe(data => console.log(data));
 
     this.updateFormSub = this.goalService.getUpdateData().subscribe((workLog) => {
       const minutes = workLog.duration % 60;
       const hours = (workLog.duration - minutes) / 60;
-      console.log(hours, minutes);
       this.workLogForm.setValue({
         hours: hours,
         minutes: minutes,
@@ -47,7 +46,6 @@ export class GoalComponent implements OnInit, OnDestroy {
         date: workLog.date,
         labels: workLog.labels,
       })
-      console.log(workLog);
       this.workLogId = workLog.id
     })
   }
@@ -64,7 +62,6 @@ export class GoalComponent implements OnInit, OnDestroy {
       date: formData.date,
       labels: formData.labels
     }
-    console.log(workLogData);
     this.goalService.createWorkLog(workLogData).subscribe(
         () => {
           this.loadWorkLogs();
@@ -72,7 +69,7 @@ export class GoalComponent implements OnInit, OnDestroy {
             hours: 0,
             minutes: 30,
             date: formatDate(new Date(), 'yyyy-MM-dd', 'en'),
-            labels: null,
+            labels: [],
           });
         },
     );

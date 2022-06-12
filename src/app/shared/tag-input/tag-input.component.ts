@@ -1,9 +1,10 @@
-import { Component, ElementRef, forwardRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, forwardRef, Input, ViewChild } from '@angular/core';
 import { ControlValueAccessor,  NG_VALUE_ACCESSOR } from "@angular/forms";
 import { ConnectedPosition, Overlay, OverlayConfig } from '@angular/cdk/overlay';
 import { DropList } from '../drop-list/drop-list.component';
 import { OverlayService } from '../../modal2/sg-overlay.service';
 import { OverlayManager } from '../../modal2/sg-overlay-manager';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'sg-tag-input',
@@ -16,23 +17,25 @@ import { OverlayManager } from '../../modal2/sg-overlay-manager';
   styleUrls: ['./tag-input.component.scss']
 })
 export class TagInputComponent implements ControlValueAccessor {
+  @Input() duplication: boolean = false;
+  @Input() options: string[] = [];
   @ViewChild('inputEl', { read: ElementRef }) private inputEl: ElementRef;
   public innerValue: string[] = [];
-  labelList: OverlayManager;
+  labelDropDown: OverlayManager;
   onChange = (_value: string[]) => {}
   onTouched = () => {}
+  private _availableOptions: string[];
 
   constructor(
       private overlay: Overlay,
       private overlayService: OverlayService
-  ) { }
+  ) {
+    this._availableOptions = [...this.options];
+  }
 
   writeValue(value: string[]): void {
-    if (value === null || value === undefined) {
-      this.innerValue = [];
-    } else {
-      this.innerValue = value;
-    }
+    this.availableOptions = value;
+    this.innerValue = value ?? [];
   };
 
   registerOnChange(fn: any): void {
@@ -44,6 +47,9 @@ export class TagInputComponent implements ControlValueAccessor {
   };
 
   openLabelList() {
+    if (this.availableOptions.length === 0) {
+      return
+    }
     const positionStrategy = this.overlay.position()
         .flexibleConnectedTo(this.inputEl)
         .withPositions([{
@@ -58,11 +64,19 @@ export class TagInputComponent implements ControlValueAccessor {
       positionStrategy
     });
 
-    this.labelList = this.overlayService.open<DropList, string[]>(DropList, overlayConfig, ['home', 'work', 'hobby', 'health'])
-    this.labelList.afterClosed().subscribe(data => {
-      const newValue = this.innerValue.concat(data)
+    this.labelDropDown = this.overlayService.open<DropList, string[]>(DropList, overlayConfig, this.availableOptions)
+    this.labelDropDown.afterClosed().subscribe((option: string) => {
+      const newValue = this.innerValue.concat(option);
       this.writeValue(newValue);
       this.onChange(this.innerValue);
     })
+  }
+
+  set availableOptions(usedOptions: string[]) {
+    this._availableOptions = this.duplication ? this.options : _.difference(this.options, usedOptions);
+  }
+
+  get availableOptions() {
+    return this._availableOptions;
   }
 }
