@@ -1,4 +1,4 @@
-import { Component, ElementRef, forwardRef, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, forwardRef, Input, OnChanges, ViewChild } from '@angular/core';
 import { ControlValueAccessor,  NG_VALUE_ACCESSOR } from "@angular/forms";
 import { ConnectedPosition, Overlay, OverlayConfig } from '@angular/cdk/overlay';
 import { DropList } from '../drop-list/drop-list.component';
@@ -16,21 +16,23 @@ import * as _ from 'lodash';
   templateUrl: './tag-input.component.html',
   styleUrls: ['./tag-input.component.scss']
 })
-export class TagInputComponent implements ControlValueAccessor {
+export class TagInputComponent implements ControlValueAccessor, OnChanges {
   @Input() duplication: boolean = false;
   @Input() options: string[] = [];
   @ViewChild('inputEl', { read: ElementRef }) private inputEl: ElementRef;
-  public innerValue: string[] = [];
-  labelDropDown: OverlayManager;
   onChange = (_value: string[]) => {}
   onTouched = () => {}
-  private _availableOptions: string[];
+  public innerValue: string[] = [];
+  private labelDropDown: OverlayManager;
+  private _availableOptions: string[] = [];
 
   constructor(
       private overlay: Overlay,
       private overlayService: OverlayService
-  ) {
-    this._availableOptions = [...this.options];
+  ) { }
+
+  ngOnChanges() {
+    this._availableOptions = this.options;
   }
 
   writeValue(value: string[]): void {

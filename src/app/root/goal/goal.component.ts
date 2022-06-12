@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { GoalService } from "@root/goal/goal.service";
-import { IGoalPage, IWorkLog } from "@root/goal/goal.interfaces";
+import { IGoalPage, ILabel, IWorkLog } from "@root/goal/goal.interfaces";
 import { formatDate } from '@angular/common';
 import { Subscription } from "rxjs";
 
@@ -16,7 +16,7 @@ export class GoalComponent implements OnInit, OnDestroy {
   workLogForm: FormGroup;
   updateFormSub: Subscription;
   workLogId: number;
-  labelNames: string[] = ['home', 'work', 'health'];
+  labelNames: string[];
 
   constructor(
       private formBuilder: FormBuilder,
@@ -35,6 +35,7 @@ export class GoalComponent implements OnInit, OnDestroy {
     });
 
     this.loadWorkLogs();
+    this.loadLabels();
 
     this.updateFormSub = this.goalService.getUpdateData().subscribe((workLog) => {
       const minutes = workLog.duration % 60;
@@ -81,6 +82,12 @@ export class GoalComponent implements OnInit, OnDestroy {
           this.workLogs = goalPage.results;
         }
     )
+  }
+
+  loadLabels() {
+    this.goalService.getLabels().subscribe((labels: ILabel[]) => {
+      this.labelNames = labels.map(label => label.name);
+    });
   }
 }
 

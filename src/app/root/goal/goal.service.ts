@@ -35,7 +35,7 @@ export class GoalService {
     return this.http.get<IGoalPage>(this.baseUrl, { params });
   }
 
-  getLabelTable(): Observable<any> {
+  getLabels(): Observable<any> {
     return this.http.get<any>('label');
   }
 
