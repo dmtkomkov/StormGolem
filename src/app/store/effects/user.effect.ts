@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { UserService } from "@services";
 import {
   UserAction, EUserAction,
@@ -18,7 +18,7 @@ export class UserEffect {
     private userService: UserService,
   ) { }
 
-  @Effect() loadUser$ = this.actions$.pipe(
+   loadUser$ = createEffect(() => this.actions$.pipe(
     ofType<UserAction>(EUserAction.LoadUser),
     concatMap(() => this.userService.getUser()
       .pipe(
@@ -26,5 +26,5 @@ export class UserEffect {
         catchError(() => of(new LoadUserError())),
       )
     ),
-  );
+  ));
 }

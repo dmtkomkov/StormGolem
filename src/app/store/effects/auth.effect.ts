@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthService } from "@services";
 import {
   EAuthAction, AuthAction,
@@ -18,7 +18,7 @@ export class AuthEffect {
     private authService: AuthService,
   ) { }
 
-  @Effect() authUser$ = this.actions$.pipe(
+   authUser$ = createEffect(() => this.actions$.pipe(
     ofType<AuthAction>(EAuthAction.LogIn),
     concatMap((action: LogIn) => this.authService.auth(action.payload)
       .pipe(
@@ -32,5 +32,5 @@ export class AuthEffect {
         }),
       )
     ),
-  );
+  ));
 }
