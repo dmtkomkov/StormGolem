@@ -73,10 +73,6 @@ import { OverlayService } from './modal2/sg-overlay.service';
     },
     OverlayService,
   ],
-  entryComponents: [
-    LoginDialogComponent,
-    MainMenuComponent,
-  ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

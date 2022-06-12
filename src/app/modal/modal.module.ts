@@ -7,6 +7,5 @@ import { ClickOutsideModule } from 'ng-click-outside';
 @NgModule({
   imports: [CommonModule, ClickOutsideModule],
   declarations: [ModalComponent, ModalDirective],
-  entryComponents: [ModalComponent]
 })
 export class ModalModule {}
