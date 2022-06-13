@@ -22,10 +22,20 @@ input {
 }
 
 .label {
+  cursor: default;
+  display: flex;
+  gap: 5px;
   font-size: 10px;
   margin-right: 5px;
   padding: 2px 5px;
-  //background-color: #d2acac;
   border-radius: 5px;
   border: 1px solid #8c5252;
+
+  .icon {
+    cursor: pointer;
+
+    &:hover {
+      font-weight: bold;
+    }
+  }
 }

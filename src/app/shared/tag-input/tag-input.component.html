@@ -1,6 +1,10 @@
 <div class="div-input">
   <div class="labels">
-    <div class="label" *ngFor="let v of innerValue">{{ v }}</div>
+    <div class="label" *ngFor="let value of innerValue; let i = index">
+      <div class="text">{{ value }}</div>
+      <div>|</div>
+      <div class="icon" (click)="removeLabelByIndex(i)">X</div>
+    </div>
     <input #inputEl (blur)="onTouched()" (click)="openLabelList()"/>
   </div>
 </div>

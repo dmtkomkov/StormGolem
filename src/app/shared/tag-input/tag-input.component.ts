@@ -36,8 +36,8 @@ export class TagInputComponent implements ControlValueAccessor, OnChanges {
   }
 
   writeValue(value: string[]): void {
-    this.availableOptions = value;
     this.innerValue = value ?? [];
+    this.availableOptions = this.innerValue;
   };
 
   registerOnChange(fn: any): void {
@@ -69,8 +69,7 @@ export class TagInputComponent implements ControlValueAccessor, OnChanges {
     this.labelDropDown = this.overlayService.open<DropList, string[]>(DropList, overlayConfig, this.availableOptions)
     this.labelDropDown.afterClosed().subscribe((option: string) => {
       const newValue = this.innerValue.concat(option);
-      this.writeValue(newValue);
-      this.onChange(this.innerValue);
+      this.changeValue(newValue);
     })
   }
 
@@ -80,5 +79,16 @@ export class TagInputComponent implements ControlValueAccessor, OnChanges {
 
   get availableOptions() {
     return this._availableOptions;
+  }
+
+  removeLabelByIndex(i: number) {
+    const newValue = [...this.innerValue];
+    newValue.splice(i, 1);
+    this.changeValue(newValue);
+  }
+
+  private changeValue(value) {
+    this.writeValue(value);
+    this.onChange(this.innerValue);
   }
 }
