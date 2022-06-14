@@ -17,6 +17,7 @@ export class GoalComponent implements OnInit, OnDestroy {
   updateFormSub: Subscription;
   workLogId: number;
   labelNames: string[];
+  editWorklogId: number = NaN;
 
   constructor(
       private formBuilder: FormBuilder,
@@ -38,6 +39,8 @@ export class GoalComponent implements OnInit, OnDestroy {
     this.loadLabels();
 
     this.updateFormSub = this.goalService.getUpdateData().subscribe((workLog) => {
+      console.log(workLog);
+      this.editWorklogId = workLog.id;
       const minutes = workLog.duration % 60;
       const hours = (workLog.duration - minutes) / 60;
       this.workLogForm.setValue({
@@ -74,6 +77,39 @@ export class GoalComponent implements OnInit, OnDestroy {
           });
         },
     );
+  }
+
+  update() {
+    const formData = this.workLogForm.value;
+    const workLogData: IWorkLog = {
+      id: this.editWorklogId,
+      log: formData.log,
+      duration: formData.hours * 60 + formData.minutes,
+      date: formData.date,
+      labels: formData.labels
+    };
+    this.goalService.updateWorkLog(workLogData).subscribe(
+      () => {
+        this.loadWorkLogs();
+        this.editWorklogId = NaN;
+        this.workLogForm.reset({
+          hours: 0,
+          minutes: 30,
+          date: formatDate(new Date(), 'yyyy-MM-dd', 'en'),
+          labels: [],
+        });
+      },
+    );
+  }
+
+  cancel() {
+    this.editWorklogId = NaN;
+    this.workLogForm.reset({
+      hours: 0,
+      minutes: 30,
+      date: formatDate(new Date(), 'yyyy-MM-dd', 'en'),
+      labels: [],
+    });
   }
 
   loadWorkLogs() {
