@@ -1,9 +1,25 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { GoalService } from "@root/goal/goal.service";
 import { IGoalPage, ILabel, IWorkLog } from "@root/goal/goal.interfaces";
 import { formatDate } from '@angular/common';
 import { Subscription } from "rxjs";
+
+interface IWorkLogForm {
+  hours: number,
+  minutes: number,
+  log: string,
+  date: string, // TODO: special type for regexp
+  labels: [],
+}
+
+const DEFAULT_WORKLOG_FORM: IWorkLogForm = {
+  hours: 0,
+  minutes: 30,
+  log: '',
+  date: formatDate(new Date(), 'yyyy-MM-dd', 'en'),
+  labels: [],
+}
 
 @Component({
   selector: 'sg-work-log',
@@ -11,36 +27,43 @@ import { Subscription } from "rxjs";
   styleUrls: ['goal.component.scss']
 })
 export class GoalComponent implements OnInit, OnDestroy {
-  @ViewChild('testbutton', {read: ElementRef}) private testButton: ElementRef;
   workLogs: IWorkLog[];
   workLogForm: FormGroup;
   updateFormSub: Subscription;
   workLogId: number;
   labelNames: string[];
-  editWorklogId: number = NaN;
 
   constructor(
-      private formBuilder: FormBuilder,
-      private goalService: GoalService
+    private formBuilder: FormBuilder,
+    private goalService: GoalService
   ) {
     this.workLogId = NaN;
   }
 
   ngOnInit() {
-    this.workLogForm = this.formBuilder.group({
-      hours: 0,
-      minutes: 30,
-      log: '',
-      date: formatDate(new Date(), 'yyyy-MM-dd', 'en'),
-      labels: [],
-    });
-
+    this.workLogForm = this.formBuilder.group(DEFAULT_WORKLOG_FORM);
     this.loadWorkLogs();
     this.loadLabels();
+    this.handleUpdateForm();
+  }
 
+  private loadWorkLogs() {
+    this.goalService.getGoalPage(1).subscribe(
+      (goalPage: IGoalPage) => {
+        this.workLogs = goalPage.results;
+      }
+    )
+  }
+
+  private loadLabels() {
+    this.goalService.getLabels().subscribe((labels: ILabel[]) => {
+      this.labelNames = labels.map(label => label.name);
+    });
+  }
+
+  private handleUpdateForm() {
     this.updateFormSub = this.goalService.getUpdateData().subscribe((workLog) => {
-      console.log(workLog);
-      this.editWorklogId = workLog.id;
+      this.workLogId = workLog.id
       const minutes = workLog.duration % 60;
       const hours = (workLog.duration - minutes) / 60;
       this.workLogForm.setValue({
@@ -50,12 +73,7 @@ export class GoalComponent implements OnInit, OnDestroy {
         date: workLog.date,
         labels: workLog.labels,
       })
-      this.workLogId = workLog.id
-    })
-  }
-
-  ngOnDestroy() {
-    this.updateFormSub.unsubscribe();
+    });
   }
 
   create() {
@@ -67,22 +85,17 @@ export class GoalComponent implements OnInit, OnDestroy {
       labels: formData.labels
     }
     this.goalService.createWorkLog(workLogData).subscribe(
-        () => {
-          this.loadWorkLogs();
-          this.workLogForm.reset({
-            hours: 0,
-            minutes: 30,
-            date: formatDate(new Date(), 'yyyy-MM-dd', 'en'),
-            labels: [],
-          });
-        },
+      () => {
+        this.resetForm();
+        this.loadWorkLogs();
+      },
     );
   }
 
   update() {
     const formData = this.workLogForm.value;
     const workLogData: IWorkLog = {
-      id: this.editWorklogId,
+      id: this.workLogId,
       log: formData.log,
       duration: formData.hours * 60 + formData.minutes,
       date: formData.date,
@@ -90,40 +103,19 @@ export class GoalComponent implements OnInit, OnDestroy {
     };
     this.goalService.updateWorkLog(workLogData).subscribe(
       () => {
+        this.resetForm();
         this.loadWorkLogs();
-        this.editWorklogId = NaN;
-        this.workLogForm.reset({
-          hours: 0,
-          minutes: 30,
-          date: formatDate(new Date(), 'yyyy-MM-dd', 'en'),
-          labels: [],
-        });
       },
     );
   }
 
-  cancel() {
-    this.editWorklogId = NaN;
-    this.workLogForm.reset({
-      hours: 0,
-      minutes: 30,
-      date: formatDate(new Date(), 'yyyy-MM-dd', 'en'),
-      labels: [],
-    });
+  resetForm() {
+    this.workLogId = NaN;
+    this.workLogForm.reset(DEFAULT_WORKLOG_FORM);
   }
 
-  loadWorkLogs() {
-    this.goalService.getGoalPage(1).subscribe(
-        (goalPage: IGoalPage) => {
-          this.workLogs = goalPage.results;
-        }
-    )
-  }
-
-  loadLabels() {
-    this.goalService.getLabels().subscribe((labels: ILabel[]) => {
-      this.labelNames = labels.map(label => label.name);
-    });
+  ngOnDestroy() {
+    this.updateFormSub.unsubscribe();
   }
 }
 

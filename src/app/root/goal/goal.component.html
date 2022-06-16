@@ -27,10 +27,10 @@
         <input autocomplete="off" formControlName="log" spellcheck="false" maxlength="70" class="input log">
         <sg-tag-input formControlName='labels' [options]="labelNames"></sg-tag-input>
         <div class="panel">
-          <sg-button *ngIf="editWorklogId" class="btn-error" (click)="cancel()">Cancel</sg-button>
+          <sg-button *ngIf="workLogId" class="btn-error" (click)="resetForm()">Cancel</sg-button>
           <div class="separator"></div>
-          <sg-button *ngIf="!editWorklogId" class="btn-ok" (click)="create()">Save</sg-button>
-          <sg-button *ngIf="editWorklogId" class="btn-ok" (click)="update()">Update</sg-button>
+          <sg-button *ngIf="!workLogId" class="btn-ok" (click)="create()">Save</sg-button>
+          <sg-button *ngIf="workLogId" class="btn-ok" (click)="update()">Update</sg-button>
         </div>
       </form>
     </div>
