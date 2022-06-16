@@ -1,9 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { GoalService } from "@root/goal/goal.service";
 import { IGoalPage, ILabel, IWorkLog } from "@root/goal/goal.interfaces";
 import { formatDate } from '@angular/common';
-import { Subscription } from "rxjs";
+import { EMPTY, Subject, Subscription } from "rxjs";
+import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
+import { catchError, distinctUntilChanged, mergeMap } from "rxjs/operators";
 
 interface IWorkLogForm {
   hours: number,
@@ -27,24 +29,30 @@ const DEFAULT_WORKLOG_FORM: IWorkLogForm = {
   styleUrls: ['goal.component.scss']
 })
 export class GoalComponent implements OnInit, OnDestroy {
+  @ViewChild(CdkVirtualScrollViewport, { static: true }) viewport: CdkVirtualScrollViewport;
   workLogs: IWorkLog[];
   workLogForm: FormGroup;
   updateFormSub: Subscription;
+  newPageSub: Subscription;
   workLogId: number;
   labelNames: string[];
+  pageCount: number;
+  newPage$ = new Subject<number>();
 
   constructor(
     private formBuilder: FormBuilder,
     private goalService: GoalService
   ) {
     this.workLogId = NaN;
+    this.workLogs = [];
+    this.pageCount = 0;
   }
 
   ngOnInit() {
-    this.workLogForm = this.formBuilder.group(DEFAULT_WORKLOG_FORM);
-    this.loadWorkLogs();
+    this.resetForm();
     this.loadLabels();
-    this.handleUpdateForm();
+    this.handleUpdate();
+    this.handleNextPage();
   }
 
   private loadWorkLogs() {
@@ -55,14 +63,33 @@ export class GoalComponent implements OnInit, OnDestroy {
     )
   }
 
+  handleNextPage() {
+    this.newPageSub = this.newPage$.pipe(
+      distinctUntilChanged(),
+      mergeMap(() => this.goalService.getGoalPage(this.pageCount + 1).pipe(
+        catchError(() => EMPTY), // TODO: ensure 404 error
+      )),
+    ).subscribe((goalPage: IGoalPage) => {
+      this.pageCount++;
+      this.workLogs = [...this.workLogs, ...goalPage.results];
+    });
+  }
+
+  loadNextPage() {
+    if (this.viewport.measureScrollOffset('bottom') < 200) {
+      this.newPage$.next(this.pageCount);
+    }
+  }
+
   private loadLabels() {
     this.goalService.getLabels().subscribe((labels: ILabel[]) => {
       this.labelNames = labels.map(label => label.name);
     });
   }
 
-  private handleUpdateForm() {
+  private handleUpdate() {
     this.updateFormSub = this.goalService.getUpdateData().subscribe((workLog) => {
+      this.viewport.scrollToIndex(0);
       this.workLogId = workLog.id
       const minutes = workLog.duration % 60;
       const hours = (workLog.duration - minutes) / 60;
@@ -116,6 +143,7 @@ export class GoalComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.updateFormSub.unsubscribe();
+    this.newPageSub.unsubscribe();
   }
 }
 

@@ -1,9 +1,4 @@
-<div class="goal-container">
-<!--     infiniteScroll-->
-<!--     [scrollWindow]="false"-->
-<!--     [infiniteScrollDistance]="1"-->
-<!--     [infiniteScrollThrottle]="600"-->
-<!--     (scrolled)="loadNextPage()"-->
+<cdk-virtual-scroll-viewport class="goal-container" itemSize="100" (scrolledIndexChange)="loadNextPage()">
   <div class="goal">
     <div class="worklog-form">
       <form [formGroup]="workLogForm" novalidate>
@@ -36,4 +31,4 @@
     </div>
     <sg-goal-table *ngIf="workLogs" [workLogs]="workLogs"></sg-goal-table>
   </div>
-</div>
+</cdk-virtual-scroll-viewport>
