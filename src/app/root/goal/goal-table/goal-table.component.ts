@@ -22,10 +22,11 @@ export class GoalTableComponent implements OnInit, OnChanges {
 
   private buildGoalTable() {
     this.goalTable = this.workLogs.reduce((result, workLog: IWorkLog) => {
-      const date = workLog.date;
-      delete workLog.date;
+      const workLogNoDate: IWorkLog = { ...workLog  }
+      const date = workLogNoDate.date;
+      delete workLogNoDate.date;
       result[date] = result[date] || [];
-      result[date].push(workLog);
+      result[date].push(workLogNoDate);
       return result;
     }, {});
     this.sortedDates = Object.keys(this.goalTable).sort();
