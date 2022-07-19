@@ -49,7 +49,7 @@ export class GoalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.resetForm();
+    this.workLogForm = this.formBuilder.group(DEFAULT_WORKLOG_FORM);
     this.loadLabels();
     this.handleUpdate();
     this.handleNextPage();
