@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 
 import { BlogService } from '@services';
 
@@ -7,7 +7,9 @@ import { IBlogPage, IBlogPost } from '@interfaces';
 import { Store } from '@ngrx/store';
 import { IAppState, authSlice, IAuthState, EAuthStatus } from "@store/states";
 
-import { Observable, Subscription } from 'rxjs';
+import {EMPTY, Observable, Subject, Subscription} from 'rxjs';
+import {CdkVirtualScrollViewport} from "@angular/cdk/scrolling";
+import {catchError, distinctUntilChanged, mergeMap} from "rxjs/operators";
 
 const EMPTY_BLOG_POST: IBlogPost = { id: 0, title: '', body: '' };
 
@@ -17,23 +19,26 @@ const EMPTY_BLOG_POST: IBlogPost = { id: 0, title: '', body: '' };
   styleUrls: ['blog.component.scss'],
 })
 export class BlogComponent implements OnInit, OnDestroy {
+  @ViewChild(CdkVirtualScrollViewport, { static: true }) viewport: CdkVirtualScrollViewport;
   private statusSubscription: Subscription;
   private actionSubscription: Subscription;
-  private pageNumber: number;
+  private pageCount: number;
   selectedPostId: number;
-  blogPosts: IBlogPost[]
+  blogPosts: IBlogPost[];
+  nextPage$ = new Subject<number>();
+  nextPageSub: Subscription;
 
   constructor(
     private blogService: BlogService,
     private store: Store<IAppState>,
   ) {
-    this.pageNumber = 1;
+    this.pageCount = 0;
     this.blogPosts = [];
   }
 
   ngOnInit() {
-    // Load blog at first place
-    this.loadBlogPosts();
+    // Handle page switch
+    this.handleNextPage();
 
     // Subscribe blog actions
     this.handleBlogOnActions();
@@ -62,47 +67,51 @@ export class BlogComponent implements OnInit, OnDestroy {
         }
         serviceAction.subscribe(
           () => {
-            this.loadBlogPosts(true);
+            this.loadFirstPage();
           },
         )
       },
     )
   }
 
+  onScroll() {
+    if (this.viewport.measureScrollOffset('bottom') < 200) {
+      this.nextPage$.next(this.pageCount + 1);
+    }
+  }
+
+  private handleNextPage() {
+    this.nextPageSub = this.nextPage$.pipe(
+        distinctUntilChanged(),
+        mergeMap((nextPageNumber: number) => this.blogService.getBlogPage(nextPageNumber).pipe(
+            catchError(() => EMPTY), // TODO: ensure 404 error
+        )),
+    ).subscribe((blogPage: IBlogPage) => {
+      this.blogPosts = [...this.blogPosts, ...blogPage.results];
+      this.pageCount++;
+    });
+  }
+
   private handleBlogOnLogin() {
     this.statusSubscription = this.store.select(authSlice).subscribe((authState: IAuthState) => {
       if (authState.authStatus === EAuthStatus.LoggedIn) {
-        this.loadBlogPosts();
+        this.loadFirstPage();
       }
     });
   }
 
-  private loadBlogPosts(resetSelected: boolean = false) {
-    this.blogService.getBlogPages(this.pageNumber).subscribe(
-      (blogPage: IBlogPage) => {
-        this.blogPosts = [EMPTY_BLOG_POST].concat(blogPage.results);
-        if (resetSelected) {
+  private loadFirstPage() {
+    this.blogService.getBlogPage(1).subscribe(
+        (blogPage: IBlogPage) => {
+          this.blogPosts = [EMPTY_BLOG_POST].concat(blogPage.results);
+          this.pageCount = 1;
           this.selectedPostId = NaN;
         }
-      }
-    )
-  }
-
-  private addBlogPosts() {
-    this.blogService.getBlogPage(this.pageNumber).subscribe(
-      (blogPage: IBlogPage) => {
-        this.blogPosts = this.blogPosts.concat(blogPage.results);
-      }
     )
   }
 
   trackByPostId(index: number, blogPost: IBlogPost): number {
     return blogPost.id;
-  }
-
-  loadNextPage() {
-    this.pageNumber += 1;
-    this.addBlogPosts();
   }
 
   togglePost(id: number) {
@@ -112,5 +121,6 @@ export class BlogComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.statusSubscription.unsubscribe();
     this.actionSubscription.unsubscribe();
+    this.nextPageSub.unsubscribe();
   }
 }

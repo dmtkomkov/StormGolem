@@ -6,6 +6,8 @@ import { formatDate } from '@angular/common';
 import { EMPTY, Subject, Subscription } from "rxjs";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import { catchError, distinctUntilChanged, mergeMap } from "rxjs/operators";
+import {authSlice, EAuthStatus, IAppState, IAuthState} from "@store/states";
+import {Store} from "@ngrx/store";
 
 interface IWorkLogForm {
   hours: number,
@@ -33,7 +35,8 @@ export class GoalComponent implements OnInit, OnDestroy {
   workLogs: IWorkLog[];
   workLogForm: FormGroup;
   updateFormSub: Subscription;
-  newPageSub: Subscription;
+  nextPageSub: Subscription;
+  private statusSubscription: Subscription;
   workLogId: number;
   labelNames: string[];
   pageCount: number;
@@ -41,7 +44,8 @@ export class GoalComponent implements OnInit, OnDestroy {
 
   constructor(
     private formBuilder: FormBuilder,
-    private goalService: GoalService
+    private goalService: GoalService,
+    private store: Store<IAppState>,
   ) {
     this.workLogId = NaN;
     this.workLogs = [];
@@ -53,6 +57,7 @@ export class GoalComponent implements OnInit, OnDestroy {
     this.loadLabels();
     this.handleUpdate();
     this.handleNextPage();
+    this.handleGoalOnLogin();
   }
 
   private loadFirstPage() {
@@ -60,12 +65,13 @@ export class GoalComponent implements OnInit, OnDestroy {
       (goalPage: IGoalPage) => {
         this.workLogs = goalPage.results;
         this.pageCount = 1;
+        this.resetForm();
       }
     )
   }
 
   private handleNextPage() {
-    this.newPageSub = this.nextPage$.pipe(
+    this.nextPageSub = this.nextPage$.pipe(
       distinctUntilChanged(),
       mergeMap((nextPageNumber: number) => this.goalService.getGoalPage(nextPageNumber).pipe(
         catchError(() => EMPTY), // TODO: ensure 404 error
@@ -85,6 +91,14 @@ export class GoalComponent implements OnInit, OnDestroy {
   private loadLabels() {
     this.goalService.getLabels().subscribe((labels: ILabel[]) => {
       this.labelNames = labels.map(label => label.name);
+    });
+  }
+
+  private handleGoalOnLogin() {
+    this.statusSubscription = this.store.select(authSlice).subscribe((authState: IAuthState) => {
+      if (authState.authStatus === EAuthStatus.LoggedIn) {
+        this.loadFirstPage();
+      }
     });
   }
 
@@ -114,7 +128,6 @@ export class GoalComponent implements OnInit, OnDestroy {
     }
     this.goalService.createWorkLog(workLogData).subscribe(
       () => {
-        this.resetForm();
         this.loadFirstPage();
       },
     );
@@ -131,7 +144,6 @@ export class GoalComponent implements OnInit, OnDestroy {
     };
     this.goalService.updateWorkLog(workLogData).subscribe(
       () => {
-        this.resetForm();
         this.loadFirstPage();
       },
     );
@@ -148,7 +160,7 @@ export class GoalComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.updateFormSub.unsubscribe();
-    this.newPageSub.unsubscribe();
+    this.nextPageSub.unsubscribe();
   }
 }
 

@@ -1,9 +1,4 @@
-<div class="blog-container"
-     infiniteScroll
-     [scrollWindow]="false"
-     [infiniteScrollDistance]="1"
-     [infiniteScrollThrottle]="600"
-     (scrolled)="loadNextPage()">
+<cdk-virtual-scroll-viewport class="blog-container" itemSize="100" (scrolledIndexChange)="onScroll()">
   <div class="blog">
     <sg-post class="sg-post"
        *ngFor="let blogPost of blogPosts; trackBy: trackByPostId"
@@ -12,4 +7,4 @@
        (selectPost)="togglePost($event)">
     </sg-post>
   </div>
-</div>
+</cdk-virtual-scroll-viewport>
