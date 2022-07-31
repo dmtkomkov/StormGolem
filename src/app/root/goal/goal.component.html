@@ -1,4 +1,4 @@
-<cdk-virtual-scroll-viewport class="goal-container" itemSize="100" (scrolledIndexChange)="loadNextPage()">
+<cdk-virtual-scroll-viewport class="goal-container" itemSize="100" (scrolledIndexChange)="onScroll()">
   <div class="goal">
     <div class="worklog-form">
       <form [formGroup]="workLogForm" novalidate>
@@ -22,7 +22,7 @@
         <input autocomplete="off" formControlName="log" spellcheck="false" maxlength="70" class="input log">
         <sg-tag-input formControlName='labels' [options]="labelNames"></sg-tag-input>
         <div class="panel">
-          <sg-button *ngIf="workLogId" class="btn-error" (click)="resetForm()">Cancel</sg-button>
+          <sg-button *ngIf="workLogId" class="btn-error" (click)="cancelForm()">Cancel</sg-button>
           <div class="separator"></div>
           <sg-button *ngIf="!workLogId" class="btn-ok" (click)="create()">Save</sg-button>
           <sg-button *ngIf="workLogId" class="btn-ok" (click)="update()">Update</sg-button>

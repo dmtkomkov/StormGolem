@@ -37,7 +37,7 @@ export class GoalComponent implements OnInit, OnDestroy {
   workLogId: number;
   labelNames: string[];
   pageCount: number;
-  newPage$ = new Subject<number>();
+  nextPage$ = new Subject<number>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -55,29 +55,30 @@ export class GoalComponent implements OnInit, OnDestroy {
     this.handleNextPage();
   }
 
-  private loadWorkLogs() {
+  private loadFirstPage() {
     this.goalService.getGoalPage(1).subscribe(
       (goalPage: IGoalPage) => {
         this.workLogs = goalPage.results;
+        this.pageCount = 1;
       }
     )
   }
 
-  handleNextPage() {
-    this.newPageSub = this.newPage$.pipe(
+  private handleNextPage() {
+    this.newPageSub = this.nextPage$.pipe(
       distinctUntilChanged(),
-      mergeMap(() => this.goalService.getGoalPage(this.pageCount + 1).pipe(
+      mergeMap((nextPageNumber: number) => this.goalService.getGoalPage(nextPageNumber).pipe(
         catchError(() => EMPTY), // TODO: ensure 404 error
       )),
     ).subscribe((goalPage: IGoalPage) => {
-      this.pageCount++;
       this.workLogs = [...this.workLogs, ...goalPage.results];
+      this.pageCount++;
     });
   }
 
-  loadNextPage() {
+  onScroll() {
     if (this.viewport.measureScrollOffset('bottom') < 200) {
-      this.newPage$.next(this.pageCount);
+      this.nextPage$.next(this.pageCount + 1);
     }
   }
 
@@ -114,7 +115,7 @@ export class GoalComponent implements OnInit, OnDestroy {
     this.goalService.createWorkLog(workLogData).subscribe(
       () => {
         this.resetForm();
-        this.loadWorkLogs();
+        this.loadFirstPage();
       },
     );
   }
@@ -131,14 +132,18 @@ export class GoalComponent implements OnInit, OnDestroy {
     this.goalService.updateWorkLog(workLogData).subscribe(
       () => {
         this.resetForm();
-        this.loadWorkLogs();
+        this.loadFirstPage();
       },
     );
   }
 
-  resetForm() {
+  private resetForm() {
     this.workLogId = NaN;
     this.workLogForm.reset(DEFAULT_WORKLOG_FORM);
+  }
+
+  cancelForm() {
+    this.resetForm();
   }
 
   ngOnDestroy() {
