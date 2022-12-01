@@ -1,24 +1,32 @@
 @import "colors";
 
-input {
-  line-height: 1.5;
-  outline: none;
-  padding: 0;
-  color: $text-dark;
-  border: none;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  margin: 0;
-}
-
 .div-input {
-  padding-bottom: 5px;
-  padding-top: 5px;
+  padding: 5px;
+  position: relative;
+  display: flex;
+  border: 1px solid $border-default;
 }
 
 .labels {
+  width: 100%;
+  flex-wrap: wrap;
   display: flex;
   flex-direction: row;
+  gap: 5px;
+}
+
+input {
+  line-height: 1.5;
+  min-width: 1rem;
+  flex: 1 1;
+  box-sizing: border-box;
+  padding: 0;
+  color: $text-dark;
+  border: none;
+  outline: none;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  margin: 0;
 }
 
 .label {
@@ -26,7 +34,6 @@ input {
   display: flex;
   gap: 5px;
   font-size: 10px;
-  margin-right: 5px;
   padding: 2px 5px;
   border-radius: 5px;
   border: 1px solid #8c5252;
