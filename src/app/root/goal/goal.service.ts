@@ -14,6 +14,7 @@ export class GoalService {
   private baseUrl: string = 'goal';
   private pageSize: number;
   private workLogUpdateData$ = new Subject<IWorkLog>();
+  private workLogDeleteId$ = new Subject<number>();
 
   constructor(
     private http: HttpClient,
@@ -27,6 +28,14 @@ export class GoalService {
 
   getUpdateData(): Observable<IWorkLog> {
     return this.workLogUpdateData$
+  }
+
+  sendDeleteId(id: number) {
+    this.workLogDeleteId$.next(id)
+  }
+
+  getDeleteId(): Observable<number> {
+    return this.workLogDeleteId$;
   }
 
   getGoalPage(pageNumber: number): Observable<IGoalPage> {
@@ -54,9 +63,8 @@ export class GoalService {
     return this.http.put<IWorkLog>(url, workLog);
   }
 
-  //
-  // deleteBlogPost(blogPost: IBlogPost): Observable<{}> {
-  //   const url = Location.joinWithSlash(this.baseUrl, blogPost.id.toString());
-  //   return this.http.delete<{}>(url);
-  // }
+  deleteWorkLog(id: number): Observable<{}> {
+    const url = Location.joinWithSlash(this.baseUrl, id.toString());
+    return this.http.delete<{}>(url);
+  }
 }

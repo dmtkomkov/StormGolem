@@ -19,6 +19,7 @@ export interface ILabelGroup {
 }
 
 export interface IDateLog {
+  id: number;
   log: string;
   labels?: string[];
   duration?: number;

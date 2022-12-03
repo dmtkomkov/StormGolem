@@ -35,6 +35,7 @@ export class GoalComponent implements OnInit, OnDestroy {
   workLogs: IWorkLog[];
   workLogForm: FormGroup;
   updateFormSub: Subscription;
+  deleteSub: Subscription;
   nextPageSub: Subscription;
   private statusSubscription: Subscription;
   workLogId: number;
@@ -56,6 +57,7 @@ export class GoalComponent implements OnInit, OnDestroy {
     this.workLogForm = this.formBuilder.group(DEFAULT_WORKLOG_FORM);
     this.loadLabels();
     this.handleUpdate();
+    this.handleDelete();
     this.handleNextPage();
     this.handleGoalOnLogin();
   }
@@ -118,6 +120,12 @@ export class GoalComponent implements OnInit, OnDestroy {
     });
   }
 
+  private handleDelete() {
+    this.deleteSub = this.goalService.getDeleteId().subscribe((id: number) => {
+      this.delete(id);
+    })
+  }
+
   create() {
     const formData = this.workLogForm.value;
     const workLogData: IWorkLog = {
@@ -143,6 +151,14 @@ export class GoalComponent implements OnInit, OnDestroy {
       labels: formData.labels
     };
     this.goalService.updateWorkLog(workLogData).subscribe(
+      () => {
+        this.loadFirstPage();
+      },
+    );
+  }
+
+  delete(id: number) {
+    this.goalService.deleteWorkLog(id).subscribe(
       () => {
         this.loadFirstPage();
       },

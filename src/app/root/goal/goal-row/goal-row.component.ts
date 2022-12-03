@@ -47,6 +47,8 @@ export class GoalRowComponent implements OnInit {
     this.menu.afterClosed().subscribe((action: string) => {
       if (action === 'edit') {
         this.goalService.sendUpdateData({ ...this.dateLog, date: this.date });
+      } else if (action === 'delete') {
+        this.goalService.sendDeleteId(this.dateLog.id);
       }
     })
   }
