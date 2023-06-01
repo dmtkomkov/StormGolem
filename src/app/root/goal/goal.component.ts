@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
 import { GoalService } from "@root/goal/goal.service";
 import { IGoalPage, ILabel, IWorkLog } from "@root/goal/goal.interfaces";
 import { formatDate } from '@angular/common';
@@ -33,7 +33,7 @@ const DEFAULT_WORKLOG_FORM: IWorkLogForm = {
 export class GoalComponent implements OnInit, OnDestroy {
   @ViewChild(CdkVirtualScrollViewport, { static: true }) viewport: CdkVirtualScrollViewport;
   workLogs: IWorkLog[];
-  workLogForm: FormGroup;
+  workLogForm: UntypedFormGroup;
   updateFormSub: Subscription;
   deleteSub: Subscription;
   nextPageSub: Subscription;
@@ -44,7 +44,7 @@ export class GoalComponent implements OnInit, OnDestroy {
   nextPage$ = new Subject<number>();
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private goalService: GoalService,
     private store: Store<IAppState>,
   ) {

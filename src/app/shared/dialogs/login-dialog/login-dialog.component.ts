@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 import { Store } from "@ngrx/store";
 import { LogIn } from "@store/actions";
@@ -15,13 +15,13 @@ import { ModalRef } from "@modal/modal-ref";
   styleUrls: [ 'login-dialog.component.scss' ],
 })
 export class LoginDialogComponent implements OnInit, OnDestroy {
-  public loginForm: FormGroup;
+  public loginForm: UntypedFormGroup;
   public loginErrMsg: string;
   private statusSubscription: Subscription;
 
   constructor(
     private dialogRef: ModalRef,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private store: Store<IAppState>,
   ) {
     this.loginErrMsg = null;

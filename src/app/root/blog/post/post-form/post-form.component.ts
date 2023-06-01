@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 import { BlogService } from '@services';
 import { IBlogPost } from "@interfaces";
@@ -13,10 +13,10 @@ export class PostFormComponent implements OnInit {
   @Input() id: number;
   @Input() title: string;
   @Input() body: string;
-  blogPostForm: FormGroup;
+  blogPostForm: UntypedFormGroup;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private blogService: BlogService,
   ) { }
 
